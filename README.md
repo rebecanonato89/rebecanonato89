@@ -26,6 +26,9 @@
 ![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=rebecanonato89&show_icons=true&theme=radical)
 <br><br><br>
 
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=rebecanonato89&layout=compact)](https://github.com/rebecanonato89/github-readme-stats)
+<br><br><br>
+
 ##
  **Dev Fullstack**
 
@@ -45,4 +48,3 @@
           - CSS
 ```
 
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=rebecanonato89&layout=compact)](https://github.com/rebecanonato89/github-readme-stats)
