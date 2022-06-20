@@ -1,50 +1,56 @@
-# Rebeca Nonato Domingos
-## Descrição pessoal das qualificações e tecnologias utilizadas.
+<h2 align="left">Hi 👋! My name is Rebeca and I'm a fullstack developer, from Lavras-MG</h2>
+
+###
+
+<div align="center">
+  <a href="rebecanonato89" target="_blank">
+    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/discord/default.svg" width="38" height="26" alt="discord logo"  />
+  </a>
+  <a href="rebecanonato89@gmail.com" target="_blank">
+    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/gmail/default.svg" width="38" height="26" alt="gmail logo"  />
+  </a>
+  <a href="https://www.linkedin.com/in/rebecanonato89/" target="_blank">
+    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/linkedin/default.svg" width="38" height="26" alt="linkedin logo"  />
+  </a>
+  <a href="https://pt.stackoverflow.com/users/81283/rebeca-nonato" target="_blank">
+    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/stackoverflow/default.svg" width="38" height="26" alt="stackoverflow logo"  />
+  </a>
+  <a href="https://api.whatsapp.com/send?phone=5531994298913&text=Ol%C3%A1%2C%20envie%20sua%20mensagem%2C%20logo%20irei%20responder." target="_blank">
+    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/whatsapp/default.svg" width="38" height="26" alt="whatsapp logo"  />
+  </a>
+</div>
+
+###
+
+###
+
+<div align="left">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="30" width="42" alt="javascript logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-plain.svg" height="30" width="42" alt="typescript logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" height="30" width="42" alt="nodejs logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="30" width="42" alt="html5 logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="30" width="42" alt="css3 logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="30" width="42" alt="react logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" height="30" width="42" alt="csharp logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" height="30" width="42" alt="angularjs logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" height="30" width="42" alt="mongodb logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" height="30" width="42" alt="mysql logo"  />
+</div>
+
+###
+
+###
+
+<div align="center">
+  <img src="https://github-readme-stats.vercel.app/api?hide_title=false&hide_rank=false&show_icons=true&include_all_commits=true&count_private=true&disable_animations=false&theme=dracula&locale=en&hide_border=false&username=undefined" height="150" alt="stats graph"  />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs?locale=en&hide_title=false&layout=compact&card_width=320&langs_count=5&theme=dracula&hide_border=false&username=undefined" height="150" alt="languages graph"  />
+</div>
+
+###
 
 
-<a href="https://www.linkedin.com/in/rebecanonato89/">
-  <code><img alt="My linkedin" width="28" src="https://cdn-icons-png.flaticon.com/512/220/220343.png" /></code>
-</a>
 
-<a href="https://api.whatsapp.com/send?phone=5531994298913">
-  <code><img alt="My whatsapp" width="28" src="https://cdn-icons-png.flaticon.com/512/1384/1384023.png" /></code>
-</a>
 
-<a href="https://app.rocketseat.com.br/me/rebecanonato89">
-  <code><img alt="My Rocketseat" width="28" src="https://cdn-icons-png.flaticon.com/512/166/166340.png" /></code>
-</a>
 
-<a href="mailto:rebecanonato89@gmail.com">
-  <code><img alt="My e-mail" width="32" src="https://cdn-icons-png.flaticon.com/512/747/747314.png" /></code>
-</a>
 
-<a href="https://rebecanonato89.dev/">
-  <code><img alt="My site" width="32" src="https://cdn-icons-png.flaticon.com/512/617/617273.png" /></code>
-</a>
-
-<br><br><br>
-![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=rebecanonato89&show_icons=true&theme=radical)
-<br><br><br>
-
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=rebecanonato89&layout=compact)](https://github.com/rebecanonato89/github-readme-stats)
-<br><br><br>
-
-##
- **Dev Fullstack**
-
-```
-     - Back-end: 
-          - C# 
-               -- .Net Core
-               -- .Net Framework
-          - NodeJS
-```
-```
-     - Front-end:
-          - JavaScript
-               -- Angular
-               -- ReactJS
-          - HTML
-          - CSS
-```
 
