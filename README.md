@@ -15,11 +15,8 @@
   <a href="https://pt.stackoverflow.com/users/81283/rebeca-nonato" target="_blank">
     <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/stackoverflow/default.svg" width="38" height="26" alt="stackoverflow logo"  />
   </a>
-  <a href="https://api.whatsapp.com/send?phone=5531994298913&text=Ol%C3%A1%2C%20envie%20sua%20mensagem%2C%20logo%20irei%20responder." target="_blank">
-    <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/whatsapp/default.svg" width="38" height="26" alt="whatsapp logo"  />
-  </a>
   <a href="https://github.com/BAY-EFRUT" target="_blank">
-    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111432.png" width="38" height="26" alt="whatsapp logo"  />
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111432.png" width="38" height="26" alt="git logo"  />
   </a>
 </div>
 

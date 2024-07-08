@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaGithub, FaLinkedin, FaStackOverflow, FaFileAlt, FaWhatsappSquare } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaStackOverflow, FaFileAlt } from 'react-icons/fa';
 import { GrMail } from 'react-icons/gr';
 import { Container } from './styles';
 
