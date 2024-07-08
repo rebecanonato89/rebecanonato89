@@ -19,9 +19,6 @@ function Social() {
       >
         <FaLinkedin />
       </a>
-      <a id="curriculo" title="Currículo" href="https://drive.google.com/file/d/1wd6WQ7rd3roxVBEpAlNxUhOPHyr3pTL5/view?usp=sharing">
-          <FaFileAlt />
-      </a>
       <a id="email" title="Email" href="mailto:rebecanonato89@gmail.com">
         <GrMail />
       </a>
