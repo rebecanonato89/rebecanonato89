@@ -25,9 +25,6 @@ function Social() {
       <a id="email" title="Email" href="mailto:rebecanonato89@gmail.com">
         <GrMail />
       </a>
-      <a id="whats" title="WhatsApp" href="https://api.whatsapp.com/send?phone=5531994298913&text=Ol%C3%A1%2C%20envie%20sua%20mensagem%2C%20logo%20irei%20responder.">
-        <FaWhatsappSquare />
-      </a>
     </Container>
   );
 }
