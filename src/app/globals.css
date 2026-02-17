@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-base-900 text-base-100 antialiased;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+h1,
+h2 {
+  font-family: var(--font-serif), ui-serif, Georgia, serif;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+.light {
+  color-scheme: light;
+}
+
+.container-grid {
+  @apply mx-auto w-full max-w-6xl px-5;
+}
+
+.surface {
+  @apply rounded-2xl border border-base-700 bg-base-800 shadow-soft;
+}
+
+.section-title {
+  @apply text-2xl font-semibold text-base-100;
+}
+
+.section-lead {
+  @apply mt-3 text-base text-base-300;
+}
+
+.skip-link {
+  @apply sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-base-100 focus:px-4 focus:py-2 focus:text-base-900;
+}
