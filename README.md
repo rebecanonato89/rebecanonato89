@@ -5,10 +5,10 @@
 </p>
 
 <p align="center">
-  <a href="#-sobre">⚓ Sobre</a> • 
-  <a href="#-stack">🧭 Stack</a> • 
-  <a href="#-projetos-em-rota">🗺️ Projetos</a> • 
-  <a href="#-contato">📡 Contato</a>
+  · ⚓ <a href="#-sobre">Sobre</a>
+  · 🧭 <a href="#-stack">Stack</a>
+  · 🗺️ <a href="#%EF%B8%8F-projetos-em-rota">Projetos</a>
+  · 📡 <a href="#-contato">Contato</a>
 </p>
 
 <p align="center">
@@ -25,41 +25,55 @@
 
 ---
 
-## <a name="-sobre"></a>⚓ Sobre
+## ⚓ Sobre
 
 <code>Backend • Arquitetura • Sistemas distribuídos • Consistência • Segurança • Qualidade</code>
 
 Aqui a “rota” é simples: mostrar trabalho real, com documentação e decisões técnicas claras.
 
-## <a name="-stack"></a>🧭 Stack
+## 🧭 Stack
 
-<p align="left">
+<p>
   <a href="https://skillicons.dev">
-    <img alt="Tech Stack" src="https://skillicons.dev/icons?i=kotlin,java,cs,ts,nodejs,nestjs,react,angular,postgres,docker,kafka,graphql,python&perline=13" />
   </a>
 </p>
 
-## <a name="-projetos-em-rota"></a>🗺️ Projetos em rota
+## 🗺️ Projetos em rota
 
 ### Hedge CLI — detector híbrido com gating de LLM
 Um CLI que combina heurística estática com LLM apenas quando necessário, buscando otimizar custo vs. precisão.
 
 <a href="https://github.com/rebecanonato89/hedge-cli">
-  <img align="center" alt="Hedge CLI" src="https://github-readme-stats.vercel.app/api/pin/?username=rebecanonato89&repo=hedge-cli&show_owner=true&theme=dark" />
 </a>
 
 ### AllRev — backend SaaS com RBAC e multi-tenant
 Backend em NestJS com módulos de autenticação, tenants e controle por papéis.
 
 <a href="https://github.com/Devs-IO/allrev-backend">
-  <img align="center" alt="AllRev Backend" src="https://github-readme-stats.vercel.app/api/pin/?username=Devs-IO&repo=allrev-backend&show_owner=true&theme=dark" />
 </a>
 
 ### ClinicFiapApp — microsserviços com Outbox, Kafka e CQRS
-Sistema distribuído com execução via Docker Compose e foco em resiliência.
+Sistema distribuído com execução via Docker Compose e foco em resiliência (idempotência, DLQ/DLT, consistência eventual).
 
 <a href="https://github.com/fiap-tech-challenge-java/clinicfiapp-monorepo">
-  <img align="center" alt="ClinicFiapApp Monorepo" src="https://github-readme-stats.vercel.app/api/pin/?username=fiap-tech-challenge-java&repo=clinicfiapp-monorepo&show_owner=true&theme=dark" />
+</a>
+
+### Food Fiapp — Clean Architecture com Java 21 e testes
+Back-end com camadas bem definidas, suíte de testes e ferramentas de qualidade.
+
+<a href="https://github.com/fiap-tech-challenge-java/food-fiapp">
+</a>
+
+### TechChallenge — execução com Docker
+Guia e estrutura para rodar o projeto localmente via containers.
+
+<a href="https://github.com/fiap-tech-challenge-java/fiap-tech-challenge">
+</a>
+
+### Equinox — repositório público
+Repositório TypeScript com README padrão do Create React App.
+
+<a href="https://github.com/rebecanonato89/equinox">
 </a>
 
 ---
@@ -67,14 +81,7 @@ Sistema distribuído com execução via Docker Compose e foco em resiliência.
 ## 📈 Scoreboard
 
 <p align="center">
-  <img height="180" src="https://github-readme-stats.vercel.app/api?username=rebecanonato89&show_icons=true&theme=dark&hide_border=true" />
-  <img height="180" src="https://streak-stats.demolab.com/?user=rebecanonato89&theme=dark&hide_border=true" />
-</p>
-
-<p align="center">
-  <a href="https://github.com/ryo-ma/github-profile-trophy">
-    <img alt="Trophies" src="https://github-profile-trophy.vercel.app/?username=rebecanonato89&theme=onedark&no-frame=true&row=1" />
-  </a>
+  <img height="165" alt="Streak" src="https://streak-stats.demolab.com/?user=rebecanonato89&hide_border=true&theme=dark" />
 </p>
 
 ---
@@ -82,14 +89,21 @@ Sistema distribuído com execução via Docker Compose e foco em resiliência.
 ## 🌍 Currículo curto
 
 <details>
-  <summary><strong>PT-BR / EN / 中文</strong></summary>
-  <br>
-  <strong>PT-BR:</strong> Engenheira de software com foco em backend e arquitetura...
-  <br><br>
-  <strong>EN:</strong> Software engineer focused on backend and architecture...
+  <summary><strong>PT-BR</strong></summary>
+  <p>Engenheira de software com foco em backend e arquitetura. Gosto de sistemas com requisitos reais: consistência, segurança, observabilidade e escalabilidade. Este perfil prioriza projetos com documentação e decisões técnicas explícitas.</p>
 </details>
 
-## <a name="-contato"></a>📡 Contato
+<details>
+  <summary><strong>EN</strong></summary>
+  <p>Software engineer focused on backend and architecture. I enjoy systems with real constraints: consistency, security, observability, and scalability. This profile prioritizes projects with clear documentation and explicit technical decisions.</p>
+</details>
 
-- **LinkedIn:** [rebecanonato89](https://www.linkedin.com/in/rebecanonato89/)
-- **Portfólio:** [rebecanonato89.dev](https://rebecanonato89.dev)
+<details>
+  <summary><strong>中文</strong></summary>
+  <p>我是一名专注于后端与架构的软件工程师，偏好真实约束下的系统：一致性、安全性、可观测性与可扩展性。该主页重点展示有清晰文档与明确技术决策的项目。</p>
+</details>
+
+## 📡 Contato
+
+- LinkedIn: [https://www.linkedin.com/in/rebecanonato89/](https://www.linkedin.com/in/rebecanonato89/)
+- Portfólio: [https://rebecanonato89.dev](https://rebecanonato89.dev)
