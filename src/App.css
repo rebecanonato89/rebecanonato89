@@ -1,52 +1,52 @@
 :root {
-  --tech-blue: #1e90ff;
-  --tech-blue-dark: #0a2342;
-  --tech-gray: #23272f;
-  --tech-gray-light: #3a3f4b;
-  --tech-black: #10131a;
-  --tech-white: #f5f7fa;
+  --tech-blue: #3399ff;
+  --tech-blue-dark: #010818;
+  --tech-gray: #181a1f;
+  --tech-gray-light: #e6e8ef;
+  --tech-black: #000000;
+  --tech-white: #ffffff;
   --tech-cyan: #00eaff;
 
-  /* THEME TOKENS (LIGHT-ish base but still “tech dark”) */
-  --bg: radial-gradient(900px 520px at 18% 22%, rgba(0,234,255,0.18), rgba(0,0,0,0) 60%),
-        radial-gradient(720px 460px at 78% 32%, rgba(30,144,255,0.18), rgba(0,0,0,0) 55%),
-        linear-gradient(120deg, var(--tech-blue-dark) 0%, var(--tech-gray) 100%);
+    /* THEME TOKENS (LIGHT base) */
+    --bg: radial-gradient(900px 520px at 18% 22%, rgba(0,234,255,0.22), rgba(0,0,0,0) 60%),
+      radial-gradient(720px 460px at 78% 32%, rgba(51,153,255,0.22), rgba(0,0,0,0) 55%),
+      linear-gradient(120deg, var(--tech-blue-dark) 0%, var(--tech-gray-light) 100%);
 
-  --text: var(--tech-white);
+    --text: #23272f;
 
-  --card-bg: linear-gradient(120deg, rgba(35,39,47,0.92) 10%, rgba(0,234,255,0.10) 100%);
-  --card-border: rgba(0,234,255,0.62);
+    --card-bg: linear-gradient(120deg, rgba(230,232,239,0.92) 10%, rgba(0,234,255,0.10) 100%);
+    --card-border: rgba(0,234,255,0.62);
 
-  --node-bg: rgba(16, 19, 26, 0.38);
-  --node-border: rgba(0,234,255,0.36);
-  --node-bg-active: rgba(0,234,255,0.14);
-  --node-border-active: rgba(0,234,255,0.78);
+    --node-bg: rgba(230, 232, 239, 0.38);
+    --node-border: rgba(0,234,255,0.36);
+    --node-bg-active: rgba(0,234,255,0.14);
+    --node-border-active: rgba(0,234,255,0.78);
 
-  --link: rgba(0,234,255,0.22);
-  --link-hot: rgba(0,234,255,0.58);
+    --link: rgba(0,234,255,0.22);
+    --link-hot: rgba(0,234,255,0.58);
 
-  --backdrop: rgba(0,0,0,0.12);
+    --backdrop: rgba(255,255,255,0.12);
 }
 
 body.dark {
-  --bg: radial-gradient(900px 520px at 18% 22%, rgba(0,234,255,0.10), rgba(0,0,0,0) 60%),
-        radial-gradient(720px 460px at 78% 32%, rgba(30,144,255,0.12), rgba(0,0,0,0) 55%),
-        linear-gradient(120deg, var(--tech-black) 0%, var(--tech-blue-dark) 100%);
+    --bg: radial-gradient(900px 520px at 18% 22%, rgba(0,234,255,0.06), rgba(0,0,0,0) 60%),
+      radial-gradient(720px 460px at 78% 32%, rgba(1,8,24,0.12), rgba(0,0,0,0) 55%),
+      linear-gradient(120deg, var(--tech-black) 0%, var(--tech-blue-dark) 100%);
 
-  --text: rgba(245,247,250,0.92);
+    --text: rgba(245,247,250,1);
 
-  --card-bg: linear-gradient(120deg, rgba(16,19,26,0.92) 10%, rgba(30,144,255,0.12) 100%);
-  --card-border: rgba(30,144,255,0.58);
+    --card-bg: linear-gradient(120deg, rgba(1,8,24,0.98) 10%, rgba(51,153,255,0.12) 100%);
+    --card-border: rgba(51,153,255,0.68);
 
-  --node-bg: rgba(10, 12, 18, 0.46);
-  --node-border: rgba(30,144,255,0.36);
-  --node-bg-active: rgba(30,144,255,0.16);
-  --node-border-active: rgba(30,144,255,0.72);
+    --node-bg: rgba(1, 8, 24, 0.56);
+    --node-border: rgba(51,153,255,0.36);
+    --node-bg-active: rgba(51,153,255,0.18);
+    --node-border-active: rgba(51,153,255,0.82);
 
-  --link: rgba(30,144,255,0.22);
-  --link-hot: rgba(30,144,255,0.58);
+    --link: rgba(51,153,255,0.32);
+    --link-hot: rgba(51,153,255,0.68);
 
-  --backdrop: rgba(0,0,0,0.20);
+    --backdrop: rgba(0,0,0,0.28);
 }
 
 body {
