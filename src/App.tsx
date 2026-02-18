@@ -44,59 +44,59 @@ function t(lang: Lang, key: string) {
   return dict[lang][key] ?? key;
 }
 
-// Icons
+const langs: Lang[] = ['pt', 'en', 'zh'];
+
+/** Slightly nicer inline icons (consistent stroke + glow via CSS) */
 const icons = {
   user: (
-    <svg className="icon" viewBox="0 0 32 32" fill="none">
-      <circle cx="16" cy="11" r="7" stroke="var(--tech-cyan)" strokeWidth="2" />
-      <rect x="4" y="22" width="24" height="6" rx="3" stroke="var(--tech-cyan)" strokeWidth="2" />
+    <svg className="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M20 21a8 8 0 0 0-16 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" strokeWidth="2" />
     </svg>
   ),
   stack: (
-    <svg className="icon" viewBox="0 0 32 32" fill="none">
-      <rect x="4" y="8" width="24" height="6" rx="3" stroke="var(--tech-cyan)" strokeWidth="2" />
-      <rect x="4" y="18" width="24" height="6" rx="3" stroke="var(--tech-cyan)" strokeWidth="2" />
+    <svg className="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 3 3 8l9 5 9-5-9-5Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <path d="M3 12l9 5 9-5" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <path d="M3 16l9 5 9-5" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
     </svg>
   ),
   project: (
-    <svg className="icon" viewBox="0 0 32 32" fill="none">
-      <rect x="6" y="6" width="20" height="20" rx="5" stroke="var(--tech-cyan)" strokeWidth="2" />
-      <path d="M10 16h12" stroke="var(--tech-cyan)" strokeWidth="2" />
+    <svg className="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M14 3h7v7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M10 14 21 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M20 14v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   ),
   diff: (
-    <svg className="icon" viewBox="0 0 32 32" fill="none">
-      <circle cx="16" cy="16" r="12" stroke="var(--tech-cyan)" strokeWidth="2" />
-      <path d="M10 16h12" stroke="var(--tech-cyan)" strokeWidth="2" />
-      <path d="M16 10v12" stroke="var(--tech-cyan)" strokeWidth="2" />
+    <svg className="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 2 4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <path d="M9 12l2 2 4-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   ),
   contact: (
-    <svg className="icon" viewBox="0 0 32 32" fill="none">
-      <rect x="4" y="8" width="24" height="16" rx="4" stroke="var(--tech-cyan)" strokeWidth="2" />
-      <path d="M4 12l12 8 12-8" stroke="var(--tech-cyan)" strokeWidth="2" />
+    <svg className="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M4 4h16v16H4V4Z" stroke="currentColor" strokeWidth="2" />
+      <path d="M4 8l8 6 8-6" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
     </svg>
   ),
   sun: (
-    <svg className="icon" viewBox="0 0 32 32" fill="none">
-      <circle cx="16" cy="16" r="7" stroke="var(--tech-cyan)" strokeWidth="2" />
-      <g stroke="var(--tech-cyan)" strokeWidth="2">
-        <line x1="16" y1="2" x2="16" y2="6" />
-        <line x1="16" y1="26" x2="16" y2="30" />
-        <line x1="2" y1="16" x2="6" y2="16" />
-        <line x1="26" y1="16" x2="30" y2="16" />
-      </g>
+    <svg className="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" strokeWidth="2" />
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+            stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   ),
   moon: (
-    <svg className="icon" viewBox="0 0 32 32" fill="none">
-      <path d="M24 16a8 8 0 1 1-8-8c0 4.418 3.582 8 8 8z" stroke="var(--tech-cyan)" strokeWidth="2" />
+    <svg className="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M21 13.5A7.5 7.5 0 0 1 10.5 3a6.5 6.5 0 1 0 10.5 10.5Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
     </svg>
   ),
   sound: (
-    <svg className="icon" viewBox="0 0 32 32" fill="none">
-      <rect x="8" y="12" width="6" height="8" rx="2" fill="var(--tech-cyan)" />
-      <path d="M18 16c2 0 4 2 4 4" stroke="var(--tech-cyan)" strokeWidth="2" />
+    <svg className="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M11 5 6 9H3v6h3l5 4V5Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <path d="M16 9a4 4 0 0 1 0 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M18.5 7a7 7 0 0 1 0 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   ),
 };
@@ -109,8 +109,6 @@ type NodeDef = {
   links: SectionKey[];
 };
 
-const langs: Lang[] = ['pt', 'en', 'zh'];
-
 function useBeep() {
   const ctxRef = useRef<AudioContext | null>(null);
 
@@ -121,8 +119,8 @@ function useBeep() {
       const o = ctx.createOscillator();
       const g = ctx.createGain();
       o.type = 'sine';
-      o.frequency.value = 660;
-      g.gain.value = 0.04;
+      o.frequency.value = 740;
+      g.gain.value = 0.03;
       o.connect(g);
       g.connect(ctx.destination);
       o.start();
@@ -137,11 +135,13 @@ export default function App() {
   const [lang, setLang] = useState<Lang>('pt');
   const [dark, setDark] = useState(false);
   const [sound, setSound] = useState(false);
-  const [active, setActive] = useState<SectionKey | null>('about'); // começa em Sobre, mas pode ocultar
+  const [active, setActive] = useState<SectionKey | null>('about');
+
   const playBeep = useBeep();
 
   const bgRef = useRef<HTMLCanvasElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+
   const [stageSize, setStageSize] = useState<{ w: number; h: number }>({
     w: window.innerWidth,
     h: window.innerHeight,
@@ -171,34 +171,46 @@ export default function App() {
     return () => ro.disconnect();
   }, []);
 
-  // Dark mode toggle (fix)
+  // Dark mode toggle (reliable)
   useEffect(() => {
     document.body.classList.toggle('dark', dark);
   }, [dark]);
 
-  // Background effect
+  // Background glow effect (canvas)
   useEffect(() => {
     const canvas = bgRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    let animationId: number;
+    let animationId = 0;
 
     function resize() {
-      canvas!!.width = window.innerWidth;
-      canvas!!.height = window.innerHeight;
+      if (!canvas) return;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
     resize();
     window.addEventListener('resize', resize);
 
     function draw() {
-      if (!ctx) return;
-      ctx.clearRect(0, 0, canvas!!.width, canvas!!.height);
-      const grad = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 180);
-      grad.addColorStop(0, 'rgba(0,234,255,0.25)');
-      grad.addColorStop(1, 'rgba(30,144,255,0)');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, canvas!!.width, canvas!!.height);
+      if (!ctx || !canvas) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // glow layers (subtle)
+      const g1 = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 260);
+      g1.addColorStop(0, 'rgba(0,234,255,0.18)');
+      g1.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g1;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      if (canvas) {
+        const g2 = ctx.createRadialGradient(canvas.width * 0.8, canvas.height * 0.25, 0, canvas.width * 0.8, canvas.height * 0.25, 320);
+        g2.addColorStop(0, 'rgba(30,144,255,0.14)');
+        g2.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g2;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
       animationId = requestAnimationFrame(draw);
     }
     draw();
@@ -221,7 +233,7 @@ export default function App() {
     return nodes.find(n => n.id === active) ?? null;
   }, [active, nodes]);
 
-  // Camera: if no active, no pan/zoom
+  // Camera pan (Option B). If no active node -> neutral (see full map).
   const camera = useMemo(() => {
     if (!activeNode) return { dx: 0, dy: 0, zoom: 1 };
     const cx = stageSize.w / 2;
@@ -230,7 +242,7 @@ export default function App() {
     const ay = (activeNode.pos.y / 100) * stageSize.h;
     const dx = cx - ax;
     const dy = cy - ay;
-    const zoom = 1.04;
+    const zoom = 1.05;
     return { dx, dy, zoom };
   }, [activeNode, stageSize.h, stageSize.w]);
 
@@ -240,6 +252,7 @@ export default function App() {
   }
 
   function nodeState(id: SectionKey) {
+    if (!active) return 'node';
     return id === active ? 'node active' : 'node inactive';
   }
 
@@ -263,33 +276,48 @@ export default function App() {
     if (active === 'about') {
       return (
         <>
-          <h3 className="card-title">{icons.user} {t(lang, 'about')}</h3>
-          <p className="card-lead">
-            Backend • Arquitetura • Sistemas distribuídos • Consistência • Segurança • Qualidade
-          </p>
+          <h3 className="card-title">
+            <span className="card-ico">{icons.user}</span> {t(lang, 'about')}
+          </h3>
 
-          {/* Sobre (README) */}
           {lang === 'pt' && (
             <>
-              <p className="card-text">
-                🚀 Olá! Eu sou a Rebeca, apaixonada por construir sistemas robustos, escaláveis e com propósito. Minha missão é transformar requisitos complexos em soluções elegantes, documentadas e fáceis de manter.
+              <p className="card-lead">
+                Backend • Arquitetura • Sistemas distribuídos • Consistência • Segurança • Qualidade
               </p>
               <p className="card-text">
-                🧩 Gosto de desafios reais: consistência, segurança, observabilidade, escalabilidade e decisões técnicas transparentes. Aqui você encontra projetos com código aberto, documentação clara e foco em qualidade.
+                🚀 Olá! Eu sou a Rebeca, apaixonada por construir sistemas robustos, escaláveis e com propósito.
+                Minha missão é transformar requisitos complexos em soluções elegantes, documentadas e fáceis de manter.
+              </p>
+              <p className="card-text">
+                🧩 Gosto de desafios reais: consistência, segurança, observabilidade, escalabilidade e decisões técnicas transparentes.
+                Aqui você encontra projetos com código aberto, documentação clara e foco em qualidade.
               </p>
             </>
           )}
 
           {lang === 'en' && (
-            <p className="card-text">
-              Software engineer focused on backend and architecture. I enjoy systems with real constraints: consistency, security, observability, and scalability. This profile prioritizes projects with clear documentation and explicit technical decisions.
-            </p>
+            <>
+              <p className="card-lead">
+                Backend • Architecture • Distributed systems • Consistency • Security • Quality
+              </p>
+              <p className="card-text">
+                I’m Rebeca. I build robust, scalable systems with purpose. I care about clear documentation,
+                explicit technical decisions, and real-world constraints (consistency, security, observability).
+              </p>
+            </>
           )}
 
           {lang === 'zh' && (
-            <p className="card-text">
-              我是一名专注于后端与架构的软件工程师，偏好真实约束下的系统：一致性、安全性、可观测性与可扩展性。该主页重点展示有清晰文档与明确技术决策的项目。
-            </p>
+            <>
+              <p className="card-lead">
+                后端 • 架构 • 分布式系统 • 一致性 • 安全 • 质量
+              </p>
+              <p className="card-text">
+                我是 Rebeca，专注于后端与架构，偏好真实约束下的系统：一致性、安全性、可观测性与可扩展性。
+                这里展示文档清晰、技术决策明确、重视质量的项目。
+              </p>
+            </>
           )}
         </>
       );
@@ -298,7 +326,9 @@ export default function App() {
     if (active === 'stack') {
       return (
         <>
-          <h3 className="card-title">{icons.stack} {t(lang, 'stack')}</h3>
+          <h3 className="card-title">
+            <span className="card-ico">{icons.stack}</span> {t(lang, 'stack')}
+          </h3>
 
           <p className="card-text">
             <b>{lang === 'pt' ? 'Principais' : lang === 'en' ? 'Core' : '核心'}:</b>{' '}
@@ -306,12 +336,16 @@ export default function App() {
           </p>
 
           <p className="card-text">
-            <b>{lang === 'pt' ? 'Ferramentas e práticas' : lang === 'en' ? 'Tools & practices' : '工具与实践'}:</b>{' '}
+            <b>{lang === 'pt' ? 'Práticas' : lang === 'en' ? 'Practices' : '实践'}:</b>{' '}
             Clean Architecture · CQRS · Event Sourcing · Testes automatizados · CI/CD · Observabilidade
           </p>
 
           <div className="card-links">
-            <a href="https://skillicons.dev/icons?i=kotlin,java,ts,nestjs,postgres,docker,aws,git,linux,react" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://skillicons.dev/icons?i=kotlin,java,ts,nestjs,postgres,docker,aws,git,linux,react"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               skillicons (preview)
             </a>
           </div>
@@ -322,55 +356,56 @@ export default function App() {
     if (active === 'projects') {
       return (
         <>
-          <h3 className="card-title">{icons.project} {t(lang, 'projects')}</h3>
+          <h3 className="card-title">
+            <span className="card-ico">{icons.project}</span> {t(lang, 'projects')}
+          </h3>
 
-          {/* Sem scroll de página; aqui é conteúdo colapsável */}
           <div className="card-collapsible">
             <details open>
               <summary><b>Hedge CLI</b> — TypeScript, Node.js</summary>
               <div className="card-detail">
-                Detector híbrido com gating de LLM. Heurística estática + LLM só quando necessário, otimizando custo vs. precisão.
-                <div><a href="https://github.com/rebecanonato89/hedge-cli" target="_blank" rel="noopener noreferrer">Acessar</a></div>
+                Detector híbrido com gating de LLM (heurística + LLM só quando necessário).
+                <div><a href="https://github.com/rebecanonato89/hedge-cli" target="_blank" rel="noopener noreferrer">GitHub</a></div>
               </div>
             </details>
 
             <details>
               <summary><b>AllRev</b> — NestJS, PostgreSQL, Docker</summary>
               <div className="card-detail">
-                Backend SaaS multi-tenant com RBAC, autenticação e controle de acesso.
-                <div><a href="https://github.com/Devs-IO/allrev-backend" target="_blank" rel="noopener noreferrer">Acessar</a></div>
+                Backend multi-tenant com autenticação e controle de acesso.
+                <div><a href="https://github.com/Devs-IO/allrev-backend" target="_blank" rel="noopener noreferrer">GitHub</a></div>
               </div>
             </details>
 
             <details>
               <summary><b>ClinicFiapApp</b> — Java, Spring, Kafka, Docker</summary>
               <div className="card-detail">
-                Microsserviços com Outbox, Kafka, CQRS, resiliência e consistência eventual.
-                <div><a href="https://github.com/fiap-tech-challenge-java/clinicfiapp-monorepo" target="_blank" rel="noopener noreferrer">Acessar</a></div>
+                Microsserviços com Outbox + Kafka + CQRS, foco em consistência.
+                <div><a href="https://github.com/fiap-tech-challenge-java/clinicfiapp-monorepo" target="_blank" rel="noopener noreferrer">GitHub</a></div>
               </div>
             </details>
 
             <details>
               <summary><b>Food Fiapp</b> — Java, JUnit, Docker</summary>
               <div className="card-detail">
-                Clean Architecture, Java 21, testes automatizados e qualidade.
-                <div><a href="https://github.com/fiap-tech-challenge-java/food-fiapp" target="_blank" rel="noopener noreferrer">Acessar</a></div>
+                Clean Architecture, Java 21, testes automatizados.
+                <div><a href="https://github.com/fiap-tech-challenge-java/food-fiapp" target="_blank" rel="noopener noreferrer">GitHub</a></div>
               </div>
             </details>
 
             <details>
               <summary><b>TechChallenge</b> — Docker, Node.js</summary>
               <div className="card-detail">
-                Execução local via Docker, guia prático para containers.
-                <div><a href="https://github.com/fiap-tech-challenge-java/fiap-tech-challenge" target="_blank" rel="noopener noreferrer">Acessar</a></div>
+                Execução local via Docker (guia prático para containers).
+                <div><a href="https://github.com/fiap-tech-challenge-java/fiap-tech-challenge" target="_blank" rel="noopener noreferrer">GitHub</a></div>
               </div>
             </details>
 
             <details>
               <summary><b>Equinox</b> — TypeScript, React</summary>
               <div className="card-detail">
-                Repositório público TypeScript, base Create React App.
-                <div><a href="https://github.com/rebecanonato89/equinox" target="_blank" rel="noopener noreferrer">Acessar</a></div>
+                Base React/TypeScript (Create React App).
+                <div><a href="https://github.com/rebecanonato89/equinox" target="_blank" rel="noopener noreferrer">GitHub</a></div>
               </div>
             </details>
           </div>
@@ -381,13 +416,15 @@ export default function App() {
     if (active === 'diff') {
       return (
         <>
-          <h3 className="card-title">{icons.diff} {t(lang, 'differentials')}</h3>
+          <h3 className="card-title">
+            <span className="card-ico">{icons.diff}</span> {t(lang, 'differentials')}
+          </h3>
           <ul className="card-bullets">
-            <li>Documentação clara e decisões técnicas justificadas</li>
-            <li>Projetos com testes, CI/CD e exemplos de uso</li>
-            <li>Foco em arquitetura limpa, escalabilidade e segurança</li>
-            <li>Experiência com sistemas distribuídos, microsserviços e cloud</li>
-            <li>Comunicação transparente e colaboração</li>
+            <li>{lang === 'pt' ? 'Documentação clara e decisões técnicas justificadas' : lang === 'en' ? 'Clear documentation and justified technical decisions' : '清晰文档与有依据的技术决策'}</li>
+            <li>{lang === 'pt' ? 'Projetos com testes, CI/CD e exemplos de uso' : lang === 'en' ? 'Projects with tests, CI/CD and usage examples' : '包含测试、CI/CD与用例'}</li>
+            <li>{lang === 'pt' ? 'Foco em arquitetura limpa, escalabilidade e segurança' : lang === 'en' ? 'Focus on clean architecture, scalability and security' : '专注架构、扩展性与安全'}</li>
+            <li>{lang === 'pt' ? 'Experiência com sistemas distribuídos e cloud' : lang === 'en' ? 'Experience with distributed systems and cloud' : '分布式系统与云经验'}</li>
+            <li>{lang === 'pt' ? 'Comunicação transparente e colaboração' : lang === 'en' ? 'Transparent communication and collaboration' : '透明沟通与协作'}</li>
           </ul>
         </>
       );
@@ -395,7 +432,9 @@ export default function App() {
 
     return (
       <>
-        <h3 className="card-title">{icons.contact} {t(lang, 'contact')}</h3>
+        <h3 className="card-title">
+          <span className="card-ico">{icons.contact}</span> {t(lang, 'contact')}
+        </h3>
         <div className="card-links">
           <a href="https://www.linkedin.com/in/rebecanonato89/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a href="https://rebecanonato89.dev" target="_blank" rel="noopener noreferrer">Portfólio</a>
@@ -420,29 +459,48 @@ export default function App() {
           </div>
 
           <div className="topbar-right">
-            <button className="theme-toggle" onClick={() => setDark(d => !d)} title={dark ? 'Light' : 'Dark'}>
-              {dark ? icons.sun : icons.moon}
+            <button
+              className="theme-toggle"
+              onClick={() => setDark(d => !d)}
+              title={dark ? 'Light mode' : 'Dark mode'}
+              aria-label={dark ? 'Ativar modo claro' : 'Ativar modo escuro'}
+              type="button"
+            >
+              <span className="btn-ico">{dark ? icons.sun : icons.moon}</span>
             </button>
 
-            <button className="sound-toggle" onClick={() => setSound(s => !s)} title={t(lang, sound ? 'sound_off' : 'sound_on')}>
-              {icons.sound}
+            <button
+              className="sound-toggle"
+              onClick={() => setSound(s => !s)}
+              title={t(lang, sound ? 'sound_off' : 'sound_on')}
+              aria-label={t(lang, sound ? 'sound_off' : 'sound_on')}
+              type="button"
+            >
+              <span className={`btn-ico${sound ? ' on' : ''}`}>{icons.sound}</span>
             </button>
 
             {langs.map(l => (
-              <button key={l} className={`lang-btn${lang === l ? ' active' : ''}`} onClick={() => setLang(l)}>
+              <button
+                key={l}
+                className={`lang-btn${lang === l ? ' active' : ''}`}
+                onClick={() => setLang(l)}
+                type="button"
+              >
                 {l.toUpperCase()}
               </button>
             ))}
           </div>
         </header>
 
-        {/* Backdrop para ocultar o card e ver o mapa */}
+        {/* Click outside to hide card */}
         {active && <div className="backdrop" onClick={() => setActive(null)} />}
 
         {active && (
-          <div className="center-card" role="region" aria-label="Content">
+          <div className="center-card pop" role="region" aria-label="Content">
             <div className="card-actions">
-              <button className="hide-btn" onClick={() => setActive(null)} type="button">{t(lang, 'hide')}</button>
+              <button className="hide-btn" onClick={() => setActive(null)} type="button">
+                {t(lang, 'hide')}
+              </button>
             </div>
             {renderCardContent()}
           </div>
@@ -459,7 +517,14 @@ export default function App() {
                 if (!b) return null;
                 const key = `${n.id}__${b.id}`;
                 const isHot = n.id === active || b.id === active;
-                return <path key={key} d={pathBetween(n, b)} className={isHot ? 'link hot' : 'link'} vectorEffect="non-scaling-stroke" />;
+                return (
+                  <path
+                    key={key}
+                    d={pathBetween(n, b)}
+                    className={isHot ? 'link hot' : 'link'}
+                    vectorEffect="non-scaling-stroke"
+                  />
+                );
               })
             )}
           </svg>

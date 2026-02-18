@@ -1,5 +1,73 @@
-/* ===== Map layout (no-scroll, everything visible) ===== */
+:root {
+  --tech-blue: #1e90ff;
+  --tech-blue-dark: #0a2342;
+  --tech-gray: #23272f;
+  --tech-gray-light: #3a3f4b;
+  --tech-black: #10131a;
+  --tech-white: #f5f7fa;
+  --tech-cyan: #00eaff;
 
+  /* THEME TOKENS (LIGHT-ish base but still “tech dark”) */
+  --bg: radial-gradient(900px 520px at 18% 22%, rgba(0,234,255,0.18), rgba(0,0,0,0) 60%),
+        radial-gradient(720px 460px at 78% 32%, rgba(30,144,255,0.18), rgba(0,0,0,0) 55%),
+        linear-gradient(120deg, var(--tech-blue-dark) 0%, var(--tech-gray) 100%);
+
+  --text: var(--tech-white);
+
+  --card-bg: linear-gradient(120deg, rgba(35,39,47,0.92) 10%, rgba(0,234,255,0.10) 100%);
+  --card-border: rgba(0,234,255,0.62);
+
+  --node-bg: rgba(16, 19, 26, 0.38);
+  --node-border: rgba(0,234,255,0.36);
+  --node-bg-active: rgba(0,234,255,0.14);
+  --node-border-active: rgba(0,234,255,0.78);
+
+  --link: rgba(0,234,255,0.22);
+  --link-hot: rgba(0,234,255,0.58);
+
+  --backdrop: rgba(0,0,0,0.12);
+}
+
+body.dark {
+  --bg: radial-gradient(900px 520px at 18% 22%, rgba(0,234,255,0.10), rgba(0,0,0,0) 60%),
+        radial-gradient(720px 460px at 78% 32%, rgba(30,144,255,0.12), rgba(0,0,0,0) 55%),
+        linear-gradient(120deg, var(--tech-black) 0%, var(--tech-blue-dark) 100%);
+
+  --text: rgba(245,247,250,0.92);
+
+  --card-bg: linear-gradient(120deg, rgba(16,19,26,0.92) 10%, rgba(30,144,255,0.12) 100%);
+  --card-border: rgba(30,144,255,0.58);
+
+  --node-bg: rgba(10, 12, 18, 0.46);
+  --node-border: rgba(30,144,255,0.36);
+  --node-bg-active: rgba(30,144,255,0.16);
+  --node-border-active: rgba(30,144,255,0.72);
+
+  --link: rgba(30,144,255,0.22);
+  --link-hot: rgba(30,144,255,0.58);
+
+  --backdrop: rgba(0,0,0,0.20);
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Fira Sans', 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow: hidden;
+  transition: background 550ms ease, color 350ms ease;
+}
+
+/* background canvas (glow) */
+#bg-effect {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ===== Stage / map ===== */
 #stage {
   position: fixed;
   inset: 0;
@@ -7,12 +75,28 @@
   z-index: 1;
 }
 
+/* subtle grid to make the map less “dry” */
+#stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(0,234,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,144,255,0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  opacity: 0.22;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+body.dark #stage::before { opacity: 0.16; }
+
+/* ===== Topbar ===== */
 .topbar {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
-  z-index: 6;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -39,7 +123,7 @@
   font-weight: 900;
   letter-spacing: 0.02em;
   color: var(--tech-white);
-  text-shadow: 0 0 16px rgba(0,234,255,0.15);
+  text-shadow: 0 0 18px rgba(0,234,255,0.18);
 }
 
 .brand-sub {
@@ -47,26 +131,126 @@
   color: rgba(245, 247, 250, 0.85);
 }
 
+/* Reset for buttons */
+.theme-toggle,
+.sound-toggle,
+.lang-btn,
+.node,
+.hide-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+}
+
+/* circular icon buttons */
+.theme-toggle,
+.sound-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,234,255,0.35);
+  background: rgba(0,234,255,0.06);
+  color: var(--tech-cyan);
+  cursor: pointer;
+  transition: transform 220ms ease, background 220ms ease, border-color 220ms ease;
+  padding: 0;
+}
+
+.theme-toggle:hover,
+.sound-toggle:hover {
+  background: rgba(0,234,255,0.12);
+  border-color: rgba(0,234,255,0.55);
+  transform: translateY(-1px);
+}
+
+.btn-ico .icon,
+.btn-ico svg,
+.theme-toggle .icon,
+.sound-toggle .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-ico.on {
+  filter: drop-shadow(0 0 10px rgba(0,234,255,0.25));
+}
+
+.lang-btn {
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,234,255,0.22);
+  background: rgba(0,234,255,0.04);
+  color: rgba(245,247,250,0.92);
+  cursor: pointer;
+  transition: background 220ms ease, border-color 220ms ease, transform 220ms ease;
+}
+
+.lang-btn:hover {
+  background: rgba(0,234,255,0.10);
+  border-color: rgba(0,234,255,0.40);
+  transform: translateY(-1px);
+}
+
+.lang-btn.active {
+  border-color: rgba(0,234,255,0.62);
+  background: rgba(0,234,255,0.12);
+  color: var(--tech-cyan);
+}
+
+/* ===== Center card ===== */
 .center-card {
   position: absolute;
   left: 50%;
   top: 52%;
-  transform: translate(-50%, -50%);
-  z-index: 7;
+  z-index: 30;
   width: min(720px, calc(100vw - 28px));
   max-height: min(560px, calc(100vh - 120px));
   overflow: hidden;
+  transform: translate(-50%, -50%);
   border-radius: 22px;
-  border: 2px solid rgba(0,234,255,0.6);
-  background: linear-gradient(120deg, rgba(35,39,47,0.92) 10%, rgba(0,234,255,0.06) 100%);
-  box-shadow: 0 10px 60px rgba(0, 0, 0, 0.35);
+  border: 2px solid var(--card-border);
+  background: var(--card-bg);
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.38);
   padding: 18px 18px 14px 18px;
   backdrop-filter: blur(10px);
+  transition: background 350ms ease, border-color 350ms ease;
 }
 
-body.dark .center-card {
-  background: linear-gradient(120deg, rgba(16,19,26,0.88) 10%, rgba(30,144,255,0.08) 100%);
-  border-color: rgba(30,144,255,0.55);
+.center-card.pop {
+  animation: popIn 420ms cubic-bezier(.22,1,.36,1) both;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.965); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.hide-btn {
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,234,255,0.32);
+  background: rgba(0,234,255,0.06);
+  color: var(--tech-cyan);
+  cursor: pointer;
+  transition: background 220ms ease, transform 220ms ease, border-color 220ms ease;
+}
+
+.hide-btn:hover {
+  background: rgba(0,234,255,0.12);
+  border-color: rgba(0,234,255,0.48);
+  transform: translateY(-1px);
 }
 
 .card-title {
@@ -75,6 +259,13 @@ body.dark .center-card {
   align-items: center;
   gap: 10px;
   color: var(--tech-cyan);
+}
+
+.card-ico {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  filter: drop-shadow(0 0 14px rgba(0,234,255,0.20));
 }
 
 .card-lead {
@@ -87,24 +278,7 @@ body.dark .center-card {
 .card-text {
   margin: 0 0 10px 0;
   color: rgba(245, 247, 250, 0.92);
-  line-height: 1.55;
-}
-
-.card-list {
-  margin: 0;
-  padding-left: 18px;
-  overflow: auto;
-  max-height: 420px;
-}
-
-.card-list li {
-  margin: 10px 0;
-}
-
-.card-sub {
-  font-size: 12px;
-  color: rgba(245, 247, 250, 0.8);
-  margin-top: 4px;
+  line-height: 1.58;
 }
 
 .card-bullets {
@@ -129,140 +303,17 @@ body.dark .center-card {
   justify-content: center;
   padding: 10px 12px;
   border-radius: 14px;
-  border: 1px solid rgba(0,234,255,0.35);
+  border: 1px solid rgba(0,234,255,0.30);
   background: rgba(0,234,255,0.06);
   color: var(--tech-cyan);
   text-decoration: none;
+  transition: transform 220ms ease, background 220ms ease, border-color 220ms ease;
 }
 
 .card-links a:hover {
   background: rgba(0,234,255,0.12);
-}
-
-.map-layer {
-  position: absolute;
-  inset: 0;
-  transform-origin: 0 0;
-  transition: transform 420ms cubic-bezier(.22, 1, .36, 1);
-  will-change: transform;
-}
-
-.map-links {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.link {
-  fill: none;
-  stroke: rgba(0,234,255,0.22);
-  stroke-width: 2;
-}
-
-.link.hot {
-  stroke: rgba(0,234,255,0.55);
-  stroke-width: 2.5;
-  filter: drop-shadow(0 0 10px rgba(0,234,255,0.18));
-}
-
-.node {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border-radius: 999px;
-  border: 1.5px solid rgba(0,234,255,0.35);
-  background: rgba(16, 19, 26, 0.25);
-  color: rgba(245, 247, 250, 0.92);
-  cursor: pointer;
-  user-select: none;
-  transition: transform 360ms cubic-bezier(.22,1,.36,1), opacity 260ms, filter 260ms, background 260ms, border-color 260ms;
-}
-
-.node .icon {
-  width: 1.7em;
-  height: 1.7em;
-  margin: 0;
-}
-
-.node-label {
-  font-weight: 800;
-  letter-spacing: 0.01em;
-  font-size: 14px;
-}
-
-.node.active {
-  transform: translate(-50%, -50%) scale(1.14);
-  background: rgba(0,234,255,0.10);
-  border-color: rgba(0,234,255,0.75);
-  filter: drop-shadow(0 0 14px rgba(0,234,255,0.18));
-  z-index: 5;
-}
-
-.node.inactive {
-  opacity: 0.55;
-  filter: blur(0.2px) grayscale(0.15);
-}
-
-.node:focus-visible {
-  outline: 2px solid rgba(0,234,255,0.7);
-  outline-offset: 3px;
-}
-
-@media (max-width: 900px) {
-  .topbar {
-    padding: 14px 14px;
-  }
-  .brand-name {
-    font-size: 16px;
-  }
-  .brand-sub {
-    display: none;
-  }
-  .center-card {
-    top: 55%;
-    padding: 14px 14px 12px 14px;
-    max-height: calc(100vh - 98px);
-  }
-  .node {
-    padding: 10px 12px;
-  }
-  .node-label {
-    font-size: 13px;
-  }
-}
-
-/* Backdrop: click outside to hide card */
-.backdrop {
-  position: absolute;
-  inset: 0;
-  z-index: 6; /* below card (7), above map */
-  background: rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(0px);
-}
-
-/* Card actions */
-.card-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 8px;
-}
-
-.hide-btn {
-  padding: 8px 10px;
-  border-radius: 12px;
-  border: 1px solid rgba(0,234,255,0.35);
-  background: rgba(0,234,255,0.06);
-  color: var(--tech-cyan);
-  cursor: pointer;
-}
-
-.hide-btn:hover {
-  background: rgba(0,234,255,0.12);
+  border-color: rgba(0,234,255,0.50);
+  transform: translateY(-1px);
 }
 
 /* Collapsible projects */
@@ -283,4 +334,119 @@ body.dark .center-card {
   margin-top: 8px;
   color: rgba(245, 247, 250, 0.88);
   line-height: 1.45;
+}
+
+/* Backdrop: click outside to hide card */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 25; /* below card (30), above map */
+  background: var(--backdrop);
+  transition: background 350ms ease;
+}
+
+/* ===== Map layer ===== */
+.map-layer {
+  position: absolute;
+  inset: 0;
+  transform-origin: 0 0;
+  transition: transform 520ms cubic-bezier(.22, 1, .36, 1);
+  will-change: transform;
+}
+
+.map-links {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.link {
+  fill: none;
+  stroke: var(--link);
+  stroke-width: 2;
+}
+
+.link.hot {
+  stroke: var(--link-hot);
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 14px rgba(0,234,255,0.16));
+}
+
+.node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 999px;
+  border: 1.5px solid var(--node-border);
+  background: var(--node-bg);
+  color: rgba(245, 247, 250, 0.92);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    transform 420ms cubic-bezier(.22,1,.36,1),
+    opacity 260ms ease,
+    filter 260ms ease,
+    background 260ms ease,
+    border-color 260ms ease;
+}
+
+.node .icon,
+.node svg {
+  width: 20px;
+  height: 20px;
+}
+
+.icon {
+  color: var(--tech-cyan);
+  filter: drop-shadow(0 0 14px rgba(0,234,255,0.18));
+}
+
+.node-label {
+  font-weight: 850;
+  letter-spacing: 0.01em;
+  font-size: 14px;
+}
+
+.node.active {
+  transform: translate(-50%, -50%) scale(1.12);
+  background: var(--node-bg-active);
+  border-color: var(--node-border-active);
+  filter: drop-shadow(0 0 18px rgba(0,234,255,0.16));
+  z-index: 15;
+}
+
+.node.inactive {
+  opacity: 0.52;
+  filter: blur(0.25px) grayscale(0.12);
+}
+
+.node:focus-visible,
+.theme-toggle:focus-visible,
+.sound-toggle:focus-visible,
+.lang-btn:focus-visible,
+.hide-btn:focus-visible {
+  outline: 2px solid rgba(0,234,255,0.7);
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .topbar { padding: 14px 14px; }
+  .brand-name { font-size: 16px; }
+  .brand-sub { display: none; }
+
+  .center-card {
+    top: 55%;
+    padding: 14px 14px 12px 14px;
+    max-height: calc(100vh - 98px);
+  }
+
+  .node { padding: 10px 12px; }
+  .node-label { font-size: 13px; }
+
+  #stage::before { background-size: 72px 72px; }
 }
