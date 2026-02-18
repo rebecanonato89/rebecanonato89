@@ -29,60 +29,52 @@
 
 <code>Backend • Arquitetura • Sistemas distribuídos • Consistência • Segurança • Qualidade</code>
 
-Aqui a “rota” é simples: mostrar trabalho real, com documentação e decisões técnicas claras.
+🚀 Olá! Eu sou a Rebeca, apaixonada por construir sistemas robustos, escaláveis e com propósito. Minha missão é transformar requisitos complexos em soluções elegantes, documentadas e fáceis de manter.
 
-## 🧭 Stack
-
-<p>
-  <a href="https://skillicons.dev">
-  </a>
-</p>
-
-## 🗺️ Projetos em rota
-
-### Hedge CLI — detector híbrido com gating de LLM
-Um CLI que combina heurística estática com LLM apenas quando necessário, buscando otimizar custo vs. precisão.
-
-<a href="https://github.com/rebecanonato89/hedge-cli">
-</a>
-
-### AllRev — backend SaaS com RBAC e multi-tenant
-Backend em NestJS com módulos de autenticação, tenants e controle por papéis.
-
-<a href="https://github.com/Devs-IO/allrev-backend">
-</a>
-
-### ClinicFiapApp — microsserviços com Outbox, Kafka e CQRS
-Sistema distribuído com execução via Docker Compose e foco em resiliência (idempotência, DLQ/DLT, consistência eventual).
-
-<a href="https://github.com/fiap-tech-challenge-java/clinicfiapp-monorepo">
-</a>
-
-### Food Fiapp — Clean Architecture com Java 21 e testes
-Back-end com camadas bem definidas, suíte de testes e ferramentas de qualidade.
-
-<a href="https://github.com/fiap-tech-challenge-java/food-fiapp">
-</a>
-
-### TechChallenge — execução com Docker
-Guia e estrutura para rodar o projeto localmente via containers.
-
-<a href="https://github.com/fiap-tech-challenge-java/fiap-tech-challenge">
-</a>
-
-### Equinox — repositório público
-Repositório TypeScript com README padrão do Create React App.
-
-<a href="https://github.com/rebecanonato89/equinox">
-</a>
+🧩 Gosto de desafios reais: consistência, segurança, observabilidade, escalabilidade e decisões técnicas transparentes. Aqui você encontra projetos com código aberto, documentação clara e foco em qualidade.
 
 ---
 
-## 📈 Scoreboard
+## 🧭 Stack
 
-<p align="center">
+<div align="center">
+  <img src="https://skillicons.dev/icons?i=kotlin,java,ts,nestjs,postgres,docker,aws,git,linux,react" />
+</div>
+
+**Principais:** Kotlin · Java · TypeScript · NestJS · PostgreSQL · Docker · AWS · Git · Linux · React
+
+**Ferramentas e práticas:** Clean Architecture · CQRS · Event Sourcing · Testes automatizados · CI/CD · Observabilidade
+
+---
+
+## 🗺️ Projetos em rota
+
+| Projeto | Descrição | Stack | Link |
+|---------|-----------|-------|------|
+| **Hedge CLI** | Detector híbrido com gating de LLM. Heurística estática + LLM só quando necessário, otimizando custo vs. precisão. | TypeScript, Node.js | [Acessar](https://github.com/rebecanonato89/hedge-cli) |
+| **AllRev** | Backend SaaS multi-tenant com RBAC, autenticação e controle de acesso. | NestJS, PostgreSQL, Docker | [Acessar](https://github.com/Devs-IO/allrev-backend) |
+| **ClinicFiapApp** | Microsserviços com Outbox, Kafka, CQRS, resiliência e consistência eventual. | Java, Spring, Kafka, Docker | [Acessar](https://github.com/fiap-tech-challenge-java/clinicfiapp-monorepo) |
+| **Food Fiapp** | Clean Architecture, Java 21, testes automatizados e qualidade. | Java, JUnit, Docker | [Acessar](https://github.com/fiap-tech-challenge-java/food-fiapp) |
+| **TechChallenge** | Execução local via Docker, guia prático para containers. | Docker, Node.js | [Acessar](https://github.com/fiap-tech-challenge-java/fiap-tech-challenge) |
+| **Equinox** | Repositório público TypeScript, base Create React App. | TypeScript, React | [Acessar](https://github.com/rebecanonato89/equinox) |
+
+---
+
+## 🏆 Scoreboard
+
+<div align="center">
   <img height="165" alt="Streak" src="https://streak-stats.demolab.com/?user=rebecanonato89&hide_border=true&theme=dark" />
-</p>
+</div>
+
+---
+
+## ✨ Diferenciais
+
+- Documentação clara e decisões técnicas justificadas
+- Projetos com testes, CI/CD e exemplos de uso
+- Foco em arquitetura limpa, escalabilidade e segurança
+- Experiência com sistemas distribuídos, microsserviços e cloud
+- Comunicação transparente e colaboração
 
 ---
 
@@ -103,7 +95,10 @@ Repositório TypeScript com README padrão do Create React App.
   <p>我是一名专注于后端与架构的软件工程师，偏好真实约束下的系统：一致性、安全性、可观测性与可扩展性。该主页重点展示有清晰文档与明确技术决策的项目。</p>
 </details>
 
+---
+
 ## 📡 Contato
 
-- LinkedIn: [https://www.linkedin.com/in/rebecanonato89/](https://www.linkedin.com/in/rebecanonato89/)
-- Portfólio: [https://rebecanonato89.dev](https://rebecanonato89.dev)
+- 💼 [LinkedIn](https://www.linkedin.com/in/rebecanonato89/)
+- 🌐 [Portfólio](https://rebecanonato89.dev)
+- ✉️ rebeca.nonato.dev@gmail.com
