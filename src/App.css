@@ -147,7 +147,7 @@ body.dark #stage::before { opacity: 0.16; }
 
 /* circular icon buttons */
 .theme-toggle,
-.sound-toggle {
+sound-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -160,6 +160,22 @@ body.dark #stage::before { opacity: 0.16; }
   cursor: pointer;
   transition: transform 220ms ease, background 220ms ease, border-color 220ms ease;
   padding: 0;
+}
+.theme-toggle.active {
+  background: var(--tech-cyan);
+  border-color: var(--tech-cyan);
+  color: #fff;
+}
+
+.theme-toggle .btn-ico {
+  transition: filter 220ms, color 220ms;
+}
+.theme-toggle .btn-ico.on {
+  color: #fff;
+  filter: drop-shadow(0 0 8px var(--tech-cyan));
+}
+.theme-toggle:not(.active) .btn-ico {
+  color: var(--tech-cyan);
 }
 
 .theme-toggle:hover,
@@ -205,6 +221,12 @@ body.dark #stage::before { opacity: 0.16; }
 
 /* ===== Center card ===== */
 .center-card {
+  /* Corrige cor do texto dos cards no modo light */
+  body:not(.dark) .center-card .card-lead,
+  body:not(.dark) .center-card .card-text,
+  body:not(.dark) .center-card .card-bullets li {
+    color: #23272f;
+  }
   position: absolute;
   left: 50%;
   top: 52%;

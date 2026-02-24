@@ -89,7 +89,8 @@ const icons = {
   ),
   moon: (
     <svg className="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M21 13.5A7.5 7.5 0 0 1 10.5 3a6.5 6.5 0 1 0 10.5 10.5Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <path d="M21 12.79A9 9 0 0 1 12.79 3a7 7 0 1 0 8.21 9.79Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" fill="currentColor" fillOpacity="0.18" />
+      <path d="M21 12.79A9 9 0 0 1 12.79 3a7 7 0 1 0 8.21 9.79Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
     </svg>
   ),
   sound: (
@@ -133,7 +134,11 @@ function useBeep() {
 
 export default function App() {
   const [lang, setLang] = useState<Lang>('pt');
-  const [dark, setDark] = useState(false);
+  // Inicializa o tema com base no localStorage ou padrão claro
+  const [dark, setDark] = useState(() => {
+    const saved = localStorage.getItem('theme-dark');
+    return saved === 'true';
+  });
   const [sound, setSound] = useState(false);
   const [active, setActive] = useState<SectionKey | null>('about');
 
@@ -174,6 +179,7 @@ export default function App() {
   // Dark mode toggle (reliable)
   useEffect(() => {
     document.body.classList.toggle('dark', dark);
+    localStorage.setItem('theme-dark', String(dark));
   }, [dark]);
 
   // Background glow effect (canvas)
@@ -460,13 +466,13 @@ export default function App() {
 
           <div className="topbar-right">
             <button
-              className="theme-toggle"
+              className={`theme-toggle${dark ? ' active' : ''}`}
               onClick={() => setDark(d => !d)}
               title={dark ? 'Light mode' : 'Dark mode'}
               aria-label={dark ? 'Ativar modo claro' : 'Ativar modo escuro'}
               type="button"
             >
-              <span className="btn-ico">{dark ? icons.sun : icons.moon}</span>
+              <span className={`btn-ico${dark ? ' on' : ''}`}>{dark ? icons.sun : icons.moon}</span>
             </button>
 
             <button
