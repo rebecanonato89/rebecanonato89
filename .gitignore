@@ -1,0 +1,25 @@
+# Node/Vite/Vue
+node_modules/
+dist/
+.env
+.env.*
+.DS_Store
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+# VSCode
+.vscode/
+# System
+Thumbs.db
+*.swp
+.idea/
+# Backup
+*~
+# Mac
+.DS_Store
+# Windows
+*.exe
+*.dll
+*.log
