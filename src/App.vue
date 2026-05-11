@@ -97,9 +97,14 @@
             <ul class="tech-list" aria-label="Stack Tecnológica">
               <li v-for="tech in project.stack" :key="tech" class="tech-tag">{{ tech }}</li>
             </ul>
-            <a :href="project.link" target="_blank" rel="noopener noreferrer" class="btn-hud">
-              Repositório <span class="sr-only"> (Abre em uma nova aba)</span>
-            </a>
+            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+              <a v-if="project.liveUrl" :href="project.liveUrl" target="_blank" rel="noopener noreferrer" class="btn-hud btn-hud--live">
+                Acessar App <span class="sr-only"> (Abre em uma nova aba)</span>
+              </a>
+              <a :href="project.link" target="_blank" rel="noopener noreferrer" class="btn-hud">
+                Repositório <span class="sr-only"> (Abre em uma nova aba)</span>
+              </a>
+            </div>
           </article>
         </div>
       </section>
@@ -215,6 +220,14 @@ export default {
         }
       ],
       projectsData: [
+        {
+          title: 'ConcursoTrack: Tracker de Estudos para Concursos Públicos',
+          period: 'Mai 2026 - Momento',
+          description: '<p>Aplicação web pessoal full-stack para gerenciamento de estudos em concursos públicos de alto nível (TCU, TCE-SP, CGU, SEFAZ-CE e outros).</p><p style="margin-top: 10px;"><strong>Funcionalidades:</strong></p><ul style="margin-top: 5px; padding-left: 20px;"><li><strong>Fila inteligente:</strong> une conteúdos de múltiplos concursos sem duplicação, com ordem de pré-requisitos.</li><li><strong>Check propagado:</strong> marcar um tópico como concluído reflete em todos os concursos que o exigem.</li><li><strong>Dashboard:</strong> streak de dias, heatmap estilo GitHub, progresso por concurso e alertas de prazo.</li><li><strong>Auth:</strong> Google OAuth 2.0 com whitelist de 1 usuário. Mobile-first com bottom tab bar.</li></ul>',
+          stack: ['Node.js', 'Express', 'Prisma', 'PostgreSQL', 'React', 'Vite', 'Tailwind CSS', 'Docker'],
+          liveUrl: 'https://concursotrack.rebecanonato89.dev',
+          link: 'https://github.com/rebecanonato89/concursotrack'
+        },
         {
           title: 'Hedge CLI: Detector Híbrido de "Eager Test" Smells com IA',
           period: 'Set 2025 - Momento',
@@ -494,6 +507,8 @@ section { margin-bottom: var(--space-xl); }
 
 .btn-hud { display: inline-flex; align-items: center; gap: 8px; background: var(--cyan-dim); color: var(--cyan-core); border: 1px solid var(--cyan-border); padding: 8px 16px; font-family: var(--font-ui); font-size: 1.1rem; text-decoration: none; text-transform: uppercase; transition: all 0.3s; align-self: flex-start; }
 .btn-hud:hover { background: var(--cyan-core); color: var(--bg-base); box-shadow: 0 0 15px var(--cyan-dim); }
+.btn-hud--live { background: var(--cyan-core); color: var(--bg-base); font-weight: 700; }
+.btn-hud--live:hover { box-shadow: 0 0 25px var(--cyan-core); opacity: 0.85; }
 
 .timeline { list-style: none; position: relative; padding-left: 30px; }
 .timeline::before {
