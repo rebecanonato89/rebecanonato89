@@ -1,5 +1,7 @@
 <template>
   <main id="main-content">
+    <HeroTerminal />
+
     <section id="about" aria-labelledby="about-title">
       <h2 id="about-title" class="section-title">Parâmetros do Sistema</h2>
       <div class="hud-card">
@@ -45,26 +47,6 @@
     <section id="projects" aria-labelledby="projects-title">
       <h2 id="projects-title" class="section-title">Deployments & Cases</h2>
       <div class="project-grid">
-        <article class="hud-card">
-          <header class="card-header">
-            <h3 class="card-title">Go Game: IA de Weiqi/Baduk no Browser</h3>
-            <span class="card-period">Jul 2026</span>
-          </header>
-          <div class="card-desc">
-            <p>Jogo de Go (Baduk/Weiqi) implementado do zero, sem bibliotecas de terceiros para as regras: captura de grupos, proibição de suicídio, regra do ko, marcação de pedras mortas e contagem de território por área. Humano (Preto) contra máquina (Branco), com 3 níveis de IA: aleatória com heurística mínima, gulosa por avaliação de jogadas e Monte Carlo com orçamento de tempo.</p>
-          </div>
-          <ul class="tech-list" aria-label="Stack Tecnológica">
-            <li class="tech-tag">Vue 3</li>
-            <li class="tech-tag">JavaScript</li>
-            <li class="tech-tag">Monte Carlo</li>
-            <li class="tech-tag">Algoritmos de Jogos</li>
-          </ul>
-          <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
-            <router-link to="/go" class="btn-hud btn-hud--live">
-              Jogar agora <span class="sr-only"> (abre a página do jogo)</span>
-            </router-link>
-          </div>
-        </article>
         <article v-for="project in projectsData" :key="project.title" class="hud-card">
           <header class="card-header">
             <h3 class="card-title">{{ project.title }}</h3>
@@ -83,6 +65,34 @@
             </a>
           </div>
         </article>
+      </div>
+    </section>
+
+    <section id="arcade-preview" aria-labelledby="arcade-preview-title">
+      <h2 id="arcade-preview-title" class="section-title">Arcade // Jogue no Browser</h2>
+      <div class="hud-card">
+        <p class="card-desc" style="margin-bottom: var(--space-md);">
+          Jogos implementados do zero — regras, IA e interface — direto no navegador.
+          Go com Monte Carlo, Damas brasileiras com minimax e um jogo da memória para relaxar.
+        </p>
+        <div class="arcade-preview-row">
+          <router-link to="/go" class="btn-hud">⚫ Go</router-link>
+          <router-link to="/damas" class="btn-hud">🔴 Damas</router-link>
+          <router-link to="/memoria" class="btn-hud">🃏 Memória</router-link>
+          <router-link to="/arcade" class="btn-hud btn-hud--live">Ver o Arcade completo</router-link>
+        </div>
+      </div>
+    </section>
+
+    <section id="resources-preview" aria-labelledby="resources-preview-title">
+      <h2 id="resources-preview-title" class="section-title">Recursos // Biblioteca Aberta</h2>
+      <div class="hud-card">
+        <p class="card-desc" style="margin-bottom: var(--space-md);">
+          Curadoria de recursos gratuitos para quem desenvolve ou está aprendendo:
+          livros para download (como a <strong>BibliotecaDev</strong>), roadmaps de carreira,
+          ferramentas do dia a dia e cursos abertos. Útil mesmo que você não esteja me contratando. 😉
+        </p>
+        <router-link to="/recursos" class="btn-hud btn-hud--live">Explorar a biblioteca</router-link>
       </div>
     </section>
 
@@ -106,8 +116,11 @@
 </template>
 
 <script>
+import HeroTerminal from '../components/HeroTerminal.vue';
+
 export default {
   name: 'Home',
+  components: { HeroTerminal },
   data() {
     return {
       experienceData: [
@@ -236,3 +249,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.arcade-preview-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+</style>

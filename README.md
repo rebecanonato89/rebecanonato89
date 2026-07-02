@@ -32,6 +32,13 @@ Possuo amplo histórico no gerenciamento de incidentes críticos (war rooms, P1/
 
 ---
 
+## 🕹️ Arcade & Biblioteca Aberta
+
+* **[Arcade](https://rebecanonato89.dev/#/arcade)** — Jogos implementados do zero no browser: **Go** (Monte Carlo), **Damas brasileiras** (minimax com poda alfa-beta, lei da maioria e dama voadora) e **Jogo da Memória**. Sem cadastro, sem instalação.
+* **[Recursos](https://rebecanonato89.dev/#/recursos)** — Curadoria de recursos gratuitos para devs: livros para download ([BibliotecaDev](https://github.com/KAYOKG/BibliotecaDev), Goalkicker, free-programming-books), roadmaps, ferramentas e cursos abertos.
+
+---
+
 ## 📜 Certificações Recentes
 
 * **Reinvention with Agentic AI** (Accenture, Dez 2025)
