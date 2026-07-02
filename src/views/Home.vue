@@ -52,6 +52,18 @@
             <h3 class="card-title">{{ project.title }}</h3>
             <span class="card-period">{{ project.period }}</span>
           </header>
+
+          <button
+            v-if="project.images && project.images.length"
+            type="button"
+            class="card-thumb"
+            @click="openPreview(project)"
+            :aria-label="`Ver prévia de imagens de ${project.title}`"
+          >
+            <img :src="project.images[0].src" :alt="project.images[0].alt" loading="lazy" />
+            <span class="card-thumb-overlay">🔍 Ver prévia</span>
+          </button>
+
           <div class="card-desc" v-html="project.description"></div>
           <ul class="tech-list" aria-label="Stack Tecnológica">
             <li v-for="tech in project.stack" :key="tech" class="tech-tag">{{ tech }}</li>
@@ -63,10 +75,25 @@
             <a :href="project.link" target="_blank" rel="noopener noreferrer" class="btn-hud">
               Repositório <span class="sr-only"> (Abre em uma nova aba)</span>
             </a>
+            <button
+              v-if="project.images && project.images.length"
+              type="button"
+              class="btn-hud"
+              @click="openPreview(project)"
+            >
+              Ver prévia
+            </button>
           </div>
         </article>
       </div>
     </section>
+
+    <ProjectPreviewModal
+      v-if="previewProject"
+      :title="previewProject.title"
+      :images="previewProject.images"
+      @close="closePreview"
+    />
 
     <section id="arcade-preview" aria-labelledby="arcade-preview-title">
       <h2 id="arcade-preview-title" class="section-title">Arcade // Jogue no Browser</h2>
@@ -117,12 +144,14 @@
 
 <script>
 import HeroTerminal from '../components/HeroTerminal.vue';
+import ProjectPreviewModal from '../components/ProjectPreviewModal.vue';
 
 export default {
   name: 'Home',
-  components: { HeroTerminal },
+  components: { HeroTerminal, ProjectPreviewModal },
   data() {
     return {
+      previewProject: null,
       experienceData: [
         {
           role: 'Application Development Analyst (Senior Backend)',
@@ -207,7 +236,11 @@ export default {
           description: '<p>Aplicação web pessoal full-stack para gerenciamento de estudos em concursos públicos de alto nível (TCU, TCE-SP, CGU, SEFAZ-CE e outros).</p><p style="margin-top: 10px;"><strong>Funcionalidades:</strong></p><ul style="margin-top: 5px; padding-left: 20px;"><li><strong>Fila inteligente:</strong> une conteúdos de múltiplos concursos sem duplicação, com ordem de pré-requisitos.</li><li><strong>Check propagado:</strong> marcar um tópico como concluído reflete em todos os concursos que o exigem.</li><li><strong>Dashboard:</strong> streak de dias, heatmap estilo GitHub, progresso por concurso e alertas de prazo.</li><li><strong>Auth:</strong> Google OAuth 2.0 com whitelist de 1 usuário. Mobile-first com bottom tab bar.</li></ul>',
           stack: ['Node.js', 'Express', 'Prisma', 'PostgreSQL', 'React', 'Vite', 'Tailwind CSS', 'Docker'],
           liveUrl: 'https://concursotrack.rebecanonato89.dev',
-          link: 'https://github.com/rebecanonato89/concursotrack'
+          link: 'https://github.com/rebecanonato89/concursotrack',
+          images: [
+            { src: '/images/projects/concursotrack/inicio.svg', alt: 'ConcursoTrack — tela Início: fila em andamento, meta semanal e streak de estudos' },
+            { src: '/images/projects/concursotrack/fila.svg', alt: 'ConcursoTrack — Fila de Estudos unificando tópicos de múltiplos concursos' }
+          ]
         },
         {
           title: 'Hedge CLI: Detector Híbrido de "Eager Test" Smells com IA',
@@ -219,9 +252,22 @@ export default {
         {
           title: 'AllRev: Plataforma SaaS Multi-Tenant Full-Stack',
           period: 'Abr 2025 - Momento',
-          description: '<p>Plataforma SaaS projetada com arquitetura Multi-Tenant para servir múltiplas empresas a partir de uma única instância.</p><p style="margin-top: 10px;"><strong>Back-end:</strong> NestJS/TypeScript, PostgreSQL (TypeORM), JWT e RBAC para controle de acesso restrito e seguro.</p><p style="margin-top: 10px;"><strong>Front-end:</strong> SPA em Angular 17, NgRx para gestão de estado e Route Guards para segurança espelhada.</p>',
+          description: '<p>Plataforma SaaS projetada com arquitetura Multi-Tenant para servir múltiplas empresas a partir de uma única instância. Em produção, atendendo clientes reais como a <strong>FN Monografias</strong>.</p><p style="margin-top: 10px;"><strong>Back-end:</strong> NestJS/TypeScript, PostgreSQL (TypeORM), JWT e RBAC para controle de acesso restrito e seguro.</p><p style="margin-top: 10px;"><strong>Front-end:</strong> SPA em Angular 17, NgRx para gestão de estado e Route Guards para segurança espelhada.</p>',
           stack: ['NestJS', 'Angular 17', 'PostgreSQL', 'Multi-Tenant', 'JWT'],
-          link: 'https://github.com/Devs-IO/allrev-backend'
+          liveUrl: 'https://allrev.com.br/',
+          link: 'https://github.com/Devs-IO/allrev-backend',
+          images: [
+            { src: '/images/projects/allrev/login.svg', alt: 'AllRev — tela de Login do Sistema de Gestão' },
+            { src: '/images/projects/allrev/dashboard.svg', alt: 'AllRev — Dashboard com ordens em andamento, pendentes e recebimentos' },
+            { src: '/images/projects/allrev/nova-ordem.svg', alt: 'AllRev — fluxo de criação de Nova Ordem de Serviço' }
+          ]
+        },
+        {
+          title: 'Quotes Service: Cotação e Emissão de Apólices',
+          period: 'Jan 2026 - Momento',
+          description: '<p>MVP de domínio de seguros (Auto e Vida) explorando Domain-Driven Design em Kotlin, com foco em regras de negócio explícitas de precificação e subscrição.</p><p style="margin-top: 10px;"><strong>Destaques:</strong></p><ul style="margin-top: 5px; padding-left: 20px;"><li>Motor de cotação com cálculo de preço, adicionais de cobertura, fator de idade e aprovação/rejeição automática.</li><li>Validação de entrada via padrão funcional <em>Either</em>, evitando exceptions para erros de negócio.</li><li>Emissão de apólice a partir de cotações aprovadas, com eventos de domínio e processamento assíncrono via coroutines.</li></ul>',
+          stack: ['Kotlin', 'Spring Boot 3', 'Java 17', 'DDD', 'Coroutines'],
+          link: 'https://github.com/rebecanonato89/quotes-service'
         },
         {
           title: 'ClinicFiapApp - Microsserviços de Agendamento Hospitalar',
@@ -243,9 +289,24 @@ export default {
           description: '<p>API RESTful em Java 21 focada em gerenciamento de usuários. Implementação central baseada em Arquitetura Hexagonal (Ports & Adapters) para isolamento do domínio de negócio.</p><ul style="margin-top: 10px; padding-left: 20px;"><li><strong>Segurança:</strong> Autenticação via Spring Security e JWT com RBAC estruturado.</li><li><strong>Qualidade:</strong> SOLID, MapStruct, tratamento global de exceções e testes automatizados.</li></ul>',
           stack: ['Java 21', 'Arquitetura Hexagonal', 'JWT', 'Spring Security', 'PostgreSQL'],
           link: 'https://github.com/fiap-tech-challenge-java/fiap-tech-challenge'
+        },
+        {
+          title: 'Kube Backend: API Node.js + PostgreSQL no Kubernetes',
+          period: 'Nov 2025',
+          description: '<p>Laboratório de infraestrutura demonstrando o deploy de um backend Node.js/Express junto a um PostgreSQL em um cluster Kubernetes local (Minikube).</p><p style="margin-top: 10px;"><strong>Cobertura:</strong> Deployments e Services separados para API e banco, ConfigMaps e Secrets para gestão de configuração sensível, e endpoints de verificação de conectividade com o banco.</p>',
+          stack: ['Node.js', 'Express', 'PostgreSQL', 'Docker', 'Kubernetes'],
+          link: 'https://github.com/rebecanonato89/kube-backend'
         }
       ]
     };
+  },
+  methods: {
+    openPreview(project) {
+      this.previewProject = project;
+    },
+    closePreview() {
+      this.previewProject = null;
+    }
   }
 };
 </script>
@@ -255,5 +316,48 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
+}
+
+.card-thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--cyan-border);
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--bg-base);
+  margin-bottom: var(--space-md);
+  line-height: 0;
+}
+.card-thumb img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.card-thumb-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(3, 5, 9, 0.55);
+  color: var(--text-main);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.card-thumb:hover .card-thumb-overlay,
+.card-thumb:focus-visible .card-thumb-overlay {
+  opacity: 1;
+}
+.card-thumb:hover img,
+.card-thumb:focus-visible img {
+  transform: scale(1.03);
 }
 </style>
