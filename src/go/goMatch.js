@@ -34,7 +34,7 @@ export class GoMatch {
     this.lastMove = { x, y, color };
     this.consecutivePasses = 0;
     this.currentColor = otherColor(color);
-    return { ok: true, captured: res.captured.length };
+    return { ok: true, captured: res.captured.length, capturedPositions: res.captured };
   }
 
   pass() {

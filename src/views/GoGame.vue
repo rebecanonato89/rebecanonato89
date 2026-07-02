@@ -8,7 +8,7 @@
     <section id="go-game" aria-labelledby="go-game-title">
       <h2 id="go-game-title" class="section-title">Go Game — Humano vs Máquina</h2>
 
-      <div class="hud-card go-intro">
+      <div class="hud-card go-intro" v-if="!match">
         <p>
           Implementação própria das regras de Go (Baduk/Weiqi): captura de grupos por liberdade zero,
           proibição de jogadas suicidas e regra do Ko (não repetir a posição anterior). A partida termina
@@ -18,57 +18,61 @@
         <p>Você joga com as <strong>pedras pretas</strong> e começa. A máquina joga com as brancas.</p>
       </div>
 
-      <div class="hud-card go-controls">
-        <div class="go-control-row">
-          <label for="go-size">Tamanho do tabuleiro</label>
-          <select id="go-size" v-model.number="size" :disabled="isMatchActive">
-            <option :value="9">9×9 (rápido)</option>
-            <option :value="13">13×13</option>
-            <option :value="19">19×19 (tradicional)</option>
-          </select>
+      <div class="hud-card go-panel">
+        <div class="go-controls-row">
+          <div class="go-control-row">
+            <label for="go-size">Tabuleiro</label>
+            <select id="go-size" v-model.number="size" :disabled="isMatchActive">
+              <option :value="9">9×9 (rápido)</option>
+              <option :value="13">13×13</option>
+              <option :value="19">19×19 (tradicional)</option>
+            </select>
+          </div>
+          <div class="go-control-row">
+            <label for="go-level">Nível da máquina</label>
+            <select id="go-level" v-model.number="level">
+              <option :value="1">1 — Fácil (aleatória)</option>
+              <option :value="2">2 — Médio (heurística)</option>
+              <option :value="3">3 — Difícil (Monte Carlo)</option>
+            </select>
+          </div>
+          <button class="btn-hud btn-hud--live" @click="startNewGame">
+            {{ match ? 'Novo Jogo' : 'Iniciar Partida' }}
+          </button>
         </div>
-        <div class="go-control-row">
-          <label for="go-level">Nível da máquina</label>
-          <select id="go-level" v-model.number="level">
-            <option :value="1">1 — Fácil (aleatória)</option>
-            <option :value="2">2 — Médio (heurística)</option>
-            <option :value="3">3 — Difícil (simulações Monte Carlo)</option>
-          </select>
-        </div>
-        <button class="btn-hud btn-hud--live" @click="startNewGame">
-          {{ match ? 'Novo Jogo' : 'Iniciar Partida' }}
-        </button>
-      </div>
 
-      <template v-if="match">
-        <div class="hud-card go-status">
+        <template v-if="match">
+          <div class="go-panel-divider" aria-hidden="true"></div>
           <p class="go-message" aria-live="polite">{{ message }}</p>
-          <div class="go-captures">
-            <span>⚫ Você (Preto) — capturas: {{ blackCaptures }}</span>
-            <span>⚪ Máquina (Branco) — capturas: {{ whiteCaptures }} · komi {{ match.komi }}</span>
+
+          <div class="go-status-row">
+            <div class="go-captures">
+              <span>⚫ Preto: {{ blackCaptures }} capturas</span>
+              <span>⚪ Branco: {{ whiteCaptures }} capturas · komi {{ match.komi }}</span>
+            </div>
+
+            <div class="go-actions" v-if="phase === 'play'">
+              <button class="btn-hud" :disabled="!isHumanTurn || isAIThinking || isAnimating" @click="passHuman">Passar</button>
+              <button class="btn-hud" :disabled="isAIThinking || isAnimating" @click="resignHuman">Desistir</button>
+            </div>
+            <div class="go-actions" v-else-if="phase === 'scoring'">
+              <button class="btn-hud" @click="resumePlayClick">Continuar Jogando</button>
+              <button class="btn-hud btn-hud--live" @click="confirmScoreClick">Confirmar Placar</button>
+            </div>
           </div>
 
-          <div class="go-actions" v-if="phase === 'play'">
-            <button class="btn-hud" :disabled="!isHumanTurn || isAIThinking" @click="passHuman">Passar</button>
-            <button class="btn-hud" :disabled="isAIThinking" @click="resignHuman">Desistir</button>
-          </div>
-          <div class="go-actions" v-else-if="phase === 'scoring'">
-            <button class="btn-hud" @click="resumePlayClick">Continuar Jogando</button>
-            <button class="btn-hud btn-hud--live" @click="confirmScoreClick">Confirmar Placar</button>
-          </div>
-
-          <form v-if="phase === 'play' && isHumanTurn" class="go-coord-form" @submit.prevent="submitCoordinate">
-            <label for="go-coord">Jogar por coordenada (ex.: D4)</label>
+          <form v-if="phase === 'play'" class="go-coord-form" @submit.prevent="submitCoordinate">
+            <label for="go-coord">Jogar por coordenada</label>
             <div class="go-coord-inputs">
               <input
                 id="go-coord"
                 v-model="coordInput"
                 type="text"
                 autocomplete="off"
-                :disabled="isAIThinking"
+                :disabled="!isHumanTurn || isAIThinking || isAnimating"
                 placeholder="ex.: D4"
               />
-              <button type="submit" class="btn-hud" :disabled="isAIThinking">Jogar</button>
+              <button type="submit" class="btn-hud" :disabled="!isHumanTurn || isAIThinking || isAnimating">Jogar</button>
             </div>
           </form>
 
@@ -76,8 +80,10 @@
             Clique numa pedra do tabuleiro para marcar/desmarcar o grupo como morto. As áreas destacadas
             mostram o território estimado para cada lado com a marcação atual.
           </p>
-        </div>
+        </template>
+      </div>
 
+      <template v-if="match">
         <div class="hud-card go-board-card">
           <div class="go-board-outer">
             <div class="go-board-frame">
@@ -114,6 +120,7 @@
                     <span v-if="isDeadStone(index)" class="dead-mark" aria-hidden="true">×</span>
                     <span v-if="index === lastMoveIndex" class="last-move-marker" aria-hidden="true"></span>
                     <span v-if="territoryClass(index)" class="territory-mark" :class="territoryClass(index)" aria-hidden="true"></span>
+                    <span v-if="captureFlashIndices.includes(index)" class="capture-flash" aria-hidden="true"></span>
                   </button>
                 </div>
               </div>
@@ -201,6 +208,8 @@ export default {
       lastMoveIndex: -1,
       message: 'Escolha o tamanho do tabuleiro e o nível da máquina, depois inicie a partida.',
       isAIThinking: false,
+      isAnimating: false,
+      captureFlashIndices: [],
       coordInput: '',
       scorePreview: null,
       finalResult: null,
@@ -291,7 +300,7 @@ export default {
     isCellClickable(index) {
       if (!this.match) return false;
       if (this.phase === 'play') {
-        return this.cells[index] === EMPTY && this.isHumanTurn && !this.isAIThinking;
+        return this.cells[index] === EMPTY && this.isHumanTurn && !this.isAIThinking && !this.isAnimating;
       }
       if (this.phase === 'scoring') {
         return this.cells[index] !== EMPTY;
@@ -310,13 +319,39 @@ export default {
       }
     },
     attemptHumanMove(x, y) {
-      if (!this.match || this.phase !== 'play' || !this.isHumanTurn || this.isAIThinking) return;
+      if (!this.match || this.phase !== 'play' || !this.isHumanTurn || this.isAIThinking || this.isAnimating) return;
       const res = this.match.playAt(x, y);
       if (!res.ok) {
         this.message = res.reason || 'Jogada ilegal.';
         return;
       }
+      this.applyMoveResult(res, x, y, BLACK);
+    },
+    // Aplica o resultado de uma jogada em duas etapas quando há captura, para dar
+    // tempo do jogador perceber quais pedras foram comidas em vez de tudo mudar de uma vez.
+    async applyMoveResult(res, x, y, color) {
+      const capturedPositions = res.capturedPositions || [];
+      if (capturedPositions.length) {
+        this.isAnimating = true;
+        const movedIndex = y * this.size + x;
+        const interim = this.cells.slice();
+        interim[movedIndex] = color;
+        this.cells = interim;
+        this.captureFlashIndices = capturedPositions;
+        const n = capturedPositions.length;
+        const who = color === BLACK ? 'Você capturou' : 'A máquina capturou';
+        this.message = `${who} ${n} pedra${n > 1 ? 's' : ''}!`;
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      }
+
       this.syncFromMatch();
+
+      if (capturedPositions.length) {
+        await new Promise((resolve) => setTimeout(resolve, 400));
+        this.captureFlashIndices = [];
+        this.isAnimating = false;
+      }
+
       if (this.phase === 'play' && this.currentColor === WHITE) {
         this.triggerAIMove();
       } else {
@@ -343,7 +378,7 @@ export default {
       return { x: colIndex, y: this.size - rowNum };
     },
     passHuman() {
-      if (!this.match || this.phase !== 'play' || !this.isHumanTurn || this.isAIThinking) return;
+      if (!this.match || this.phase !== 'play' || !this.isHumanTurn || this.isAIThinking || this.isAnimating) return;
       this.match.pass();
       this.syncFromMatch();
       if (this.phase === 'play' && this.currentColor === WHITE) {
@@ -353,7 +388,7 @@ export default {
       }
     },
     resignHuman() {
-      if (!this.match || this.phase !== 'play' || this.isAIThinking) return;
+      if (!this.match || this.phase !== 'play' || this.isAIThinking || this.isAnimating) return;
       this.match.resign(BLACK);
       this.syncFromMatch();
       this.updateMessageAfterMove();
@@ -380,19 +415,34 @@ export default {
       await this.$nextTick();
       await new Promise((resolve) => setTimeout(resolve, 30));
 
+      // Garante uma pausa mínima perceptível: nos níveis rápidos (fácil/médio) a IA decide
+      // quase instantaneamente, o que fazia a jogada "pular" sem dar tempo de acompanhar.
+      const minThinkMs = 550;
+      const startedAt = performance.now();
       const move = chooseAIMove(this.match, this.level);
+      const elapsed = performance.now() - startedAt;
+      if (elapsed < minThinkMs) {
+        await new Promise((resolve) => setTimeout(resolve, minThinkMs - elapsed));
+      }
+
+      this.isAIThinking = false;
+
       if (move.type === 'pass') {
         this.match.pass();
-      } else {
-        const res = this.match.playAt(move.x, move.y);
-        if (!res.ok) {
-          // Salvaguarda: nunca deveria acontecer (a IA só propõe jogadas legais).
-          this.match.pass();
-        }
+        this.syncFromMatch();
+        this.updateMessageAfterMove();
+        return;
       }
-      this.isAIThinking = false;
-      this.syncFromMatch();
-      this.updateMessageAfterMove();
+
+      const res = this.match.playAt(move.x, move.y);
+      if (!res.ok) {
+        // Salvaguarda: nunca deveria acontecer (a IA só propõe jogadas legais).
+        this.match.pass();
+        this.syncFromMatch();
+        this.updateMessageAfterMove();
+        return;
+      }
+      await this.applyMoveResult(res, move.x, move.y, WHITE);
     },
     stoneClass(index) {
       return this.cells[index] === BLACK ? 'stone-black' : 'stone-white';
@@ -431,10 +481,42 @@ export default {
 </script>
 
 <style scoped>
-/* Barra de topo compacta, visível só no modo app (celular), já que ali o
-   cabeçalho/nav do portfólio fica escondido para o jogo parecer um app à parte. */
+/* Barra de topo compacta: substitui o cabeçalho grande do portfólio (que fica
+   escondido nesta página) em qualquer tamanho de tela, sobrando mais espaço
+   pro tabuleiro. */
 .go-app-bar {
-  display: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 12px var(--space-lg);
+  margin: 0 calc(-1 * var(--space-lg)) var(--space-md);
+  background: var(--bg-surface);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--cyan-border);
+}
+.go-app-back {
+  color: var(--cyan-core);
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.go-app-title {
+  font-family: var(--font-ui);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+/* Título reduzido: no jogo o espaço vertical vale mais que um título grande. */
+#go-game-title {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
 }
 
 .go-intro p {
@@ -445,20 +527,27 @@ export default {
   margin-bottom: 0;
 }
 
-.go-controls {
+/* Painel único (controles + status) — compacto de propósito, pra sobrar altura
+   de tela pro tabuleiro, que é o que realmente importa durante a partida. */
+.go-panel {
+  padding: 12px var(--space-lg);
+  gap: 6px;
+}
+.go-controls-row {
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-end;
-  gap: var(--space-lg);
+  gap: var(--space-md) var(--space-lg);
 }
 .go-control-row {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 .go-control-row label {
   font-family: var(--font-code);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--cyan-core);
   text-transform: uppercase;
 }
@@ -467,25 +556,34 @@ export default {
   color: var(--text-main);
   border: 1px solid var(--cyan-border);
   border-radius: 4px;
-  padding: 8px 10px;
+  padding: 6px 8px;
   font-family: var(--font-read);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
-.go-status {
-  gap: var(--space-sm);
+.go-panel-divider {
+  border-top: 1px dashed var(--cyan-dim);
+  margin: var(--space-sm) 0;
 }
 .go-message {
   font-family: var(--font-ui);
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   color: var(--text-main);
+  min-height: 1.4em;
+}
+.go-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm) var(--space-md);
 }
 .go-captures {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-md);
   font-family: var(--font-code);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
 }
 .go-actions {
@@ -495,15 +593,16 @@ export default {
 }
 .go-coord-form {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: var(--space-sm);
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
   padding-top: var(--space-sm);
   border-top: 1px dashed var(--cyan-dim);
 }
 .go-coord-form label {
   font-family: var(--font-code);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
 }
 .go-coord-inputs {
@@ -515,15 +614,23 @@ export default {
   color: var(--text-main);
   border: 1px solid var(--cyan-border);
   border-radius: 4px;
-  padding: 8px 10px;
-  width: 120px;
+  padding: 6px 8px;
+  width: 110px;
   font-family: var(--font-code);
 }
+.go-coord-inputs input:disabled,
+.go-coord-inputs button:disabled {
+  opacity: 0.5;
+}
 .go-scoring-hint {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
+  margin-top: 4px;
 }
 
+.go-board-card {
+  padding: var(--space-sm) var(--space-md);
+}
 .go-board-card.hud-card:hover {
   transform: none;
   box-shadow: none;
@@ -727,6 +834,26 @@ export default {
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
+/* Flash que marca as pedras capturadas, pra dar tempo do jogador perceber a captura
+   em vez da pedra simplesmente sumir do tabuleiro sem aviso. */
+.capture-flash {
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  background: rgba(255, 70, 70, 0.55);
+  box-shadow: 0 0 14px rgba(255, 70, 70, 0.85);
+  animation: go-capture-pulse 0.9s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes go-capture-pulse {
+  0% { opacity: 0.95; transform: scale(0.75); }
+  35% { opacity: 0.9; transform: scale(1.15); }
+  100% { opacity: 0; transform: scale(1.4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .capture-flash { animation: none; opacity: 0.6; }
+}
+
 .go-result {
   gap: var(--space-md);
 }
@@ -761,7 +888,7 @@ export default {
 }
 
 @media (max-width: 768px) {
-  .go-controls {
+  .go-controls-row {
     flex-direction: column;
     align-items: stretch;
   }
@@ -771,37 +898,13 @@ export default {
   }
 
   .go-app-bar {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    position: sticky;
     top: 52px; /* fica logo abaixo da barra de acessibilidade, que também é sticky no topo */
-    z-index: 50;
-    margin: 0 -12px var(--space-lg);
-    padding: 14px 16px;
-    background: var(--bg-surface);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--cyan-border);
-  }
-  .go-app-back {
-    color: var(--cyan-core);
-    text-decoration: none;
-    font-family: var(--font-ui);
-    font-size: 1rem;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-  .go-app-title {
-    font-family: var(--font-ui);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--text-main);
-    font-size: 0.95rem;
+    margin: 0 -12px var(--space-md);
+    padding: 12px 16px;
   }
 
-  /* A barra de topo do jogo já cobre a navegação; evita duplicar o título grande da seção. */
   #go-game-title {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 }
 </style>

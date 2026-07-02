@@ -216,6 +216,14 @@ body {
   .container { max-width: 1680px; }
 }
 
+/* Modo app (Go Game): esconde o cabeçalho e rodapé do portfólio em qualquer
+   tamanho de tela, priorizando o espaço da tela pro tabuleiro. A navegação de
+   volta ao portfólio passa a existir só na barra compacta própria do jogo. */
+.app-mode header,
+.app-mode footer {
+  display: none;
+}
+
 /* Desliga fundo no alto contraste */
 .high-contrast-mode.container { background-image: none !important; }
 
@@ -372,12 +380,8 @@ footer { border-top: 1px solid var(--cyan-border); padding: var(--space-lg) 0; t
   .a11y-toolbar { top: auto; bottom: 20px; right: 20px; }
   .container { padding: 0 var(--space-md); }
 
-  /* Modo app: no celular, o Go Game ocupa a tela inteira, sem o cabeçalho/rodapé
-     do portfólio, para parecer um aplicativo separado em vez de uma página comum. */
-  .app-mode header,
-  .app-mode footer {
-    display: none;
-  }
+  /* No celular, o Go Game ocupa a tela inteira (sem padding/fundo do portfólio),
+     pra parecer um aplicativo separado em vez de uma página comum. */
   .app-mode.container {
     padding: 0;
     background-image: none;
