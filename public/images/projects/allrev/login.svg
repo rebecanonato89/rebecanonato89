@@ -1,0 +1,18 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0,229,255,0.15)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="800" fill="#060910" />
+  <rect width="1200" height="800" fill="url(#grid)" />
+  <rect x="1" y="1" width="1198" height="798" fill="none" stroke="rgba(0,229,255,0.35)" stroke-width="2" />
+
+  <rect x="0" y="0" width="1200" height="56" fill="rgba(10,15,25,0.9)" />
+  <line x1="0" y1="56" x2="1200" y2="56" stroke="rgba(0,229,255,0.35)" stroke-width="1" />
+  <circle cx="28" cy="28" r="6" fill="#ff5f57" opacity="0.6" />
+  <circle cx="50" cy="28" r="6" fill="#febc2e" opacity="0.6" />
+  <circle cx="72" cy="28" r="6" fill="#28c840" opacity="0.6" />
+  <text x="600" y="34" text-anchor="middle" font-family="Fira Code, monospace" font-size="15" fill="#8892b0">app.allrev.com.br — /login</text>
+<text x="90" y="130" font-family="Rajdhani, sans-serif" font-size="30" font-weight="700" fill="#e2e8f0" text-anchor="start">Bem-vindo ao Sistema</text><text x="90" y="170" font-family="Rajdhani, sans-serif" font-size="30" font-weight="700" fill="#00e5ff" text-anchor="start">de Gestao</text><text x="90" y="220" font-family="Rajdhani, sans-serif" font-size="15" font-weight="500" fill="#8892b0" text-anchor="start">Gerencie seus projetos e tarefas</text><text x="90" y="244" font-family="Rajdhani, sans-serif" font-size="15" font-weight="500" fill="#8892b0" text-anchor="start">de forma simples e eficiente.</text><rect x="700" y="150" width="440" height="400" rx="16" fill="rgba(10,15,25,0.9)" stroke="rgba(0,229,255,0.35)" stroke-width="1.5" /><text x="730" y="200" font-family="Rajdhani, sans-serif" font-size="20" font-weight="700" fill="#e2e8f0" text-anchor="start">Faca seu Login</text><rect x="730" y="225" width="380" height="46" rx="6" fill="rgba(10,15,25,0.9)" stroke="rgba(0,229,255,0.35)" stroke-width="1.5" /><text x="745" y="254" font-family="Rajdhani, sans-serif" font-size="13" font-weight="500" fill="#8892b0" text-anchor="start">voce@empresa.com</text><rect x="730" y="290" width="380" height="46" rx="6" fill="rgba(10,15,25,0.9)" stroke="rgba(0,229,255,0.35)" stroke-width="1.5" /><text x="745" y="319" font-family="Rajdhani, sans-serif" font-size="13" font-weight="500" fill="#8892b0" text-anchor="start">********</text><rect x="730" y="355" width="380" height="46" rx="23.0" fill="#00e5ff" stroke="#00e5ff" stroke-width="1.5" /><text x="920.0" y="383.0" font-family="Rajdhani, sans-serif" font-size="15" font-weight="600" fill="#060910" text-anchor="middle">Login</text><text x="730" y="430" font-family="Rajdhani, sans-serif" font-size="12" font-weight="500" fill="#8892b0" text-anchor="start">Nao possui uma conta?  Entre em contato</text>
+</svg>
