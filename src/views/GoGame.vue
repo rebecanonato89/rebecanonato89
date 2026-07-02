@@ -1,5 +1,10 @@
 <template>
   <main id="main-content">
+    <div class="go-app-bar">
+      <router-link to="/" class="go-app-back" aria-label="Fechar e voltar ao portfólio">&larr; Portfólio</router-link>
+      <span class="go-app-title">Go Game</span>
+    </div>
+
     <section id="go-game" aria-labelledby="go-game-title">
       <h2 id="go-game-title" class="section-title">Go Game — Humano vs Máquina</h2>
 
@@ -426,6 +431,12 @@ export default {
 </script>
 
 <style scoped>
+/* Barra de topo compacta, visível só no modo app (celular), já que ali o
+   cabeçalho/nav do portfólio fica escondido para o jogo parecer um app à parte. */
+.go-app-bar {
+  display: none;
+}
+
 .go-intro p {
   margin-bottom: var(--space-sm);
   color: var(--text-main);
@@ -753,6 +764,44 @@ export default {
   .go-controls {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  #main-content {
+    padding: 0 12px 24px;
+  }
+
+  .go-app-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    position: sticky;
+    top: 52px; /* fica logo abaixo da barra de acessibilidade, que também é sticky no topo */
+    z-index: 50;
+    margin: 0 -12px var(--space-lg);
+    padding: 14px 16px;
+    background: var(--bg-surface);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--cyan-border);
+  }
+  .go-app-back {
+    color: var(--cyan-core);
+    text-decoration: none;
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .go-app-title {
+    font-family: var(--font-ui);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-main);
+    font-size: 0.95rem;
+  }
+
+  /* A barra de topo do jogo já cobre a navegação; evita duplicar o título grande da seção. */
+  #go-game-title {
+    font-size: 1.4rem;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ 'high-contrast-mode': isHighContrast, 'light-mode': isLightMode }">
+  <div class="container" :class="{ 'high-contrast-mode': isHighContrast, 'light-mode': isLightMode, 'app-mode': isGoRoute }">
     <a href="#main-content" class="skip-link" @click.prevent="skipToMain">Pular para o conteúdo principal</a>
 
     <aside class="a11y-toolbar" aria-label="Ferramentas de acessibilidade e tema">
@@ -64,6 +64,11 @@ export default {
       isHighContrast: false,
       isLightMode: false,
     };
+  },
+  computed: {
+    isGoRoute() {
+      return this.$route.path === '/go';
+    }
   },
   mounted() {
     // Recupera a preferência de tema do usuário (caso ele já tenha alterado antes)
@@ -194,10 +199,21 @@ body {
     linear-gradient(90deg, var(--cyan-dim) 1px, transparent 1px);
   background-size: 40px 40px;
   background-attachment: fixed;
-  transition: background-color 0.4s ease;
+  transition: background-color 0.4s ease, max-width 0.3s ease;
   padding: 0 var(--space-lg);
   max-width: 1000px;
   margin: 0 auto;
+}
+
+/* Em telas grandes o conteúdo cresce em vez de ficar preso numa coluna estreita */
+@media (min-width: 1440px) {
+  .container { max-width: 1200px; }
+}
+@media (min-width: 1800px) {
+  .container { max-width: 1440px; }
+}
+@media (min-width: 2200px) {
+  .container { max-width: 1680px; }
 }
 
 /* Desliga fundo no alto contraste */
@@ -354,5 +370,40 @@ footer { border-top: 1px solid var(--cyan-border); padding: var(--space-lg) 0; t
   .section-title { font-size: 1.8rem; }
   .card-header { flex-direction: column; }
   .a11y-toolbar { top: auto; bottom: 20px; right: 20px; }
+  .container { padding: 0 var(--space-md); }
+
+  /* Modo app: no celular, o Go Game ocupa a tela inteira, sem o cabeçalho/rodapé
+     do portfólio, para parecer um aplicativo separado em vez de uma página comum. */
+  .app-mode header,
+  .app-mode footer {
+    display: none;
+  }
+  .app-mode.container {
+    padding: 0;
+    background-image: none;
+    min-height: 100dvh;
+  }
+  .app-mode .skip-link {
+    display: none;
+  }
+  /* A barra fixa de acessibilidade vira uma faixa presa no topo (em vez de flutuar
+     sobre o rodapé da tela), pra não tampar os botões principais do jogo. */
+  .app-mode .a11y-toolbar {
+    position: sticky;
+    top: 0;
+    bottom: auto;
+    right: auto;
+    left: auto;
+    width: 100%;
+    justify-content: center;
+    border-radius: 0;
+    border-width: 0 0 1px 0;
+    z-index: 200;
+  }
+}
+
+@media (max-width: 420px) {
+  .container { padding: 0 12px; }
+  .brand h1 { font-size: 1.5rem; }
 }
 </style>
