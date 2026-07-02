@@ -1,7 +1,7 @@
 <template>
   <main id="main-content">
     <div class="go-app-bar">
-      <router-link to="/" class="go-app-back" aria-label="Fechar e voltar ao portfólio">&larr; Portfólio</router-link>
+      <router-link to="/arcade" class="go-app-back" aria-label="Fechar e voltar ao arcade">&larr; Arcade</router-link>
       <span class="go-app-title">Go Game</span>
     </div>
 

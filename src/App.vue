@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ 'high-contrast-mode': isHighContrast, 'light-mode': isLightMode, 'app-mode': isGoRoute }">
+  <div class="container" :class="{ 'high-contrast-mode': isHighContrast, 'light-mode': isLightMode, 'app-mode': isGameRoute }">
     <a href="#main-content" class="skip-link" @click.prevent="skipToMain">Pular para o conteúdo principal</a>
 
     <aside class="a11y-toolbar" aria-label="Ferramentas de acessibilidade e tema">
@@ -35,13 +35,15 @@
         <ul v-if="$route.path === '/'">
           <li><a href="#about" @click.prevent="scrollToId('about')">Identidade</a></li>
           <li><a href="#experience" @click.prevent="scrollToId('experience')">Log Execução</a></li>
-          <li><a href="#education" @click.prevent="scrollToId('education')">Data Banks</a></li>
           <li><a href="#projects" @click.prevent="scrollToId('projects')">Deployments</a></li>
+          <li><router-link to="/arcade" class="nav-highlight">Arcade</router-link></li>
+          <li><router-link to="/recursos" class="nav-highlight">Recursos</router-link></li>
           <li><a href="#contact" @click.prevent="scrollToId('contact')">Uplink</a></li>
-          <li><router-link to="/go">Go Game</router-link></li>
         </ul>
         <ul v-else>
           <li><router-link to="/">&larr; Portfólio</router-link></li>
+          <li><router-link to="/arcade">Arcade</router-link></li>
+          <li><router-link to="/recursos">Recursos</router-link></li>
         </ul>
       </nav>
     </header>
@@ -66,8 +68,10 @@ export default {
     };
   },
   computed: {
-    isGoRoute() {
-      return this.$route.path === '/go';
+    // Rotas de jogo entram em "modo app": some o cabeçalho/rodapé do portfólio
+    // e o jogo ganha a tela inteira (cada jogo tem sua barra própria de volta).
+    isGameRoute() {
+      return ['/go', '/damas', '/memoria'].includes(this.$route.path);
     }
   },
   mounted() {
@@ -300,6 +304,7 @@ body:not(.light-mode):not(.high-contrast-mode) header {
 nav ul { list-style: none; display: flex; gap: var(--space-lg); }
 nav a { color: var(--text-muted); text-decoration: none; font-family: var(--font-ui); font-size: 1.1rem; text-transform: uppercase; transition: 0.3s; }
 nav a:hover { color: var(--cyan-core); text-shadow: 0 0 8px var(--cyan-dim); }
+nav a.nav-highlight { color: var(--cyan-core); }
 
 section { margin-bottom: var(--space-xl); }
 .section-title {
