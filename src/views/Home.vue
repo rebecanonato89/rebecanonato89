@@ -53,17 +53,6 @@
             <span class="card-period">{{ project.period }}</span>
           </header>
 
-          <button
-            v-if="project.images && project.images.length"
-            type="button"
-            class="card-thumb"
-            @click="openPreview(project)"
-            :aria-label="`Ver prévia de imagens de ${project.title}`"
-          >
-            <img :src="project.images[0].src" :alt="project.images[0].alt" loading="lazy" />
-            <span class="card-thumb-overlay">🔍 Ver prévia</span>
-          </button>
-
           <div class="card-desc" v-html="project.description"></div>
           <ul class="tech-list" aria-label="Stack Tecnológica">
             <li v-for="tech in project.stack" :key="tech" class="tech-tag">{{ tech }}</li>
@@ -316,48 +305,5 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
-}
-
-.card-thumb {
-  position: relative;
-  display: block;
-  width: 100%;
-  padding: 0;
-  border: 1px solid var(--cyan-border);
-  border-radius: 6px;
-  overflow: hidden;
-  cursor: pointer;
-  background: var(--bg-base);
-  margin-bottom: var(--space-md);
-  line-height: 0;
-}
-.card-thumb img {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: transform 0.3s ease;
-}
-.card-thumb-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(3, 5, 9, 0.55);
-  color: var(--text-main);
-  font-family: var(--font-ui);
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-.card-thumb:hover .card-thumb-overlay,
-.card-thumb:focus-visible .card-thumb-overlay {
-  opacity: 1;
-}
-.card-thumb:hover img,
-.card-thumb:focus-visible img {
-  transform: scale(1.03);
 }
 </style>
