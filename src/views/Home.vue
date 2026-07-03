@@ -227,8 +227,8 @@ export default {
           liveUrl: 'https://concursotrack.rebecanonato89.dev',
           link: 'https://github.com/rebecanonato89/concursotrack',
           images: [
-            { src: '/images/projects/concursotrack/inicio.svg', alt: 'ConcursoTrack — tela Início: fila em andamento, meta semanal e streak de estudos' },
-            { src: '/images/projects/concursotrack/fila.svg', alt: 'ConcursoTrack — Fila de Estudos unificando tópicos de múltiplos concursos' }
+            { src: '/images/projects/concursotrack/concursotrack-inicio.jpg', alt: 'ConcursoTrack — tela Início: fila em andamento, meta semanal e streak de estudos' },
+            { src: '/images/projects/concursotrack/concursotrack-fila.jpg', alt: 'ConcursoTrack — Fila de Estudos unificando tópicos de múltiplos concursos' }
           ]
         },
         {
@@ -246,9 +246,9 @@ export default {
           liveUrl: 'https://allrev.com.br/',
           link: 'https://github.com/Devs-IO/allrev-backend',
           images: [
-            { src: '/images/projects/allrev/login.svg', alt: 'AllRev — tela de Login do Sistema de Gestão' },
-            { src: '/images/projects/allrev/dashboard.svg', alt: 'AllRev — Dashboard com ordens em andamento, pendentes e recebimentos' },
-            { src: '/images/projects/allrev/nova-ordem.svg', alt: 'AllRev — fluxo de criação de Nova Ordem de Serviço' }
+            { src: '/images/projects/allrev/allrev-login.jpg', alt: 'AllRev — tela de Login do Sistema de Gestão' },
+            { src: '/images/projects/allrev/allrev-dashboard.jpg', alt: 'AllRev — Dashboard com ordens em andamento, pendentes e recebimentos' },
+            { src: '/images/projects/allrev/allrev-nova-ordem.jpg', alt: 'AllRev — fluxo de criação de Nova Ordem de Serviço' }
           ]
         },
         {
