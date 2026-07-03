@@ -33,17 +33,18 @@
       </div>
       <nav aria-label="Navegação Principal">
         <ul v-if="$route.path === '/'">
-          <li><a href="#about" @click.prevent="scrollToId('about')">Identidade</a></li>
-          <li><a href="#experience" @click.prevent="scrollToId('experience')">Log Execução</a></li>
-          <li><a href="#projects" @click.prevent="scrollToId('projects')">Deployments</a></li>
-          <li><router-link to="/arcade" class="nav-highlight">Arcade</router-link></li>
-          <li><router-link to="/recursos" class="nav-highlight">Recursos</router-link></li>
-          <li><a href="#contact" @click.prevent="scrollToId('contact')">Uplink</a></li>
+          <li><a href="#about" :class="{ active: activeSection === 'about' }" @click.prevent="scrollToId('about')">Identidade</a></li>
+          <li><a href="#experience" :class="{ active: activeSection === 'experience' }" @click.prevent="scrollToId('experience')">Log Execução</a></li>
+          <li><a href="#projects" :class="{ active: activeSection === 'projects' }" @click.prevent="scrollToId('projects')">Deployments</a></li>
+          <li><router-link to="/arcade" class="nav-highlight" :class="{ active: activeSection === 'arcade-preview' }">Arcade</router-link></li>
+          <li><router-link to="/recursos" class="nav-highlight" :class="{ active: activeSection === 'resources-preview' }">Recursos</router-link></li>
+          <li><a href="#contact" class="nav-cta" @click.prevent="scrollToId('contact')">Vamos nos conectar</a></li>
         </ul>
         <ul v-else>
           <li><router-link to="/">&larr; Portfólio</router-link></li>
           <li><router-link to="/arcade">Arcade</router-link></li>
           <li><router-link to="/recursos">Recursos</router-link></li>
+          <li><router-link to="/#contact" class="nav-cta">Vamos nos conectar</router-link></li>
         </ul>
       </nav>
     </header>
@@ -65,6 +66,8 @@ export default {
       fontSizeStep: 0,
       isHighContrast: false,
       isLightMode: false,
+      activeSection: '',
+      sectionObserver: null,
     };
   },
   computed: {
@@ -74,22 +77,61 @@ export default {
       return ['/go', '/damas', '/memoria'].includes(this.$route.path);
     }
   },
+  watch: {
+    '$route.path'() {
+      document.body.classList.toggle('app-mode', this.isGameRoute);
+      this.$nextTick(() => this.setupSectionObserver());
+    }
+  },
   mounted() {
     // Recupera a preferência de tema do usuário (caso ele já tenha alterado antes)
     const savedTheme = localStorage.getItem('rebeca-portfolio-lightmode');
     if (savedTheme === 'true') {
       this.isLightMode = true;
-      this.applyBodyClass();
     }
+    this.applyBodyClass();
+    document.body.classList.toggle('app-mode', this.isGameRoute);
+    // No carregamento inicial, o vue-router resolve a navegação de forma
+    // assíncrona: o <router-view> ainda pode não ter renderizado as seções
+    // no instante em que este mounted() roda. Esperar o router ficar pronto
+    // garante que o DOM da Home já existe antes de observar as seções.
+    this.$router.isReady().then(() => this.$nextTick(() => this.setupSectionObserver()));
+  },
+  beforeUnmount() {
+    if (this.sectionObserver) this.sectionObserver.disconnect();
   },
   methods: {
+    // Observa as seções da home para: (1) destacar o item ativo no menu e
+    // (2) marcar a seção visível na tela com um destaque visual (.in-view),
+    // criando uma divisão clara entre elas conforme o scroll.
+    setupSectionObserver() {
+      if (this.sectionObserver) {
+        this.sectionObserver.disconnect();
+        this.sectionObserver = null;
+      }
+      // O scrollspy só faz sentido na home: é a única página com âncoras internas.
+      if (this.$route.path !== '/') return;
+      const sections = document.querySelectorAll('main#main-content section[id]');
+      if (!sections.length) return;
+      this.sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle('in-view', entry.isIntersecting);
+          if (entry.isIntersecting) this.activeSection = entry.target.id;
+        });
+      }, { rootMargin: '-35% 0px -50% 0px', threshold: 0 });
+      sections.forEach((section) => this.sectionObserver.observe(section));
+    },
     toggleTheme() {
       this.isLightMode = !this.isLightMode;
       localStorage.setItem('rebeca-portfolio-lightmode', this.isLightMode);
       this.applyBodyClass();
     },
     applyBodyClass() {
-      // Sincroniza a cor de fundo real do body para evitar barras brancas/pretas no scroll overflow
+      // O fundo decorativo (grade) vive no body para se estender por toda a
+      // largura da tela (não só a coluna central). Por isso o body também
+      // precisa das classes de tema, para usar as variáveis de cor corretas.
+      document.body.classList.toggle('high-contrast-mode', this.isHighContrast);
+      document.body.classList.toggle('light-mode', this.isLightMode);
       if (this.isHighContrast) {
         document.body.style.backgroundColor = '#000000';
       } else if (this.isLightMode) {
@@ -186,24 +228,28 @@ export default {
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { font-size: 100%; scroll-behavior: smooth; }
 
+/* O grid decorativo vive no body (não no .container) para se estender por
+   toda a largura da janela em qualquer resolução — em monitores ultrawide
+   ele cobre a tela inteira em vez de parar na coluna central de conteúdo.
+   As classes de tema (.light-mode/.high-contrast-mode) são espelhadas no
+   body via JS (ver applyBodyClass) para que as variáveis de cor cheguem
+   até aqui. */
 body {
   font-family: var(--font-read);
-  background-color: var(--bg-base);
   color: var(--text-main);
   line-height: 1.6;
-  transition: background-color 0.4s ease, color 0.4s ease;
-}
-
-/* O grid de fundo precisa ser gerenciado pelo wrapper para respeitar os temas */
-.container {
-  min-height: 100vh;
   background-color: var(--bg-base);
-  background-image: 
+  background-image:
     linear-gradient(var(--cyan-dim) 1px, transparent 1px),
     linear-gradient(90deg, var(--cyan-dim) 1px, transparent 1px);
   background-size: 40px 40px;
   background-attachment: fixed;
-  transition: background-color 0.4s ease, max-width 0.3s ease;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.container {
+  min-height: 100vh;
+  transition: max-width 0.3s ease;
   padding: 0 var(--space-lg);
   max-width: 1000px;
   margin: 0 auto;
@@ -229,7 +275,16 @@ body {
 }
 
 /* Desliga fundo no alto contraste */
-.high-contrast-mode.container { background-image: none !important; }
+body.high-contrast-mode { background-image: none !important; }
+
+/* Em telas de tablet/celular a grade decorativa fica mais compacta (curta),
+   em vez de repetir o mesmo espaçamento largo usado no desktop. */
+@media (max-width: 1024px) {
+  body { background-size: 28px 28px; }
+}
+@media (max-width: 480px) {
+  body { background-size: 20px 20px; }
+}
 
 /* =========================================
    ACESSBILIDADE & BARRA HUD
@@ -284,7 +339,7 @@ body {
    LAYOUT & COMPONENTES
    ========================================= */
 header {
-  padding: var(--space-lg) 0; display: flex; justify-content: space-between; align-items: center;
+  padding: var(--space-lg) 0; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-md);
   border-bottom: 1px solid var(--cyan-border); margin-bottom: var(--space-xl);
   background: var(--bg-surface);
   position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px);
@@ -301,12 +356,49 @@ body:not(.light-mode):not(.high-contrast-mode) header {
 
 .brand h1 { font-family: var(--font-ui); font-size: 2rem; color: var(--text-main); text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px var(--cyan-dim); }
 .brand span { font-family: var(--font-code); font-size: 0.8rem; color: var(--cyan-core); }
-nav ul { list-style: none; display: flex; gap: var(--space-lg); }
-nav a { color: var(--text-muted); text-decoration: none; font-family: var(--font-ui); font-size: 1.1rem; text-transform: uppercase; transition: 0.3s; }
+nav ul { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-lg); }
+nav a { position: relative; color: var(--text-muted); text-decoration: none; font-family: var(--font-ui); font-size: 1.1rem; text-transform: uppercase; transition: 0.3s; padding-bottom: 2px; }
 nav a:hover { color: var(--cyan-core); text-shadow: 0 0 8px var(--cyan-dim); }
 nav a.nav-highlight { color: var(--cyan-core); }
 
-section { margin-bottom: var(--space-xl); }
+/* Indica no menu qual seção da página está visível no momento (scrollspy) */
+nav a.active { color: var(--cyan-core); text-shadow: 0 0 8px var(--cyan-dim); }
+nav a.active::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -6px;
+  height: 2px; background: var(--cyan-core); box-shadow: 0 0 8px var(--cyan-dim);
+}
+
+/* CTA "Vamos nos conectar": precisa se destacar dos demais links do menu,
+   por isso ganha o tratamento de botão sólido em vez de texto simples. */
+nav a.nav-cta {
+  background: var(--cyan-core); color: var(--bg-base); font-weight: 700;
+  padding: 8px 16px; border-radius: 4px; box-shadow: 0 0 15px var(--cyan-dim);
+}
+nav a.nav-cta:hover, nav a.nav-cta:focus-visible {
+  color: var(--bg-base); text-shadow: none; box-shadow: 0 0 25px var(--cyan-core); opacity: 0.9;
+}
+
+section { margin-bottom: var(--space-xl); padding: var(--space-lg); border-radius: 12px; transition: background-color 0.6s ease, box-shadow 0.6s ease; }
+
+/* Nos jogos (modo app) a seção deve continuar colada nas bordas da tela,
+   sem o box/realce de divisão pensado para as seções do portfólio. */
+.app-mode section {
+  padding: 0; border-radius: 0; background: none; box-shadow: none;
+}
+
+/* Divisão clara entre seções: a que estiver na tela ganha um leve destaque de
+   fundo, enquanto as demais permanecem neutras — reforça em qual "bloco" do
+   portfólio o visitante está no momento do scroll. */
+section.in-view {
+  background: var(--cyan-dim);
+  box-shadow: inset 0 0 0 1px var(--cyan-border);
+}
+.high-contrast-mode section.in-view,
+body.high-contrast-mode section.in-view {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--cyan-border);
+}
+
 .section-title {
   font-family: var(--font-ui); font-size: 2.2rem; color: var(--text-main); margin-bottom: var(--space-lg);
   display: flex; align-items: center; gap: var(--space-md);
@@ -342,7 +434,18 @@ section { margin-bottom: var(--space-xl); }
 .card-desc { color: var(--text-main); font-size: 0.95rem; flex-grow: 1; margin-bottom: var(--space-lg); }
 .card-desc p, .card-desc ul, .card-desc li { color: var(--text-main) !important; }
 
-.project-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); }
+.project-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); align-items: start; }
+
+/* Em telas largas o grid de projetos usa o espaço extra em 2 colunas em vez
+   de esticar cada card para a largura inteira da coluna central.
+   minmax(0, 1fr) evita que o conteúdo dos cards (tags, texto longo) force
+   a coluna a crescer além da largura disponível e estoure o container. */
+@media (min-width: 1000px) {
+  .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1800px) {
+  .project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 
 .tech-list { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-bottom: var(--space-lg); }
 .tech-tag { font-family: var(--font-code); font-size: 0.75rem; color: var(--cyan-core); background: var(--cyan-dim); border: 1px dashed var(--cyan-border); padding: 4px 8px; border-radius: 4px; }
@@ -377,10 +480,19 @@ footer { border-top: 1px solid var(--cyan-border); padding: var(--space-lg) 0; t
   * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
 
+/* Faixa intermediária (tablets e janelas médias): a barra de acessibilidade
+   ainda flutua no canto superior direito, mas o respiro reservado no cabeçalho
+   pode ser bem menor que os 300px pensados para telas largas. */
+@media (max-width: 1100px) and (min-width: 769px) {
+  header { padding-right: 190px; }
+  nav ul { gap: var(--space-md); }
+}
+
 @media (max-width: 768px) {
   header { flex-direction: column; gap: var(--space-md); align-items: flex-start; padding-right: 0; }
   nav ul { flex-wrap: wrap; gap: var(--space-md); }
   .section-title { font-size: 1.8rem; }
+  section { padding: var(--space-md); margin-bottom: var(--space-lg); }
   .card-header { flex-direction: column; }
   .a11y-toolbar { top: auto; bottom: 20px; right: 20px; }
   .container { padding: 0 var(--space-md); }
@@ -389,8 +501,10 @@ footer { border-top: 1px solid var(--cyan-border); padding: var(--space-lg) 0; t
      pra parecer um aplicativo separado em vez de uma página comum. */
   .app-mode.container {
     padding: 0;
-    background-image: none;
     min-height: 100dvh;
+  }
+  body.app-mode {
+    background-image: none;
   }
   .app-mode .skip-link {
     display: none;
