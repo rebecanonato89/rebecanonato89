@@ -74,6 +74,7 @@ export default {
           this.print('  projetos   → deployments e cases');
           this.print('  arcade     → jogos no browser (go, damas, memoria)');
           this.print('  recursos   → biblioteca de livros, ferramentas e cursos');
+          this.print('  servicos   → contrate sites, sistemas e automações');
           this.print('  contato    → canais de contato');
           this.print('  go | damas | memoria → abre o jogo direto');
           this.print('  github | linkedin    → abre em nova aba');
@@ -84,6 +85,7 @@ export default {
         contato: () => this.goToSection('contact', 'Estabelecendo conexão…'),
         arcade: () => this.goToRoute('/arcade', 'Iniciando arcade…'),
         recursos: () => this.goToRoute('/recursos', 'Abrindo biblioteca de recursos…'),
+        servicos: () => this.goToRoute('/servicos', 'Abrindo página de serviços…'),
         go: () => this.goToRoute('/go', 'Carregando tabuleiro de Go…'),
         damas: () => this.goToRoute('/damas', 'Carregando tabuleiro de Damas…'),
         memoria: () => this.goToRoute('/memoria', 'Embaralhando cartas…'),
@@ -96,7 +98,7 @@ export default {
         },
         clear: () => { this.lines = []; },
         sudo: () => this.print('visitante is not in the sudoers file. This incident will be reported. 😄'),
-        ls: () => this.print('sobre/  projetos/  arcade/  recursos/  contato/'),
+        ls: () => this.print('sobre/  projetos/  arcade/  recursos/  servicos/  contato/'),
         pwd: () => this.print('/home/rebeca/portfolio'),
       };
 

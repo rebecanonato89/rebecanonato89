@@ -5,6 +5,7 @@ import CheckersGame from '../views/CheckersGame.vue';
 import MemoryGame from '../views/MemoryGame.vue';
 import Arcade from '../views/Arcade.vue';
 import Resources from '../views/Resources.vue';
+import Servicos from '../views/Servicos.vue';
 
 const routes = [
   { path: '/', name: 'home', component: Home },
@@ -13,6 +14,7 @@ const routes = [
   { path: '/damas', name: 'checkers-game', component: CheckersGame },
   { path: '/memoria', name: 'memory-game', component: MemoryGame },
   { path: '/recursos', name: 'resources', component: Resources },
+  { path: '/servicos', name: 'servicos', component: Servicos },
 ];
 
 const router = createRouter({
