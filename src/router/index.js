@@ -6,6 +6,11 @@ import MemoryGame from '../views/MemoryGame.vue';
 import Arcade from '../views/Arcade.vue';
 import Resources from '../views/Resources.vue';
 import Servicos from '../views/Servicos.vue';
+import SobreCode from '../views/SobreCode.vue';
+import ExperienciaCode from '../views/ExperienciaCode.vue';
+import CertificacoesCode from '../views/CertificacoesCode.vue';
+import DeploymentsCode from '../views/DeploymentsCode.vue';
+import ContatoCode from '../views/ContatoCode.vue';
 
 const routes = [
   { path: '/', name: 'home', component: Home },
@@ -15,6 +20,11 @@ const routes = [
   { path: '/memoria', name: 'memory-game', component: MemoryGame },
   { path: '/recursos', name: 'resources', component: Resources },
   { path: '/servicos', name: 'servicos', component: Servicos },
+  { path: '/sobre', name: 'sobre-code', component: SobreCode },
+  { path: '/experiencia', name: 'experiencia-code', component: ExperienciaCode },
+  { path: '/certificacoes', name: 'certificacoes-code', component: CertificacoesCode },
+  { path: '/projetos', name: 'deployments-code', component: DeploymentsCode },
+  { path: '/contato', name: 'contato-code', component: ContatoCode },
 ];
 
 const router = createRouter({

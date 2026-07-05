@@ -27,7 +27,7 @@
           <router-link to="/arcade" class="ide-menu-item" active-class="ide-menu-item--active">Arcade</router-link>
           <router-link to="/recursos" class="ide-menu-item" active-class="ide-menu-item--active">Recursos</router-link>
           <router-link to="/servicos" class="ide-menu-item" active-class="ide-menu-item--active">Serviços</router-link>
-          <a href="#contact" class="ide-menu-item" @click.prevent="scrollToId('contact')">Contato</a>
+          <router-link to="/contato" class="ide-menu-item" active-class="ide-menu-item--active">Contato</router-link>
         </nav>
 
         <div class="ide-titlebar-right">
@@ -82,7 +82,7 @@
         <IdeSidebar
           v-if="sidebarOpen"
           :tree="sidebarTree"
-          :active-node-id="selectedNodeId"
+          :active-node-id="activeNodeId"
           @open="openNode"
           @collapse="sidebarOpen = false"
         />
@@ -158,6 +158,11 @@ import IdeTerminal from './components/IdeTerminal.vue';
 // Rotas de jogo (/go, /damas, /memoria) ficam fora disso: abrem em tela cheia.
 const PATH_META = {
   '/': { label: 'home.vue', icon: 'vue', breadcrumb: ['src', 'views', 'Home.vue'] },
+  '/sobre': { label: 'sobre.md', icon: 'md', breadcrumb: ['src', 'views', 'SobreCode.vue'] },
+  '/experiencia': { label: 'experiencia.log', icon: 'log', breadcrumb: ['src', 'views', 'ExperienciaCode.vue'] },
+  '/certificacoes': { label: 'certificacoes.log', icon: 'log', breadcrumb: ['src', 'views', 'CertificacoesCode.vue'] },
+  '/projetos': { label: 'deployments.json', icon: 'json', breadcrumb: ['src', 'views', 'DeploymentsCode.vue'] },
+  '/contato': { label: 'contato.md', icon: 'md', breadcrumb: ['src', 'views', 'ContatoCode.vue'] },
   '/arcade': { label: 'arcade.vue', icon: 'vue', breadcrumb: ['src', 'views', 'Arcade.vue'] },
   '/recursos': { label: 'recursos.vue', icon: 'vue', breadcrumb: ['src', 'views', 'Resources.vue'] },
   '/servicos': { label: 'servicos.vue', icon: 'vue', breadcrumb: ['src', 'views', 'Servicos.vue'] },
@@ -174,21 +179,20 @@ export default {
       theme: 'dracula',
       sidebarOpen: true,
       terminalOpen: true,
-      selectedNodeId: 'sobre',
       openTabs: [{ path: '/', label: PATH_META['/'].label, icon: PATH_META['/'].icon }],
       sidebarTree: [
         {
           id: 'root', label: 'rebecanonato89', type: 'folder', expanded: true, children: [
             {
               id: 'perfil', label: 'perfil', type: 'folder', expanded: true, children: [
-                { id: 'sobre', label: 'sobre.md', type: 'file', icon: 'md', path: '/', hash: '#about' },
-                { id: 'experiencia', label: 'experiencia.log', type: 'file', icon: 'log', path: '/', hash: '#experience' },
-                { id: 'certificacoes', label: 'certificacoes.log', type: 'file', icon: 'log', path: '/', hash: '#education' },
+                { id: 'sobre', label: 'sobre.md', type: 'file', icon: 'md', path: '/sobre' },
+                { id: 'experiencia', label: 'experiencia.log', type: 'file', icon: 'log', path: '/experiencia' },
+                { id: 'certificacoes', label: 'certificacoes.log', type: 'file', icon: 'log', path: '/certificacoes' },
               ],
             },
             {
               id: 'projetos', label: 'projetos', type: 'folder', expanded: true, children: [
-                { id: 'deployments', label: 'deployments.json', type: 'file', icon: 'json', path: '/', hash: '#projects' },
+                { id: 'deployments', label: 'deployments.json', type: 'file', icon: 'json', path: '/projetos' },
               ],
             },
             {
@@ -201,7 +205,7 @@ export default {
             },
             { id: 'servicos', label: 'servicos.vue', type: 'file', icon: 'vue', path: '/servicos' },
             { id: 'recursos', label: 'recursos.vue', type: 'file', icon: 'vue', path: '/recursos' },
-            { id: 'contato', label: 'contato.md', type: 'file', icon: 'md', path: '/', hash: '#contact' },
+            { id: 'contato', label: 'contato.md', type: 'file', icon: 'md', path: '/contato' },
           ],
         },
       ],
@@ -226,14 +230,38 @@ export default {
       const meta = PATH_META[this.$route.path];
       return meta ? meta.breadcrumb : PATH_META['/'].breadcrumb;
     },
+    // Deriva o item selecionado no sidebar a partir da rota atual, em vez de
+    // rastrear em estado à parte — assim fica correto mesmo vindo do terminal,
+    // de um clique numa aba, ou do botão voltar/avançar do navegador.
+    activeNodeId() {
+      const path = this.$route.path;
+      const findId = (nodes) => {
+        for (const n of nodes) {
+          if (n.type === 'folder') {
+            const found = findId(n.children);
+            if (found) return found;
+          } else if (n.path === path) {
+            return n.id;
+          }
+        }
+        return '';
+      };
+      return findId(this.sidebarTree);
+    },
   },
   watch: {
-    '$route.path'(newPath) {
-      if (GAME_ROUTES.includes(newPath)) return;
-      const meta = PATH_META[newPath];
-      if (meta && !this.openTabs.some((t) => t.path === newPath)) {
-        this.openTabs.push({ path: newPath, label: meta.label, icon: meta.icon });
+    '$route'(to) {
+      if (GAME_ROUTES.includes(to.path)) return;
+      const meta = PATH_META[to.path];
+      if (meta && !this.openTabs.some((t) => t.path === to.path)) {
+        this.openTabs.push({ path: to.path, label: meta.label, icon: meta.icon });
       }
+      // Cada rota é um "arquivo" à parte: sempre abre do topo, nunca herda o
+      // scroll de onde a aba anterior tinha ficado.
+      this.$nextTick(() => {
+        const container = document.getElementById('ide-editor-content');
+        if (container) container.scrollTop = 0;
+      });
     },
   },
   mounted() {
@@ -276,24 +304,11 @@ export default {
       const newSize = 100 + this.fontSizeStep * 10;
       document.documentElement.style.fontSize = `${newSize}%`;
     },
-    // Clique num item do sidebar: se for jogo, abre em tela cheia; senão abre/ativa
-    // a aba correspondente no meio (editor) e rola até o trecho (hash), se houver.
+    // Clique num item do sidebar: cada arquivo é uma página própria, que abre
+    // (ou ativa, se já aberta) numa aba no meio — igual abrir um arquivo numa IDE.
     openNode(node) {
-      this.selectedNodeId = node.id;
-      if (GAME_ROUTES.includes(node.path)) {
-        this.$router.push(node.path);
-        return;
-      }
-      const meta = PATH_META[node.path];
-      if (meta && !this.openTabs.some((t) => t.path === node.path)) {
-        this.openTabs.push({ path: node.path, label: meta.label, icon: meta.icon });
-      }
       if (this.$route.path !== node.path) {
-        this.$router.push({ path: node.path, hash: node.hash || undefined }).then(() => {
-          if (node.hash) this.$nextTick(() => this.scrollToHash(node.hash));
-        });
-      } else if (node.hash) {
-        this.scrollToHash(node.hash);
+        this.$router.push(node.path);
       }
       if (window.innerWidth <= 900) this.sidebarOpen = false;
     },
@@ -309,17 +324,6 @@ export default {
         const next = this.openTabs[idx] || this.openTabs[idx - 1];
         this.$router.push(next.path);
       }
-    },
-    scrollToId(id) {
-      if (this.$route.path !== '/') {
-        this.$router.push('/').then(() => this.$nextTick(() => this.scrollToHash('#' + id)));
-      } else {
-        this.scrollToHash('#' + id);
-      }
-    },
-    scrollToHash(hash) {
-      const el = document.getElementById(hash.replace('#', ''));
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
     },
     skipToMain() {
       const el = document.getElementById('main-content');
@@ -367,6 +371,17 @@ export default {
   --ide-icon-log: #8b8fa3;
   --ide-icon-folder: #90a4d4;
 
+  --code-bg: #21222c;
+  --code-plain: #f8f8f2;
+  --code-heading: #ff79c6;
+  --code-comment: #6272a4;
+  --code-string: #f1fa8c;
+  --code-key: #8be9fd;
+  --code-num: #bd93f9;
+  --code-bool: #50fa7b;
+  --code-punct: #f8f8f2;
+  --code-lineno: #6272a4;
+
   --font-ui: 'Space Grotesk', sans-serif;
   --font-read: 'Inter', sans-serif;
   --font-code: 'JetBrains Mono', monospace;
@@ -411,6 +426,17 @@ export default {
   --ide-icon-md: #2b7a9e;
   --ide-icon-log: #8a7361;
   --ide-icon-folder: #a9652e;
+
+  --code-bg: #fffaf3;
+  --code-plain: #4a3728;
+  --code-heading: #9a3f6b;
+  --code-comment: #8a7361;
+  --code-string: #b5651d;
+  --code-key: #2b7a9e;
+  --code-num: #6f4e37;
+  --code-bool: #2f9e63;
+  --code-punct: #4a3728;
+  --code-lineno: #8a7361;
 }
 
 /* =========================================
@@ -443,6 +469,17 @@ export default {
   --ide-icon-md: #FFFF00;
   --ide-icon-log: #FFFF00;
   --ide-icon-folder: #FFFF00;
+
+  --code-bg: #000000;
+  --code-plain: #FFFFFF;
+  --code-heading: #FFFF00;
+  --code-comment: #FFFFFF;
+  --code-string: #FFFF00;
+  --code-key: #FFFF00;
+  --code-num: #FFFFFF;
+  --code-bool: #FFFF00;
+  --code-punct: #FFFFFF;
+  --code-lineno: #FFFFFF;
 }
 
 /* RESET */
