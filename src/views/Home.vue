@@ -1,7 +1,5 @@
 <template>
   <main id="main-content">
-    <HeroTerminal />
-
     <section id="fork" aria-label="Escolha seu caminho">
       <div class="hud-card">
         <p class="card-desc">
@@ -142,12 +140,11 @@
 </template>
 
 <script>
-import HeroTerminal from '../components/HeroTerminal.vue';
 import ProjectPreviewModal from '../components/ProjectPreviewModal.vue';
 
 export default {
   name: 'Home',
-  components: { HeroTerminal, ProjectPreviewModal },
+  components: { ProjectPreviewModal },
   data() {
     return {
       previewProject: null,

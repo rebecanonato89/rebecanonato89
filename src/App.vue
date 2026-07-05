@@ -1,145 +1,324 @@
 <template>
-  <div class="container" :class="{ 'high-contrast-mode': isHighContrast, 'light-mode': isLightMode, 'app-mode': isGameRoute }">
-    <div class="bg-icons" aria-hidden="true">
-      <svg class="bg-icon bg-icon-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="8 4 2 12 8 20"></polyline><polyline points="16 4 22 12 16 20"></polyline></svg>
-      <svg class="bg-icon bg-icon-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3H6a2 2 0 0 0-2 2v2a2 2 0 0 1-2 2 2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h2"></path><path d="M16 3h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2 2 2 0 0 0-2 2v2a2 2 0 0 1-2 2h-2"></path></svg>
-      <svg class="bg-icon bg-icon-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
-      <svg class="bg-icon bg-icon-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="8" ry="3"></ellipse><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"></path><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"></path></svg>
-      <svg class="bg-icon bg-icon-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
-      <svg class="bg-icon bg-icon-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"></rect><polyline points="6 9 10 12 6 15"></polyline><line x1="12" y1="15" x2="16" y2="15"></line></svg>
-      <svg class="bg-icon bg-icon-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="5" rx="1"></rect><rect x="2" y="15" width="20" height="5" rx="1"></rect><line x1="6" y1="6.5" x2="6.01" y2="6.5"></line><line x1="6" y1="17.5" x2="6.01" y2="17.5"></line></svg>
-      <svg class="bg-icon bg-icon-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 13a10 10 0 0 1 14 0"></path><path d="M8.5 16.5a5 5 0 0 1 7 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
-      <svg class="bg-icon bg-icon-9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="7" height="7" rx="1"></rect><rect x="13" y="13" width="7" height="7" rx="1"></rect><rect x="4" y="13" width="7" height="7" rx="1"></rect></svg>
-      <svg class="bg-icon bg-icon-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="6" width="12" height="12" rx="1"></rect><line x1="6" y1="1" x2="6" y2="4"></line><line x1="12" y1="1" x2="12" y2="4"></line><line x1="18" y1="1" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="23"></line><line x1="12" y1="20" x2="12" y2="23"></line><line x1="18" y1="20" x2="18" y2="23"></line><line x1="1" y1="6" x2="4" y2="6"></line><line x1="1" y1="12" x2="4" y2="12"></line><line x1="1" y1="18" x2="4" y2="18"></line><line x1="20" y1="6" x2="23" y2="6"></line><line x1="20" y1="12" x2="23" y2="12"></line><line x1="20" y1="18" x2="23" y2="18"></line></svg>
-      <svg class="bg-icon bg-icon-11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-      <svg class="bg-icon bg-icon-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-    </div>
-
+  <div class="ide-root" :class="[themeClass, { 'high-contrast-mode': isHighContrast, 'app-mode': isGameRoute }]">
     <a href="#main-content" class="skip-link" @click.prevent="skipToMain">Pular para o conteúdo principal</a>
 
-    <aside class="a11y-toolbar" aria-label="Ferramentas de acessibilidade e tema">
-      <button @click="toggleTheme" class="a11y-btn theme-btn" :aria-label="isLightMode ? 'Ativar modo escuro' : 'Ativar modo claro'">
-        <svg v-if="!isLightMode" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="12" cy="12" r="5"></circle>
-          <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"></path>
-        </svg>
-        <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-      </button>
+    <!-- ===================== MODO JOGO: tela cheia, sem chrome de IDE ===================== -->
+    <div v-if="isGameRoute" class="game-shell">
+      <router-view />
+    </div>
 
-      <div class="a11y-divider" aria-hidden="true"></div>
+    <!-- ===================== MODO IDE: título, sidebar, abas, editor, terminal, status ===================== -->
+    <template v-else>
+      <header class="ide-titlebar">
+        <div class="ide-titlebar-left">
+          <span class="ide-dot ide-dot--red" aria-hidden="true"></span>
+          <span class="ide-dot ide-dot--yellow" aria-hidden="true"></span>
+          <span class="ide-dot ide-dot--green" aria-hidden="true"></span>
+          <router-link to="/" class="ide-titlebar-brand">
+            <IdeIcon type="project" aria-hidden="true" />
+            <span class="ide-titlebar-project">rebecanonato89</span>
+            <span class="ide-titlebar-sep" aria-hidden="true">›</span>
+            <span class="ide-titlebar-file">{{ activeTabMeta.label }}</span>
+          </router-link>
+        </div>
 
-      <button @click="changeFontSize(-1)" class="a11y-btn" aria-label="Diminuir tamanho da fonte">A-</button>
-      <button @click="changeFontSize(1)" class="a11y-btn" aria-label="Aumentar tamanho da fonte">A+</button>
-      <button @click="resetFontSize" class="a11y-btn" aria-label="Restaurar tamanho da fonte padrão">A</button>
-      <button @click="toggleHighContrast" class="a11y-btn" :aria-pressed="isHighContrast" aria-label="Alternar modo de alto contraste restrito">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M12 2a10 10 0 0 0 0 20z" fill="currentColor"></path>
-        </svg>
-      </button>
-    </aside>
+        <nav class="ide-titlebar-menu" aria-label="Navegação Principal">
+          <router-link to="/" class="ide-menu-item" exact-active-class="ide-menu-item--active">Início</router-link>
+          <router-link to="/arcade" class="ide-menu-item" active-class="ide-menu-item--active">Arcade</router-link>
+          <router-link to="/recursos" class="ide-menu-item" active-class="ide-menu-item--active">Recursos</router-link>
+          <router-link to="/servicos" class="ide-menu-item" active-class="ide-menu-item--active">Serviços</router-link>
+          <a href="#contact" class="ide-menu-item" @click.prevent="scrollToId('contact')">Contato</a>
+        </nav>
 
-    <header>
-      <div class="brand">
-        <h1>Rebeca Nonato</h1>
-        <span>SYS.INIT // SOFTWARE_ENGINEER_SENIOR</span>
+        <div class="ide-titlebar-right">
+          <button type="button" class="ide-title-btn" @click="changeFontSize(-1)" aria-label="Diminuir tamanho da fonte">A-</button>
+          <button type="button" class="ide-title-btn" @click="changeFontSize(1)" aria-label="Aumentar tamanho da fonte">A+</button>
+          <button
+            type="button"
+            class="ide-title-btn"
+            :class="{ 'ide-title-btn--active': isHighContrast }"
+            :aria-pressed="isHighContrast"
+            aria-label="Alternar modo de alto contraste"
+            @click="toggleHighContrast"
+          >
+            <IdeIcon type="contrast" />
+          </button>
+          <button type="button" class="ide-theme-toggle" @click="toggleTheme" :aria-label="'Tema: ' + themeLabel + '. Clique para alternar.'">
+            <IdeIcon :type="theme === 'dracula' ? 'bat' : 'cup'" />
+            <span>{{ themeLabel }}</span>
+          </button>
+          <a href="https://github.com/rebecanonato89" target="_blank" rel="noopener noreferrer" class="ide-title-btn" aria-label="Abrir GitHub em nova aba">
+            GH
+          </a>
+        </div>
+      </header>
+
+      <div class="ide-workbench">
+        <div class="ide-activity-bar">
+          <button
+            type="button"
+            class="ide-activity-btn"
+            :class="{ 'ide-activity-btn--active': sidebarOpen }"
+            aria-label="Alternar painel de projeto"
+            :aria-pressed="sidebarOpen"
+            @click="sidebarOpen = !sidebarOpen"
+          >
+            <IdeIcon type="project" />
+          </button>
+          <button
+            type="button"
+            class="ide-activity-btn"
+            :class="{ 'ide-activity-btn--active': terminalOpen }"
+            aria-label="Alternar terminal"
+            :aria-pressed="terminalOpen"
+            @click="terminalOpen = !terminalOpen"
+          >
+            <IdeIcon type="terminal" />
+          </button>
+        </div>
+
+        <div v-if="sidebarOpen" class="ide-sidebar-backdrop" @click="sidebarOpen = false"></div>
+
+        <IdeSidebar
+          v-if="sidebarOpen"
+          :tree="sidebarTree"
+          :active-node-id="selectedNodeId"
+          @open="openNode"
+          @collapse="sidebarOpen = false"
+        />
+
+        <div class="ide-main">
+          <div class="ide-tabbar" role="tablist" aria-label="Abas abertas">
+            <button
+              v-for="tab in openTabs"
+              :key="tab.path"
+              type="button"
+              role="tab"
+              class="ide-tab"
+              :class="{ 'ide-tab--active': tab.path === $route.path }"
+              :aria-selected="tab.path === $route.path"
+              @click="activateTab(tab)"
+            >
+              <IdeIcon :type="tab.icon" class="ide-tab-icon" :class="'ide-tab-icon--' + tab.icon" />
+              <span>{{ tab.label }}</span>
+              <span
+                v-if="openTabs.length > 1"
+                class="ide-tab-close"
+                role="button"
+                :aria-label="'Fechar aba ' + tab.label"
+                @click.stop="closeTab(tab)"
+              >
+                <IdeIcon type="close" />
+              </span>
+            </button>
+          </div>
+
+          <div class="ide-breadcrumb" aria-hidden="true">
+            <IdeIcon type="project" />
+            <span>rebecanonato89</span>
+            <template v-for="crumb in breadcrumb" :key="crumb">
+              <span class="ide-breadcrumb-sep">›</span>
+              <span>{{ crumb }}</span>
+            </template>
+          </div>
+
+          <div id="ide-editor-content" class="ide-editor-content">
+            <router-view />
+          </div>
+
+          <div v-if="terminalOpen" class="ide-terminal-dock">
+            <IdeTerminal @collapse="terminalOpen = false" />
+          </div>
+        </div>
       </div>
-      <nav aria-label="Navegação Principal">
-        <ul>
-          <li v-if="$route.path !== '/'"><router-link to="/" class="nav-back">&larr; Portfólio</router-link></li>
-          <li><a href="#about" @click.prevent="scrollToId('about')">Identidade</a></li>
-          <li><a href="#experience" @click.prevent="scrollToId('experience')">Log Execução</a></li>
-          <li><a href="#projects" @click.prevent="scrollToId('projects')">Deployments</a></li>
-          <li><router-link to="/arcade" class="nav-highlight">Arcade</router-link></li>
-          <li><router-link to="/recursos" class="nav-highlight">Recursos</router-link></li>
-          <li><router-link to="/servicos" class="nav-highlight">Serviços</router-link></li>
-          <li><a href="#contact" @click.prevent="scrollToId('contact')">Uplink</a></li>
-        </ul>
-      </nav>
-    </header>
 
-    <router-view />
-
-    <footer>
-      <p>CONSTRUÍDO COM VUE.JS, HTML SEMÂNTICO E CSS FLUIDO. ACESSIBILIDADE NIVEL AAA.</p>
-      <p>REBECA NONATO &copy; 2026</p>
-    </footer>
+      <footer class="ide-statusbar">
+        <div class="ide-statusbar-left">
+          <span class="ide-statusbar-item"><IdeIcon type="branch" /> main</span>
+          <span class="ide-statusbar-item ide-statusbar-item--ok"><IdeIcon type="check" /> Claude Code pronto</span>
+        </div>
+        <div class="ide-statusbar-right">
+          <span class="ide-statusbar-item">UTF-8</span>
+          <span class="ide-statusbar-item">Vue 3</span>
+          <button type="button" class="ide-statusbar-item ide-statusbar-btn" @click="terminalOpen = !terminalOpen">
+            <IdeIcon type="terminal" /> Terminal
+          </button>
+        </div>
+      </footer>
+    </template>
   </div>
 </template>
 
 <script>
+import IdeIcon from './components/IdeIcon.vue';
+import IdeSidebar from './components/IdeSidebar.vue';
+import IdeTerminal from './components/IdeTerminal.vue';
+
+// Metadados das "abas" abertáveis (rotas que viram arquivo na barra de abas).
+// Rotas de jogo (/go, /damas, /memoria) ficam fora disso: abrem em tela cheia.
+const PATH_META = {
+  '/': { label: 'home.vue', icon: 'vue', breadcrumb: ['src', 'views', 'Home.vue'] },
+  '/arcade': { label: 'arcade.vue', icon: 'vue', breadcrumb: ['src', 'views', 'Arcade.vue'] },
+  '/recursos': { label: 'recursos.vue', icon: 'vue', breadcrumb: ['src', 'views', 'Resources.vue'] },
+  '/servicos': { label: 'servicos.vue', icon: 'vue', breadcrumb: ['src', 'views', 'Servicos.vue'] },
+};
+const GAME_ROUTES = ['/go', '/damas', '/memoria'];
+
 export default {
   name: 'App',
+  components: { IdeIcon, IdeSidebar, IdeTerminal },
   data() {
     return {
       fontSizeStep: 0,
       isHighContrast: false,
-      isLightMode: false,
+      theme: 'dracula',
+      sidebarOpen: true,
+      terminalOpen: true,
+      selectedNodeId: 'sobre',
+      openTabs: [{ path: '/', label: PATH_META['/'].label, icon: PATH_META['/'].icon }],
+      sidebarTree: [
+        {
+          id: 'root', label: 'rebecanonato89', type: 'folder', expanded: true, children: [
+            {
+              id: 'perfil', label: 'perfil', type: 'folder', expanded: true, children: [
+                { id: 'sobre', label: 'sobre.md', type: 'file', icon: 'md', path: '/', hash: '#about' },
+                { id: 'experiencia', label: 'experiencia.log', type: 'file', icon: 'log', path: '/', hash: '#experience' },
+                { id: 'certificacoes', label: 'certificacoes.log', type: 'file', icon: 'log', path: '/', hash: '#education' },
+              ],
+            },
+            {
+              id: 'projetos', label: 'projetos', type: 'folder', expanded: true, children: [
+                { id: 'deployments', label: 'deployments.json', type: 'file', icon: 'json', path: '/', hash: '#projects' },
+              ],
+            },
+            {
+              id: 'arcade', label: 'arcade', type: 'folder', expanded: false, children: [
+                { id: 'arcade-index', label: 'arcade.vue', type: 'file', icon: 'vue', path: '/arcade' },
+                { id: 'go', label: 'go.js', type: 'file', icon: 'game', path: '/go' },
+                { id: 'damas', label: 'damas.js', type: 'file', icon: 'game', path: '/damas' },
+                { id: 'memoria', label: 'memoria.js', type: 'file', icon: 'game', path: '/memoria' },
+              ],
+            },
+            { id: 'servicos', label: 'servicos.vue', type: 'file', icon: 'vue', path: '/servicos' },
+            { id: 'recursos', label: 'recursos.vue', type: 'file', icon: 'vue', path: '/recursos' },
+            { id: 'contato', label: 'contato.md', type: 'file', icon: 'md', path: '/', hash: '#contact' },
+          ],
+        },
+      ],
     };
   },
   computed: {
-    // Rotas de jogo entram em "modo app": some o cabeçalho/rodapé do portfólio
-    // e o jogo ganha a tela inteira (cada jogo tem sua barra própria de volta).
+    // Rotas de jogo entram em "modo app": tela cheia, sem chrome de IDE
+    // (cada jogo já tem sua própria barra de volta ao Arcade).
     isGameRoute() {
-      return ['/go', '/damas', '/memoria'].includes(this.$route.path);
-    }
+      return GAME_ROUTES.includes(this.$route.path);
+    },
+    themeClass() {
+      return this.theme === 'cappuccino' ? 'theme-cappuccino' : 'theme-dracula';
+    },
+    themeLabel() {
+      return this.theme === 'cappuccino' ? 'Cappuccino' : 'Dracula';
+    },
+    activeTabMeta() {
+      return this.openTabs.find((t) => t.path === this.$route.path) || PATH_META['/'];
+    },
+    breadcrumb() {
+      const meta = PATH_META[this.$route.path];
+      return meta ? meta.breadcrumb : PATH_META['/'].breadcrumb;
+    },
+  },
+  watch: {
+    '$route.path'(newPath) {
+      if (GAME_ROUTES.includes(newPath)) return;
+      const meta = PATH_META[newPath];
+      if (meta && !this.openTabs.some((t) => t.path === newPath)) {
+        this.openTabs.push({ path: newPath, label: meta.label, icon: meta.icon });
+      }
+    },
   },
   mounted() {
-    // Recupera a preferência de tema do usuário (caso ele já tenha alterado antes)
-    const savedTheme = localStorage.getItem('rebeca-portfolio-lightmode');
-    if (savedTheme === 'true') {
-      this.isLightMode = true;
-      this.applyBodyClass();
+    const savedTheme = localStorage.getItem('rebeca-ide-theme');
+    if (savedTheme === 'cappuccino' || savedTheme === 'dracula') {
+      this.theme = savedTheme;
+    }
+    this.applyBodyClass();
+    if (window.innerWidth <= 900) {
+      this.sidebarOpen = false;
+    }
+    if (window.innerWidth <= 640) {
+      this.terminalOpen = false;
     }
   },
   methods: {
     toggleTheme() {
-      this.isLightMode = !this.isLightMode;
-      localStorage.setItem('rebeca-portfolio-lightmode', this.isLightMode);
+      this.theme = this.theme === 'dracula' ? 'cappuccino' : 'dracula';
+      localStorage.setItem('rebeca-ide-theme', this.theme);
       this.applyBodyClass();
     },
     applyBodyClass() {
-      // Sincroniza a cor de fundo real do body para evitar barras brancas/pretas no scroll overflow
+      // Sincroniza o fundo real do body pra evitar tapumes claros/escuros no overscroll.
       if (this.isHighContrast) {
         document.body.style.backgroundColor = '#000000';
-      } else if (this.isLightMode) {
-        document.body.style.backgroundColor = '#f7f6fb';
+      } else if (this.theme === 'cappuccino') {
+        document.body.style.backgroundColor = '#f7f1e8';
       } else {
-        document.body.style.backgroundColor = '#0b0d17';
+        document.body.style.backgroundColor = '#282a36';
       }
-    },
-    changeFontSize(step) {
-      this.fontSizeStep += step;
-      if (this.fontSizeStep > 4) this.fontSizeStep = 4;
-      if (this.fontSizeStep < -2) this.fontSizeStep = -2;
-      this.applyFontSize();
-    },
-    resetFontSize() {
-      this.fontSizeStep = 0;
-      this.applyFontSize();
-    },
-    applyFontSize() {
-      const newSize = 100 + (this.fontSizeStep * 10);
-      document.documentElement.style.fontSize = `${newSize}%`;
     },
     toggleHighContrast() {
       this.isHighContrast = !this.isHighContrast;
       this.applyBodyClass();
     },
-    scrollToId(id) {
-      // Os itens Identidade/Log Execução/Deployments/Uplink são âncoras da Home;
-      // como o menu agora fica fixo em todas as páginas, primeiro voltamos pra Home
-      // (se necessário) antes de rolar até a seção.
-      if (this.$route.path !== '/') {
-        this.$router.push('/').then(() => this.$nextTick(() => this.doScroll(id)));
-      } else {
-        this.doScroll(id);
+    changeFontSize(step) {
+      this.fontSizeStep += step;
+      if (this.fontSizeStep > 4) this.fontSizeStep = 4;
+      if (this.fontSizeStep < -2) this.fontSizeStep = -2;
+      const newSize = 100 + this.fontSizeStep * 10;
+      document.documentElement.style.fontSize = `${newSize}%`;
+    },
+    // Clique num item do sidebar: se for jogo, abre em tela cheia; senão abre/ativa
+    // a aba correspondente no meio (editor) e rola até o trecho (hash), se houver.
+    openNode(node) {
+      this.selectedNodeId = node.id;
+      if (GAME_ROUTES.includes(node.path)) {
+        this.$router.push(node.path);
+        return;
+      }
+      const meta = PATH_META[node.path];
+      if (meta && !this.openTabs.some((t) => t.path === node.path)) {
+        this.openTabs.push({ path: node.path, label: meta.label, icon: meta.icon });
+      }
+      if (this.$route.path !== node.path) {
+        this.$router.push({ path: node.path, hash: node.hash || undefined }).then(() => {
+          if (node.hash) this.$nextTick(() => this.scrollToHash(node.hash));
+        });
+      } else if (node.hash) {
+        this.scrollToHash(node.hash);
+      }
+      if (window.innerWidth <= 900) this.sidebarOpen = false;
+    },
+    activateTab(tab) {
+      if (this.$route.path !== tab.path) this.$router.push(tab.path);
+    },
+    closeTab(tab) {
+      const idx = this.openTabs.findIndex((t) => t.path === tab.path);
+      if (idx === -1 || this.openTabs.length === 1) return;
+      const wasActive = this.$route.path === tab.path;
+      this.openTabs.splice(idx, 1);
+      if (wasActive) {
+        const next = this.openTabs[idx] || this.openTabs[idx - 1];
+        this.$router.push(next.path);
       }
     },
-    doScroll(id) {
-      const el = document.getElementById(id);
+    scrollToId(id) {
+      if (this.$route.path !== '/') {
+        this.$router.push('/').then(() => this.$nextTick(() => this.scrollToHash('#' + id)));
+      } else {
+        this.scrollToHash('#' + id);
+      }
+    },
+    scrollToHash(hash) {
+      const el = document.getElementById(hash.replace('#', ''));
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     },
     skipToMain() {
@@ -148,8 +327,8 @@ export default {
       el.setAttribute('tabindex', '-1');
       el.focus();
       el.scrollIntoView();
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -157,19 +336,36 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* =========================================
-   VARIÁVEIS PADRÃO (DARK MODE / ÍNDIGO+ÂMBAR)
+   TEMA DRACULA (ESCURO) — padrão
    ========================================= */
-:root {
-  --bg-base: #0b0d17;
-  --bg-surface: rgba(20, 18, 38, 0.7);
-  --accent-core: #8b5cf6;
-  --accent-dim: rgba(139, 92, 246, 0.15);
-  --accent-border: rgba(139, 92, 246, 0.35);
-  --accent-warm: #f5a524;
-  --text-main: #e8e6f5;
-  --text-muted: #9691b5;
-  --scrim-overlay: rgba(6, 6, 14, 0.88);
-  --card-shadow: rgba(0, 0, 0, 0.35);
+:root,
+.theme-dracula {
+  --bg-base: #282a36;
+  --bg-surface: rgba(68, 71, 90, 0.45);
+  --accent-core: #bd93f9;
+  --accent-dim: rgba(189, 147, 249, 0.15);
+  --accent-border: rgba(189, 147, 249, 0.35);
+  --accent-warm: #ffb86c;
+  --text-main: #f8f8f2;
+  --text-muted: #6272a4;
+  --scrim-overlay: rgba(33, 34, 44, 0.92);
+  --card-shadow: rgba(0, 0, 0, 0.45);
+
+  --ide-titlebar-bg: #21222c;
+  --ide-sidebar-bg: #21222c;
+  --ide-sidebar-hover: rgba(98, 114, 164, 0.18);
+  --ide-sidebar-active-bg: rgba(189, 147, 249, 0.18);
+  --ide-sidebar-active-text: #bd93f9;
+  --ide-tab-bg: #191a21;
+  --ide-tab-active-bg: #282a36;
+  --ide-statusbar-bg: #21222c;
+  --ide-border: #14151b;
+  --ide-icon-vue: #50fa7b;
+  --ide-icon-js: #f1fa8c;
+  --ide-icon-json: #ffb86c;
+  --ide-icon-md: #8be9fd;
+  --ide-icon-log: #8b8fa3;
+  --ide-icon-folder: #90a4d4;
 
   --font-ui: 'Space Grotesk', sans-serif;
   --font-read: 'Inter', sans-serif;
@@ -186,28 +382,44 @@ export default {
 }
 
 /* =========================================
-   VARIÁVEIS MODO CLARO (LIGHT MODE)
+   TEMA CAPPUCCINO (CLARO)
    ========================================= */
-.light-mode {
-  --bg-base: #f7f6fb;
-  --bg-surface: rgba(255, 255, 255, 0.85);
-  --accent-core: #6d28d9; /* Violeta mais escuro para contraste em fundo claro */
-  --accent-dim: rgba(109, 40, 217, 0.08);
-  --accent-border: rgba(109, 40, 217, 0.25);
-  --accent-warm: #b8770a;
-  --text-main: #201c33;
-  --text-muted: #5b5570;
-  --scrim-overlay: rgba(235, 232, 245, 0.88);
-  --card-shadow: rgba(76, 60, 130, 0.1);
+.theme-cappuccino {
+  --bg-base: #f7f1e8;
+  --bg-surface: rgba(255, 250, 243, 0.85);
+  --accent-core: #6f4e37;
+  --accent-dim: rgba(111, 78, 55, 0.08);
+  --accent-border: rgba(111, 78, 55, 0.25);
+  --accent-warm: #c17a3d;
+  --text-main: #4a3728;
+  --text-muted: #8a7361;
+  --scrim-overlay: rgba(239, 230, 216, 0.9);
+  --card-shadow: rgba(111, 78, 55, 0.12);
+
+  --ide-titlebar-bg: #efe6d8;
+  --ide-sidebar-bg: #efe6d8;
+  --ide-sidebar-hover: rgba(111, 78, 55, 0.08);
+  --ide-sidebar-active-bg: rgba(111, 78, 55, 0.16);
+  --ide-sidebar-active-text: #6f4e37;
+  --ide-tab-bg: #e7dcc9;
+  --ide-tab-active-bg: #fffaf3;
+  --ide-statusbar-bg: #efe6d8;
+  --ide-border: #ddcfb8;
+  --ide-icon-vue: #2f9e63;
+  --ide-icon-js: #a8790a;
+  --ide-icon-json: #b5651d;
+  --ide-icon-md: #2b7a9e;
+  --ide-icon-log: #8a7361;
+  --ide-icon-folder: #a9652e;
 }
 
 /* =========================================
-   VARIÁVEIS ALTO CONTRASTE (PRIORIDADE MÁXIMA)
+   ALTO CONTRASTE (ACESSIBILIDADE — prioridade máxima)
    ========================================= */
 .high-contrast-mode {
   --bg-base: #000000;
   --bg-surface: #000000;
-  --accent-core: #FFFF00; /* Amarelo puro */
+  --accent-core: #FFFF00;
   --accent-dim: transparent;
   --accent-border: #FFFF00;
   --accent-warm: #FFFF00;
@@ -215,98 +427,47 @@ export default {
   --text-muted: #FFFFFF;
   --scrim-overlay: #000000;
   --card-shadow: transparent;
+
+  --ide-titlebar-bg: #000000;
+  --ide-sidebar-bg: #000000;
+  --ide-sidebar-hover: rgba(255, 255, 0, 0.15);
+  --ide-sidebar-active-bg: rgba(255, 255, 0, 0.25);
+  --ide-sidebar-active-text: #FFFF00;
+  --ide-tab-bg: #000000;
+  --ide-tab-active-bg: #000000;
+  --ide-statusbar-bg: #000000;
+  --ide-border: #FFFF00;
+  --ide-icon-vue: #FFFF00;
+  --ide-icon-js: #FFFF00;
+  --ide-icon-json: #FFFF00;
+  --ide-icon-md: #FFFF00;
+  --ide-icon-log: #FFFF00;
+  --ide-icon-folder: #FFFF00;
 }
 
 /* RESET */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { font-size: 100%; scroll-behavior: smooth; }
+html { font-size: 100%; }
 
 body {
   font-family: var(--font-read);
   background-color: var(--bg-base);
   color: var(--text-main);
   line-height: 1.6;
-  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-.container {
-  position: relative;
+.ide-root {
   min-height: 100vh;
   background-color: var(--bg-base);
-  transition: background-color 0.4s ease, max-width 0.3s ease;
-  padding: 0 var(--space-lg);
-  max-width: 1000px;
-  margin: 0 auto;
+  transition: background-color 0.3s ease;
 }
 
 /* =========================================
-   ÍCONES DE TI FLUTUANDO NO FUNDO
-   ========================================= */
-.bg-icons {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-  color: var(--accent-core);
-}
-.bg-icon {
-  position: absolute;
-  fill: none;
-  opacity: 0.09;
-  animation: drift-float 26s ease-in-out infinite alternate;
-}
-.light-mode .bg-icon { opacity: 0.12; }
-.high-contrast-mode .bg-icons { display: none; }
-
-.bg-icon-1  { top: 8%;  left: 6%;   width: 56px; animation-duration: 24s; }
-.bg-icon-2  { top: 18%; right: 10%; width: 44px; animation-duration: 30s; animation-delay: -4s; }
-.bg-icon-3  { top: 4%;  right: 30%; width: 64px; animation-duration: 34s; animation-delay: -12s; }
-.bg-icon-4  { top: 38%; left: 16%;  width: 48px; animation-duration: 22s; animation-delay: -8s; }
-.bg-icon-5  { top: 62%; left: 4%;   width: 52px; animation-duration: 28s; animation-delay: -18s; }
-.bg-icon-6  { top: 72%; right: 8%;  width: 60px; animation-duration: 32s; animation-delay: -6s; }
-.bg-icon-7  { top: 46%; right: 22%; width: 40px; animation-duration: 20s; animation-delay: -14s; }
-.bg-icon-8  { top: 86%; left: 30%;  width: 36px; animation-duration: 26s; animation-delay: -10s; }
-.bg-icon-9  { top: 28%; left: 44%;  width: 32px; animation-duration: 24s; animation-delay: -20s; }
-.bg-icon-10 { top: 92%; right: 38%; width: 46px; animation-duration: 30s; animation-delay: -2s; }
-.bg-icon-11 { top: 14%; left: 36%;  width: 42px; animation-duration: 34s; animation-delay: -16s; }
-.bg-icon-12 { top: 56%; right: 46%; width: 38px; animation-duration: 22s; animation-delay: -9s; }
-
-@keyframes drift-float {
-  0%   { transform: translate(0, 0) rotate(0deg); }
-  50%  { transform: translate(12px, -16px) rotate(4deg); }
-  100% { transform: translate(-10px, 10px) rotate(-3deg); }
-}
-
-@media (max-width: 768px) {
-  .bg-icon-9, .bg-icon-10, .bg-icon-11, .bg-icon-12 { display: none; }
-}
-
-/* Em telas grandes o conteúdo cresce em vez de ficar preso numa coluna estreita */
-@media (min-width: 1440px) {
-  .container { max-width: 1200px; }
-}
-@media (min-width: 1800px) {
-  .container { max-width: 1440px; }
-}
-@media (min-width: 2200px) {
-  .container { max-width: 1680px; }
-}
-
-/* Modo app (Go Game): esconde o cabeçalho e rodapé do portfólio em qualquer
-   tamanho de tela, priorizando o espaço da tela pro tabuleiro. A navegação de
-   volta ao portfólio passa a existir só na barra compacta própria do jogo. */
-.app-mode header,
-.app-mode footer {
-  display: none;
-}
-
-/* =========================================
-   ACESSBILIDADE & BARRA HUD
+   ACESSIBILIDADE
    ========================================= */
 .skip-link {
   position: absolute; top: -100px; left: 0;
-  background: var(--accent-core); color: #000;
+  background: var(--accent-core); color: var(--bg-base);
   padding: var(--space-md); z-index: 9999;
   font-family: var(--font-ui); font-weight: bold; text-transform: uppercase;
   transition: top 0.2s; text-decoration: none;
@@ -319,85 +480,185 @@ body {
 }
 
 *:focus-visible {
-  outline: 2px dashed var(--accent-core); outline-offset: 4px;
+  outline: 2px dashed var(--accent-core); outline-offset: 2px;
   box-shadow: 0 0 15px var(--accent-dim); border-radius: 4px;
 }
 
-.a11y-toolbar {
-  position: fixed; top: 20px; right: 20px;
-  display: flex; gap: 8px; align-items: center;
-  z-index: 1000; background: var(--bg-surface);
-  padding: 8px; border: 1px solid var(--accent-border);
-  border-radius: var(--radius-md); backdrop-filter: blur(10px);
-  box-shadow: 0 4px 16px var(--card-shadow);
-  transition: background 0.4s, border-color 0.4s;
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
-
-.a11y-divider {
-  width: 1px; height: 24px; background-color: var(--accent-border);
-  margin: 0 4px;
-}
-
-.a11y-btn {
-  background: transparent; color: var(--text-main);
-  border: 1px solid var(--accent-border); border-radius: var(--radius-sm);
-  padding: 6px 12px; font-family: var(--font-code);
-  font-size: 1rem; font-weight: bold; cursor: pointer;
-  transition: background 0.25s cubic-bezier(.2,.8,.2,1), color 0.25s cubic-bezier(.2,.8,.2,1),
-    box-shadow 0.25s cubic-bezier(.2,.8,.2,1), transform 0.25s cubic-bezier(.2,.8,.2,1);
-  display: flex; align-items: center; justify-content: center;
-}
-.a11y-btn:hover, .a11y-btn:focus-visible {
-  background: var(--accent-core); color: var(--bg-base);
-  box-shadow: 0 0 12px var(--accent-dim);
-  transform: translateY(-1px);
-}
-.a11y-btn svg { width: 16px; height: 16px; }
-.theme-btn { padding: 6px 8px; }
 
 /* =========================================
-   LAYOUT & COMPONENTES
+   BARRA DE TÍTULO (estilo IntelliJ IDEA)
    ========================================= */
-header {
-  padding: var(--space-lg) 0; display: flex; justify-content: space-between; align-items: center;
-  border-bottom: 1px solid var(--accent-border); margin-bottom: var(--space-xl);
-  background: var(--bg-surface);
-  position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px);
-  transition: background 0.4s, border-color 0.4s;
-  /* Reserva espaço à direita para a barra de acessibilidade fixa (top:20/right:20),
-     evitando que itens de navegação fiquem escondidos/inclicáveis atrás dela. */
-  padding-right: 300px;
+.ide-titlebar {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: 0 var(--space-md);
+  background: var(--ide-titlebar-bg);
+  border-bottom: 1px solid var(--ide-border);
+}
+.ide-titlebar-left { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.ide-dot { width: 11px; height: 11px; border-radius: 50%; }
+.ide-dot--red { background: #ff5f57; }
+.ide-dot--yellow { background: #febc2e; }
+.ide-dot--green { background: #28c840; }
+.ide-titlebar-brand {
+  display: flex; align-items: center; gap: 6px; margin-left: 10px;
+  color: var(--text-main); text-decoration: none;
+  font-family: var(--font-ui); font-weight: 600; font-size: 0.95rem;
+}
+.ide-titlebar-brand svg { color: var(--accent-core); width: 16px; height: 16px; }
+.ide-titlebar-project { color: var(--text-muted); }
+.ide-titlebar-sep { color: var(--text-muted); }
+.ide-titlebar-file { color: var(--text-main); }
+
+.ide-titlebar-menu {
+  display: flex; align-items: center; gap: 4px; flex: 1;
+  overflow-x: auto;
+}
+.ide-menu-item {
+  color: var(--text-muted); text-decoration: none; font-family: var(--font-ui);
+  font-size: 0.85rem; padding: 6px 12px; border-radius: var(--radius-sm);
+  white-space: nowrap; transition: background 0.2s, color 0.2s;
+}
+.ide-menu-item:hover { background: var(--ide-sidebar-hover); color: var(--text-main); }
+.ide-menu-item--active { color: var(--accent-core); font-weight: 600; }
+
+.ide-titlebar-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.ide-title-btn {
+  background: transparent; color: var(--text-muted);
+  border: 1px solid var(--accent-border); border-radius: var(--radius-sm);
+  padding: 5px 10px; font-family: var(--font-code); font-size: 0.8rem; font-weight: 700;
+  cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.ide-title-btn svg { width: 15px; height: 15px; }
+.ide-title-btn:hover, .ide-title-btn--active { background: var(--accent-core); color: var(--bg-base); }
+
+.ide-theme-toggle {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--accent-dim); color: var(--accent-core);
+  border: 1px solid var(--accent-border); border-radius: var(--radius-sm);
+  padding: 5px 12px; font-family: var(--font-ui); font-weight: 600; font-size: 0.8rem;
+  cursor: pointer; transition: background 0.2s, transform 0.2s;
+}
+.ide-theme-toggle svg { width: 16px; height: 16px; }
+.ide-theme-toggle:hover { background: var(--accent-core); color: var(--bg-base); transform: translateY(-1px); }
+
+/* =========================================
+   WORKBENCH (sidebar + editor + terminal)
+   ========================================= */
+.ide-workbench {
+  display: flex;
+  height: calc(100vh - 48px - 30px);
+  height: calc(100dvh - 48px - 30px);
 }
 
-/* Gradiente na borda superior apenas no Dark Mode (Fica feio no claro) */
-.container:not(.light-mode):not(.high-contrast-mode) header {
-  background: linear-gradient(180deg, rgba(11,13,23,0.95) 0%, rgba(11,13,23,0) 100%);
+.ide-activity-bar {
+  width: 42px; flex-shrink: 0;
+  background: var(--ide-titlebar-bg);
+  border-right: 1px solid var(--ide-border);
+  display: flex; flex-direction: column; align-items: center;
+  padding-top: var(--space-sm); gap: 4px;
+}
+.ide-activity-btn {
+  width: 32px; height: 32px; border-radius: var(--radius-sm);
+  background: transparent; border: none; color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.ide-activity-btn svg { width: 18px; height: 18px; }
+.ide-activity-btn:hover { background: var(--ide-sidebar-hover); color: var(--text-main); }
+.ide-activity-btn--active { color: var(--accent-core); background: var(--accent-dim); }
+
+.ide-sidebar-backdrop { display: none; }
+
+.ide-main {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column;
 }
 
-.brand h1 { font-family: var(--font-ui); font-size: 2rem; color: var(--text-main); text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px var(--accent-dim); }
-.brand span { font-family: var(--font-code); font-size: 0.8rem; color: var(--accent-core); }
-nav ul { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1.1rem; justify-content: flex-end; }
-nav a {
-  color: var(--text-muted); text-decoration: none; font-family: var(--font-ui); font-size: 0.95rem;
-  text-transform: uppercase; white-space: nowrap; letter-spacing: 0.5px;
-  transition: color 0.3s, text-shadow 0.3s, border-color 0.3s, background 0.3s;
+.ide-tabbar {
+  display: flex; align-items: stretch; overflow-x: auto;
+  background: var(--ide-tab-bg); border-bottom: 1px solid var(--ide-border);
+  flex-shrink: 0;
 }
-nav a:hover { color: var(--accent-core); text-shadow: 0 0 8px var(--accent-dim); }
-
-/* Arcade/Recursos/Serviços são páginas separadas (não âncoras da Home), por isso
-   ganham uma borda fina pra se diferenciar dos demais itens sem depender só de cor. */
-nav a.nav-highlight {
-  border: 1px solid var(--accent-border); border-radius: var(--radius-sm); padding: 3px 9px;
+.ide-tab {
+  display: flex; align-items: center; gap: 7px;
+  background: transparent; border: none; border-right: 1px solid var(--ide-border);
+  color: var(--text-muted); font-family: var(--font-code); font-size: 0.82rem;
+  padding: 9px 10px 9px 14px; cursor: pointer; white-space: nowrap;
+  border-bottom: 2px solid transparent;
 }
-nav a.nav-highlight:hover { border-color: var(--accent-core); }
-
-/* Botão de voltar ao portfólio: precisa ficar bem visível nas páginas internas. */
-nav a.nav-back {
-  color: var(--accent-core); background: var(--accent-dim); border: 1px solid var(--accent-border);
-  border-radius: var(--radius-sm); padding: 3px 10px; font-weight: 600;
+.ide-tab:hover { color: var(--text-main); }
+.ide-tab--active {
+  background: var(--ide-tab-active-bg); color: var(--text-main);
+  border-bottom-color: var(--accent-core);
 }
-nav a.nav-back:hover { background: var(--accent-core); color: var(--bg-base); border-color: var(--accent-core); }
+.ide-tab-icon--vue { color: var(--ide-icon-vue); }
+.ide-tab-icon--js { color: var(--ide-icon-js); }
+.ide-tab-close {
+  display: flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px; border-radius: 3px; color: var(--text-muted);
+}
+.ide-tab-close:hover { background: var(--ide-sidebar-hover); color: var(--text-main); }
+.ide-tab-close svg { width: 10px; height: 10px; }
 
+.ide-breadcrumb {
+  display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+  padding: 5px 14px; font-family: var(--font-code); font-size: 0.72rem;
+  color: var(--text-muted); background: var(--bg-base); border-bottom: 1px solid var(--ide-border);
+}
+.ide-breadcrumb svg { width: 12px; height: 12px; color: var(--accent-core); }
+.ide-breadcrumb-sep { opacity: 0.6; }
+
+.ide-editor-content {
+  flex: 1; min-height: 0; overflow-y: auto;
+  background: var(--bg-base);
+  padding: var(--space-lg);
+}
+.ide-editor-content #main-content {
+  max-width: 1000px; margin: 0 auto;
+}
+@media (min-width: 1440px) { .ide-editor-content #main-content { max-width: 1150px; } }
+@media (min-width: 1800px) { .ide-editor-content #main-content { max-width: 1320px; } }
+
+.ide-terminal-dock {
+  height: 260px; flex-shrink: 0;
+}
+
+/* =========================================
+   BARRA DE STATUS
+   ========================================= */
+.ide-statusbar {
+  height: 30px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 var(--space-md);
+  background: var(--ide-statusbar-bg);
+  border-top: 1px solid var(--ide-border);
+  font-family: var(--font-code); font-size: 0.72rem; color: var(--text-muted);
+}
+.ide-statusbar-left, .ide-statusbar-right { display: flex; align-items: center; gap: var(--space-md); }
+.ide-statusbar-item { display: flex; align-items: center; gap: 5px; }
+.ide-statusbar-item svg { width: 12px; height: 12px; }
+.ide-statusbar-item--ok { color: var(--ide-icon-vue); }
+.ide-statusbar-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-family: var(--font-code); font-size: 0.72rem; }
+.ide-statusbar-btn:hover { color: var(--accent-core); }
+
+/* =========================================
+   MODO JOGO (tela cheia, layout de página normal)
+   ========================================= */
+.game-shell {
+  max-width: 1000px; margin: 0 auto; padding: 0 var(--space-lg);
+  min-height: 100dvh; background: var(--bg-base);
+}
+@media (min-width: 1440px) { .game-shell { max-width: 1200px; } }
+
+/* =========================================
+   COMPONENTES COMPARTILHADOS (usados pelas páginas)
+   ========================================= */
 section { margin-bottom: var(--space-xl); }
 .section-title {
   font-family: var(--font-ui); font-size: 2.2rem; color: var(--text-main);
@@ -419,19 +680,16 @@ section { margin-bottom: var(--space-xl); }
   flex-direction: column;
   box-shadow: 0 4px 20px var(--card-shadow);
   transition: transform 0.35s cubic-bezier(.2,.8,.2,1), border-color 0.35s cubic-bezier(.2,.8,.2,1),
-    box-shadow 0.35s cubic-bezier(.2,.8,.2,1), background 0.4s ease;
+    box-shadow 0.35s cubic-bezier(.2,.8,.2,1), background 0.3s ease;
   backdrop-filter: blur(10px);
   color: var(--text-main);
 }
-.hud-card p, .hud-card strong {
-  color: var(--text-main);
-}
+.hud-card p, .hud-card strong { color: var(--text-main); }
 .hud-card:hover {
   transform: translateY(-4px);
   border-color: var(--accent-core);
   box-shadow: 0 8px 28px var(--accent-dim);
 }
-
 .high-contrast-mode .hud-card { border-width: 2px; box-shadow: none !important; }
 
 .card-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--space-md); border-bottom: 1px solid var(--accent-dim); padding-bottom: var(--space-sm); }
@@ -472,57 +730,44 @@ section { margin-bottom: var(--space-xl); }
 .timeline-item::before {
   content: ''; position: absolute; left: -36px; top: 6px; width: 14px; height: 14px;
   background: var(--bg-base); border: 2px solid var(--accent-core); border-radius: 50%;
-  box-shadow: 0 0 10px var(--accent-dim); transition: background 0.4s;
+  box-shadow: 0 0 10px var(--accent-dim); transition: background 0.3s;
 }
 .timeline-date { font-family: var(--font-code); font-size: 0.85rem; color: var(--accent-core); margin-bottom: 4px; display: block; }
 .timeline-title { font-family: var(--font-ui); font-size: 1.3rem; color: var(--text-main); margin-bottom: 2px; }
 .timeline-org { font-weight: 600; color: var(--text-main); font-size: 1rem; margin-bottom: 8px; }
 .timeline-desc { color: var(--text-muted); font-size: 0.95rem; }
 
-footer { border-top: 1px solid var(--accent-border); padding: var(--space-lg) 0; text-align: center; font-family: var(--font-code); font-size: 0.8rem; color: var(--text-muted); }
-
 /* =========================================
-   RESPONSIVIDADE E DISTÚRBIOS VESTIBULARES
+   RESPONSIVIDADE
    ========================================= */
-@media (prefers-reduced-motion: reduce) {
-  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+@media (max-width: 900px) {
+  .ide-titlebar-menu { display: none; }
+  .ide-sidebar-backdrop {
+    display: block; position: fixed; inset: 48px 0 30px 0;
+    background: rgba(0, 0, 0, 0.45); z-index: 40;
+  }
+  .ide-workbench .ide-sidebar {
+    position: fixed; top: 48px; bottom: 30px; left: 42px;
+    width: min(80vw, 300px); z-index: 41; box-shadow: 4px 0 24px rgba(0,0,0,0.35);
+  }
+}
+
+@media (max-width: 640px) {
+  .ide-titlebar { gap: var(--space-sm); padding: 0 8px; }
+  .ide-titlebar-brand { margin-left: 4px; }
+  .ide-titlebar-project { display: none; }
+  .ide-titlebar-sep { display: none; }
+  .ide-title-btn:nth-of-type(1), .ide-title-btn:nth-of-type(2) { display: none; }
+  .ide-theme-toggle span { display: none; }
+  .ide-terminal-dock { height: 200px; }
+  .ide-editor-content { padding: var(--space-md); }
+  .section-title { font-size: 1.7rem; }
+  .card-header { flex-direction: column; }
+  .ide-statusbar { font-size: 0.65rem; padding: 0 8px; }
+  .ide-statusbar-left, .ide-statusbar-right { gap: var(--space-sm); }
 }
 
 @media (max-width: 768px) {
-  header { flex-direction: column; gap: var(--space-md); align-items: flex-start; padding-right: 0; }
-  nav ul { flex-wrap: wrap; gap: var(--space-md); }
-  .section-title { font-size: 1.8rem; }
-  .card-header { flex-direction: column; }
-  .a11y-toolbar { top: auto; bottom: 20px; right: 20px; }
-  .container { padding: 0 var(--space-md); }
-
-  /* No celular, o Go Game ocupa a tela inteira (sem padding/fundo do portfólio),
-     pra parecer um aplicativo separado em vez de uma página comum. */
-  .app-mode.container {
-    padding: 0;
-    min-height: 100dvh;
-  }
-  .app-mode .skip-link {
-    display: none;
-  }
-  /* A barra fixa de acessibilidade vira uma faixa presa no topo (em vez de flutuar
-     sobre o rodapé da tela), pra não tampar os botões principais do jogo. */
-  .app-mode .a11y-toolbar {
-    position: sticky;
-    top: 0;
-    bottom: auto;
-    right: auto;
-    left: auto;
-    width: 100%;
-    justify-content: center;
-    border-radius: 0;
-    border-width: 0 0 1px 0;
-    z-index: 200;
-  }
-}
-
-@media (max-width: 420px) {
-  .container { padding: 0 12px; }
-  .brand h1 { font-size: 1.5rem; }
+  .game-shell { padding: 0; }
 }
 </style>
