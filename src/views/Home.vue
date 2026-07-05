@@ -2,6 +2,16 @@
   <main id="main-content">
     <HeroTerminal />
 
+    <section id="fork" aria-label="Escolha seu caminho">
+      <div class="hud-card">
+        <p class="card-desc">
+          <strong>Recrutador?</strong> Continue rolando para ver minha trajetória técnica. ↓<br />
+          <strong>Precisa de um site ou sistema para o seu negócio?</strong>
+          <router-link to="/servicos" class="btn-hud" style="margin-left: 8px;">Conheça meus serviços →</router-link>
+        </p>
+      </div>
+    </section>
+
     <section id="about" aria-labelledby="about-title">
       <h2 id="about-title" class="section-title">Parâmetros do Sistema</h2>
       <div class="hud-card">

@@ -38,12 +38,14 @@
           <li><a href="#projects" @click.prevent="scrollToId('projects')">Deployments</a></li>
           <li><router-link to="/arcade" class="nav-highlight">Arcade</router-link></li>
           <li><router-link to="/recursos" class="nav-highlight">Recursos</router-link></li>
+          <li><router-link to="/servicos" class="nav-highlight">Serviços</router-link></li>
           <li><a href="#contact" @click.prevent="scrollToId('contact')">Uplink</a></li>
         </ul>
         <ul v-else>
           <li><router-link to="/">&larr; Portfólio</router-link></li>
           <li><router-link to="/arcade">Arcade</router-link></li>
           <li><router-link to="/recursos">Recursos</router-link></li>
+          <li><router-link to="/servicos">Serviços</router-link></li>
         </ul>
       </nav>
     </header>
