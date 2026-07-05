@@ -148,8 +148,8 @@ export default {
   align-items: center;
   gap: 8px;
   padding: 10px var(--space-md);
-  border-bottom: 1px solid var(--cyan-border);
-  background: var(--cyan-dim);
+  border-bottom: 1px solid var(--accent-border);
+  background: var(--accent-dim);
 }
 .term-dot {
   width: 12px; height: 12px; border-radius: 50%;
@@ -173,13 +173,13 @@ export default {
   overflow-y: auto;
 }
 .term-line { white-space: pre-wrap; word-break: break-word; color: var(--text-main); }
-.term-line--system { color: var(--cyan-core); }
+.term-line--system { color: var(--accent-core); }
 .term-line--input { color: var(--text-main); }
 .term-line--error { color: #ff6b6b; }
 .high-contrast-mode .term-line--error { color: #ffff00; }
 
 .term-prompt {
-  color: var(--cyan-core);
+  color: var(--accent-core);
   font-weight: 500;
   white-space: nowrap;
 }
@@ -196,7 +196,7 @@ export default {
   color: var(--text-main);
   font-family: var(--font-code);
   font-size: 0.85rem;
-  caret-color: var(--cyan-core);
+  caret-color: var(--accent-core);
   min-width: 0;
 }
 .term-input-row input::placeholder { color: var(--text-muted); opacity: 0.7; }

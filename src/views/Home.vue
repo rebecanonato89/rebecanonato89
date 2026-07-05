@@ -49,7 +49,7 @@
           <span class="timeline-date">{{ item.period }}</span>
           <h3 class="timeline-title">{{ item.role }}</h3>
           <div class="timeline-org">{{ item.company }}</div>
-          <p v-if="item.description" class="timeline-desc" style="color: var(--cyan-core); font-size: 0.85rem; margin-top: 4px;">{{ item.description }}</p>
+          <p v-if="item.description" class="timeline-desc" style="color: var(--accent-core); font-size: 0.85rem; margin-top: 4px;">{{ item.description }}</p>
         </li>
       </ol>
     </section>

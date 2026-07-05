@@ -93,6 +93,6 @@ export default {
 .arcade-icon {
   font-size: 2rem;
   margin-bottom: var(--space-sm);
-  filter: drop-shadow(0 0 8px var(--cyan-dim));
+  filter: drop-shadow(0 0 8px var(--accent-dim));
 }
 </style>
