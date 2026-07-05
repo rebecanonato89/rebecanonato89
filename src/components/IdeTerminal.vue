@@ -1,21 +1,25 @@
 <template>
-  <div class="term hud-card" @click="focusInput">
-    <div class="term-titlebar" aria-hidden="true">
-      <span class="term-dot term-dot--red"></span>
-      <span class="term-dot term-dot--yellow"></span>
-      <span class="term-dot term-dot--green"></span>
-      <span class="term-titlebar-text">rebeca@nonato.dev — bash</span>
+  <div class="ide-terminal-panel">
+    <div class="ide-terminal-tabbar">
+      <div class="ide-terminal-tab ide-terminal-tab--active">
+        <IdeIcon type="terminal" />
+        <span>bash</span>
+      </div>
+      <span class="ide-terminal-tabbar-info">rebeca@nonato.dev — claude</span>
+      <button type="button" class="ide-terminal-collapse" aria-label="Recolher terminal" @click="$emit('collapse')">
+        <IdeIcon type="chevron" style="transform: rotate(90deg);" />
+      </button>
     </div>
 
-    <div class="term-screen" ref="screen" aria-live="polite">
+    <div class="ide-terminal-screen" ref="screen" @click="focusInput" aria-live="polite">
       <div v-for="(line, index) in lines" :key="index" class="term-line" :class="'term-line--' + line.type">
         <template v-if="line.type === 'input'"><span class="term-prompt">{{ prompt }}</span> {{ line.text }}</template>
         <template v-else>{{ line.text }}</template>
       </div>
       <form class="term-input-row" @submit.prevent="run">
-        <label class="term-prompt" for="term-input">{{ prompt }}</label>
+        <label class="term-prompt" for="ide-term-input">{{ prompt }}</label>
         <input
-          id="term-input"
+          id="ide-term-input"
           ref="input"
           v-model="command"
           type="text"
@@ -31,24 +35,29 @@
 </template>
 
 <script>
-// Terminal interativo da home: um jeito diferente de navegar pelo portfólio.
-// Comandos de navegação usam o router; o restante imprime respostas na tela.
+import IdeIcon from './IdeIcon.vue';
+
+// Painel de terminal fixado na base da IDE: simula uma sessão bash com o
+// Claude Code já em execução. Comandos de navegação usam o router; o resto
+// só imprime respostas na tela — um jeito diferente de navegar pelo portfólio.
 export default {
-  name: 'HeroTerminal',
+  name: 'IdeTerminal',
+  components: { IdeIcon },
+  emits: ['collapse'],
   data() {
     return {
-      prompt: 'visitante@rebeca.dev:~$',
+      prompt: '❯',
       command: '',
       lines: [
-        { type: 'system', text: '// SISTEMA ONLINE — portfólio v3.0 carregado' },
-        { type: 'system', text: '// Engenheira de Software · Backend · Sistemas Distribuídos · Cloud' },
+        { type: 'system', text: '$ claude' },
+        { type: 'system', text: '✻ Claude Code — sessão iniciada em ~/rebecanonato89' },
+        { type: 'output', text: 'Engenheira de Software · Backend · Sistemas Distribuídos · Cloud' },
         { type: 'output', text: "Digite 'help' para listar os comandos disponíveis." },
       ],
     };
   },
   methods: {
     focusInput() {
-      // Só rouba o foco em clique direto; seleção de texto continua funcionando
       if (!window.getSelection().toString()) this.$refs.input.focus();
     },
     print(text, type = 'output') {
@@ -106,7 +115,7 @@ export default {
       if (action) {
         action();
       } else {
-        this.print(`bash: ${raw}: comando não encontrado. Digite 'help'.`, 'error');
+        this.print(`comando não encontrado: ${raw}. Digite 'help'.`, 'error');
       }
       this.scrollDown();
     },
@@ -137,50 +146,80 @@ export default {
 </script>
 
 <style scoped>
-.term {
-  padding: 0;
-  overflow: hidden;
-  margin-bottom: var(--space-xl);
-  cursor: text;
+.ide-terminal-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #191a21;
+  border-top: 1px solid var(--ide-border);
 }
-.term-titlebar {
+
+.ide-terminal-tabbar {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px var(--space-md);
-  border-bottom: 1px solid var(--accent-border);
-  background: var(--accent-dim);
+  gap: 14px;
+  padding: 0 10px;
+  height: 32px;
+  background: #21222c;
+  border-bottom: 1px solid #14151b;
+  flex-shrink: 0;
 }
-.term-dot {
-  width: 12px; height: 12px; border-radius: 50%;
-}
-.term-dot--red { background: #ff5f57; }
-.term-dot--yellow { background: #febc2e; }
-.term-dot--green { background: #28c840; }
-.term-titlebar-text {
-  margin-left: var(--space-sm);
+.ide-terminal-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  padding: 0 10px;
   font-family: var(--font-code);
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  font-size: 0.78rem;
+  color: #8b8fa3;
+  border-bottom: 2px solid transparent;
 }
+.ide-terminal-tab--active {
+  color: #f8f8f2;
+  border-bottom-color: #bd93f9;
+  background: #191a21;
+}
+.ide-terminal-tabbar-info {
+  margin-left: auto;
+  font-family: var(--font-code);
+  font-size: 0.72rem;
+  color: #6272a4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ide-terminal-collapse {
+  background: transparent;
+  border: none;
+  color: #8b8fa3;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.ide-terminal-collapse:hover { color: #bd93f9; background: rgba(189,147,249,0.12); }
 
-.term-screen {
-  padding: var(--space-md) var(--space-lg);
+.ide-terminal-screen {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 10px 16px;
   font-family: var(--font-code);
   font-size: 0.85rem;
-  line-height: 1.7;
-  max-height: 300px;
-  overflow-y: auto;
+  line-height: 1.65;
+  cursor: text;
 }
-.term-line { white-space: pre-wrap; word-break: break-word; color: var(--text-main); }
-.term-line--system { color: var(--accent-core); }
-.term-line--input { color: var(--text-main); }
-.term-line--error { color: #ff6b6b; }
-.high-contrast-mode .term-line--error { color: #ffff00; }
+.term-line { white-space: pre-wrap; word-break: break-word; color: #f8f8f2; }
+.term-line--system { color: #bd93f9; }
+.term-line--input { color: #f8f8f2; }
+.term-line--error { color: #ff5555; }
 
 .term-prompt {
-  color: var(--accent-core);
-  font-weight: 500;
+  color: #50fa7b;
+  font-weight: 700;
   white-space: nowrap;
 }
 .term-input-row {
@@ -193,16 +232,12 @@ export default {
   background: transparent;
   border: none;
   outline: none;
-  color: var(--text-main);
+  color: #f8f8f2;
   font-family: var(--font-code);
   font-size: 0.85rem;
-  caret-color: var(--accent-core);
+  caret-color: #50fa7b;
   min-width: 0;
 }
-.term-input-row input::placeholder { color: var(--text-muted); opacity: 0.7; }
+.term-input-row input::placeholder { color: #6272a4; opacity: 0.8; }
 .term-input-row input:focus-visible { outline: none; box-shadow: none; }
-
-@media (max-width: 768px) {
-  .term-screen { max-height: 240px; padding: var(--space-md); }
-}
 </style>
