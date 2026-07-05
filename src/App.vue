@@ -47,7 +47,8 @@
         <span>SYS.INIT // SOFTWARE_ENGINEER_SENIOR</span>
       </div>
       <nav aria-label="Navegação Principal">
-        <ul v-if="$route.path === '/'">
+        <ul>
+          <li v-if="$route.path !== '/'"><router-link to="/" class="nav-back">&larr; Portfólio</router-link></li>
           <li><a href="#about" @click.prevent="scrollToId('about')">Identidade</a></li>
           <li><a href="#experience" @click.prevent="scrollToId('experience')">Log Execução</a></li>
           <li><a href="#projects" @click.prevent="scrollToId('projects')">Deployments</a></li>
@@ -55,12 +56,6 @@
           <li><router-link to="/recursos" class="nav-highlight">Recursos</router-link></li>
           <li><router-link to="/servicos" class="nav-highlight">Serviços</router-link></li>
           <li><a href="#contact" @click.prevent="scrollToId('contact')">Uplink</a></li>
-        </ul>
-        <ul v-else>
-          <li><router-link to="/">&larr; Portfólio</router-link></li>
-          <li><router-link to="/arcade">Arcade</router-link></li>
-          <li><router-link to="/recursos">Recursos</router-link></li>
-          <li><router-link to="/servicos">Serviços</router-link></li>
         </ul>
       </nav>
     </header>
@@ -134,6 +129,16 @@ export default {
       this.applyBodyClass();
     },
     scrollToId(id) {
+      // Os itens Identidade/Log Execução/Deployments/Uplink são âncoras da Home;
+      // como o menu agora fica fixo em todas as páginas, primeiro voltamos pra Home
+      // (se necessário) antes de rolar até a seção.
+      if (this.$route.path !== '/') {
+        this.$router.push('/').then(() => this.$nextTick(() => this.doScroll(id)));
+      } else {
+        this.doScroll(id);
+      }
+    },
+    doScroll(id) {
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     },
@@ -164,6 +169,7 @@ export default {
   --text-main: #e8e6f5;
   --text-muted: #9691b5;
   --scrim-overlay: rgba(6, 6, 14, 0.88);
+  --card-shadow: rgba(0, 0, 0, 0.35);
 
   --font-ui: 'Space Grotesk', sans-serif;
   --font-read: 'Inter', sans-serif;
@@ -172,7 +178,11 @@ export default {
   --space-sm: 0.5rem;
   --space-md: 1rem;
   --space-lg: 2rem;
-  --space-xl: 4rem;
+  --space-xl: clamp(3rem, 6vw, 5.5rem);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 18px;
 }
 
 /* =========================================
@@ -188,6 +198,7 @@ export default {
   --text-main: #201c33;
   --text-muted: #5b5570;
   --scrim-overlay: rgba(235, 232, 245, 0.88);
+  --card-shadow: rgba(76, 60, 130, 0.1);
 }
 
 /* =========================================
@@ -203,6 +214,7 @@ export default {
   --text-main: #FFFFFF;
   --text-muted: #FFFFFF;
   --scrim-overlay: #000000;
+  --card-shadow: transparent;
 }
 
 /* RESET */
@@ -316,7 +328,8 @@ body {
   display: flex; gap: 8px; align-items: center;
   z-index: 1000; background: var(--bg-surface);
   padding: 8px; border: 1px solid var(--accent-border);
-  border-radius: 8px; backdrop-filter: blur(10px);
+  border-radius: var(--radius-md); backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px var(--card-shadow);
   transition: background 0.4s, border-color 0.4s;
 }
 
@@ -327,7 +340,7 @@ body {
 
 .a11y-btn {
   background: transparent; color: var(--text-main);
-  border: 1px solid var(--accent-border); border-radius: 4px;
+  border: 1px solid var(--accent-border); border-radius: var(--radius-sm);
   padding: 6px 12px; font-family: var(--font-code);
   font-size: 1rem; font-weight: bold; cursor: pointer;
   transition: background 0.25s cubic-bezier(.2,.8,.2,1), color 0.25s cubic-bezier(.2,.8,.2,1),
@@ -363,25 +376,48 @@ header {
 
 .brand h1 { font-family: var(--font-ui); font-size: 2rem; color: var(--text-main); text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px var(--accent-dim); }
 .brand span { font-family: var(--font-code); font-size: 0.8rem; color: var(--accent-core); }
-nav ul { list-style: none; display: flex; gap: var(--space-lg); }
-nav a { color: var(--text-muted); text-decoration: none; font-family: var(--font-ui); font-size: 1.1rem; text-transform: uppercase; transition: 0.3s; }
+nav ul { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1.1rem; justify-content: flex-end; }
+nav a {
+  color: var(--text-muted); text-decoration: none; font-family: var(--font-ui); font-size: 0.95rem;
+  text-transform: uppercase; white-space: nowrap; letter-spacing: 0.5px;
+  transition: color 0.3s, text-shadow 0.3s, border-color 0.3s, background 0.3s;
+}
 nav a:hover { color: var(--accent-core); text-shadow: 0 0 8px var(--accent-dim); }
-nav a.nav-highlight { color: var(--accent-core); }
+
+/* Arcade/Recursos/Serviços são páginas separadas (não âncoras da Home), por isso
+   ganham uma borda fina pra se diferenciar dos demais itens sem depender só de cor. */
+nav a.nav-highlight {
+  border: 1px solid var(--accent-border); border-radius: var(--radius-sm); padding: 3px 9px;
+}
+nav a.nav-highlight:hover { border-color: var(--accent-core); }
+
+/* Botão de voltar ao portfólio: precisa ficar bem visível nas páginas internas. */
+nav a.nav-back {
+  color: var(--accent-core); background: var(--accent-dim); border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm); padding: 3px 10px; font-weight: 600;
+}
+nav a.nav-back:hover { background: var(--accent-core); color: var(--bg-base); border-color: var(--accent-core); }
 
 section { margin-bottom: var(--space-xl); }
 .section-title {
-  font-family: var(--font-ui); font-size: 2.2rem; color: var(--text-main); margin-bottom: var(--space-lg);
+  font-family: var(--font-ui); font-size: 2.2rem; color: var(--text-main);
+  margin-bottom: var(--space-lg); padding-bottom: var(--space-md);
   display: flex; align-items: center; gap: var(--space-md);
+  border-bottom: 1px solid var(--accent-border);
 }
-.section-title::before { content: ''; display: block; width: 12px; height: 12px; background: var(--accent-core); box-shadow: 0 0 10px var(--accent-dim); }
+.section-title::before {
+  content: ''; display: block; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--accent-core); box-shadow: 0 0 10px var(--accent-dim); flex-shrink: 0;
+}
 
 .hud-card {
   background: var(--bg-surface);
   border: 1px solid var(--accent-border);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   padding: var(--space-lg);
   display: flex;
   flex-direction: column;
+  box-shadow: 0 4px 20px var(--card-shadow);
   transition: transform 0.35s cubic-bezier(.2,.8,.2,1), border-color 0.35s cubic-bezier(.2,.8,.2,1),
     box-shadow 0.35s cubic-bezier(.2,.8,.2,1), background 0.4s ease;
   backdrop-filter: blur(10px);
@@ -398,7 +434,7 @@ section { margin-bottom: var(--space-xl); }
 
 .high-contrast-mode .hud-card { border-width: 2px; box-shadow: none !important; }
 
-.card-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--space-md); border-bottom: 1px dashed var(--accent-dim); padding-bottom: var(--space-sm); }
+.card-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--space-md); border-bottom: 1px solid var(--accent-dim); padding-bottom: var(--space-sm); }
 .card-title { font-family: var(--font-ui); font-size: 1.6rem; color: var(--text-main); margin-bottom: 0; }
 .card-period { font-family: var(--font-code); font-size: 0.85rem; color: var(--accent-core); }
 
@@ -408,11 +444,11 @@ section { margin-bottom: var(--space-xl); }
 .project-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); }
 
 .tech-list { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-bottom: var(--space-lg); }
-.tech-tag { font-family: var(--font-code); font-size: 0.75rem; color: var(--accent-core); background: var(--accent-dim); border: 1px dashed var(--accent-border); padding: 4px 8px; border-radius: 4px; }
+.tech-tag { font-family: var(--font-code); font-size: 0.75rem; color: var(--accent-core); background: var(--accent-dim); border: 1px solid var(--accent-border); padding: 4px 10px; border-radius: var(--radius-sm); }
 
 .btn-hud {
   display: inline-flex; align-items: center; gap: 8px; background: var(--accent-dim); color: var(--accent-core);
-  border: 1px solid var(--accent-border); padding: 8px 16px; font-family: var(--font-ui); font-size: 1.1rem;
+  border: 1px solid var(--accent-border); border-radius: var(--radius-md); padding: 8px 18px; font-family: var(--font-ui); font-size: 1.1rem;
   text-decoration: none; text-transform: uppercase; align-self: flex-start;
   transition: background 0.3s cubic-bezier(.2,.8,.2,1), color 0.3s cubic-bezier(.2,.8,.2,1),
     box-shadow 0.3s cubic-bezier(.2,.8,.2,1), transform 0.3s cubic-bezier(.2,.8,.2,1);

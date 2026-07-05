@@ -111,7 +111,7 @@ export default {
 .preview-modal {
   background: var(--bg-surface);
   border: 1px solid var(--accent-border);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   max-width: 900px;
   width: 100%;
   max-height: 90vh;
@@ -137,7 +137,7 @@ export default {
   background: transparent;
   border: 1px solid var(--accent-border);
   color: var(--text-main);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   width: 36px;
   height: 36px;
   cursor: pointer;
@@ -155,7 +155,7 @@ export default {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--accent-dim);
 }
 

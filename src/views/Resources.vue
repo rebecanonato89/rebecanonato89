@@ -264,7 +264,7 @@ export default {
   background: var(--accent-core);
   color: var(--bg-base);
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   text-transform: uppercase;
   font-weight: 700;
   white-space: nowrap;
@@ -273,9 +273,9 @@ export default {
   font-family: var(--font-code);
   font-size: 0.7rem;
   color: var(--accent-core);
-  border: 1px dashed var(--accent-border);
+  border: 1px solid var(--accent-border);
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   white-space: nowrap;
 }
 .res-desc {
