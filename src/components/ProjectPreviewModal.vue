@@ -99,7 +99,7 @@ export default {
 .preview-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(3, 5, 9, 0.88);
+  background: var(--scrim-overlay);
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
@@ -110,7 +110,7 @@ export default {
 
 .preview-modal {
   background: var(--bg-surface);
-  border: 1px solid var(--cyan-border);
+  border: 1px solid var(--accent-border);
   border-radius: 12px;
   max-width: 900px;
   width: 100%;
@@ -118,7 +118,7 @@ export default {
   display: flex;
   flex-direction: column;
   padding: var(--space-lg);
-  box-shadow: 0 0 40px var(--cyan-dim);
+  box-shadow: 0 0 40px var(--accent-dim);
 }
 
 .preview-header {
@@ -135,7 +135,7 @@ export default {
 
 .preview-close {
   background: transparent;
-  border: 1px solid var(--cyan-border);
+  border: 1px solid var(--accent-border);
   color: var(--text-main);
   border-radius: 6px;
   width: 36px;
@@ -145,7 +145,7 @@ export default {
   transition: all 0.2s;
 }
 .preview-close:hover, .preview-close:focus-visible {
-  background: var(--cyan-core);
+  background: var(--accent-core);
   color: var(--bg-base);
 }
 
@@ -156,7 +156,7 @@ export default {
   justify-content: center;
   overflow: hidden;
   border-radius: 8px;
-  border: 1px solid var(--cyan-dim);
+  border: 1px solid var(--accent-dim);
 }
 
 .preview-image {
@@ -173,8 +173,8 @@ export default {
   top: 50%;
   transform: translateY(-50%);
   background: var(--bg-surface);
-  border: 1px solid var(--cyan-border);
-  color: var(--cyan-core);
+  border: 1px solid var(--accent-border);
+  color: var(--accent-core);
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -183,7 +183,7 @@ export default {
   z-index: 1;
 }
 .preview-nav:hover, .preview-nav:focus-visible {
-  background: var(--cyan-core);
+  background: var(--accent-core);
   color: var(--bg-base);
 }
 .preview-nav--prev { left: var(--space-md); }
@@ -207,14 +207,14 @@ export default {
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  border: 1px solid var(--cyan-border);
+  border: 1px solid var(--accent-border);
   background: transparent;
   cursor: pointer;
   padding: 0;
 }
 .preview-dot--active {
-  background: var(--cyan-core);
-  box-shadow: 0 0 8px var(--cyan-dim);
+  background: var(--accent-core);
+  box-shadow: 0 0 8px var(--accent-dim);
 }
 
 @media (max-width: 600px) {

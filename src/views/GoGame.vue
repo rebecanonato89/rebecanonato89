@@ -495,10 +495,10 @@ export default {
   margin: 0 calc(-1 * var(--space-lg)) var(--space-md);
   background: var(--bg-surface);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--cyan-border);
+  border-bottom: 1px solid var(--accent-border);
 }
 .go-app-back {
-  color: var(--cyan-core);
+  color: var(--accent-core);
   text-decoration: none;
   font-family: var(--font-ui);
   font-size: 1rem;
@@ -548,13 +548,13 @@ export default {
 .go-control-row label {
   font-family: var(--font-code);
   font-size: 0.75rem;
-  color: var(--cyan-core);
+  color: var(--accent-core);
   text-transform: uppercase;
 }
 .go-control-row select {
   background: var(--bg-surface);
   color: var(--text-main);
-  border: 1px solid var(--cyan-border);
+  border: 1px solid var(--accent-border);
   border-radius: 4px;
   padding: 6px 8px;
   font-family: var(--font-read);
@@ -562,7 +562,7 @@ export default {
 }
 
 .go-panel-divider {
-  border-top: 1px dashed var(--cyan-dim);
+  border-top: 1px dashed var(--accent-dim);
   margin: var(--space-sm) 0;
 }
 .go-message {
@@ -598,7 +598,7 @@ export default {
   gap: 8px;
   margin-top: 6px;
   padding-top: var(--space-sm);
-  border-top: 1px dashed var(--cyan-dim);
+  border-top: 1px dashed var(--accent-dim);
 }
 .go-coord-form label {
   font-family: var(--font-code);
@@ -612,7 +612,7 @@ export default {
 .go-coord-inputs input {
   background: var(--bg-surface);
   color: var(--text-main);
-  border: 1px solid var(--cyan-border);
+  border: 1px solid var(--accent-border);
   border-radius: 4px;
   padding: 6px 8px;
   width: 110px;
@@ -634,7 +634,7 @@ export default {
 .go-board-card.hud-card:hover {
   transform: none;
   box-shadow: none;
-  border-color: var(--cyan-border);
+  border-color: var(--accent-border);
 }
 .go-board-outer {
   overflow-x: auto;
@@ -814,7 +814,7 @@ export default {
   left: 50%;
   width: 26%;
   height: 26%;
-  border: 2px solid #00e5ff;
+  border: 2px solid var(--accent-core);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
@@ -868,23 +868,23 @@ export default {
 }
 .score-table th,
 .score-table td {
-  border: 1px solid var(--cyan-border);
+  border: 1px solid var(--accent-border);
   padding: 8px 12px;
   text-align: center;
   color: var(--text-main);
 }
 .score-table thead th {
-  color: var(--cyan-core);
+  color: var(--accent-core);
 }
 .score-total th,
 .score-total td {
   font-weight: 700;
-  background: var(--cyan-dim);
+  background: var(--accent-dim);
 }
 .result-headline {
   font-family: var(--font-ui);
   font-size: 1.3rem;
-  color: var(--cyan-core);
+  color: var(--accent-core);
 }
 
 @media (max-width: 768px) {
