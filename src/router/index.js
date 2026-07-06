@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter } from 'vue-router';
 import Home from '../views/Home.vue';
 import GoGame from '../views/GoGame.vue';
 import CheckersGame from '../views/CheckersGame.vue';
@@ -12,7 +12,7 @@ import CertificacoesCode from '../views/CertificacoesCode.vue';
 import DeploymentsCode from '../views/DeploymentsCode.vue';
 import ContatoCode from '../views/ContatoCode.vue';
 
-const routes = [
+export const routes = [
   { path: '/', name: 'home', component: Home },
   { path: '/arcade', name: 'arcade', component: Arcade },
   { path: '/go', name: 'go-game', component: GoGame },
@@ -27,14 +27,20 @@ const routes = [
   { path: '/contato', name: 'contato-code', component: ContatoCode },
 ];
 
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes,
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) return savedPosition;
-    if (to.hash) return { el: to.hash, behavior: 'smooth' };
-    return { top: 0 };
-  }
-});
-
-export default router;
+// Fábrica de router: o client usa hash history (createWebHashHistory, chamado
+// em main.js), mas o prerender de build (entry-server.js) precisa de uma
+// instância isolada com createMemoryHistory para renderizar a rota "/" fora
+// do browser — por isso a criação da history fica fora deste módulo: chamar
+// createWebHashHistory() aqui no topo do arquivo quebraria o build SSR
+// (referencia `location`, que não existe em Node).
+export function createAppRouter(history) {
+  return createRouter({
+    history,
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+      if (savedPosition) return savedPosition;
+      if (to.hash) return { el: to.hash, behavior: 'smooth' };
+      return { top: 0 };
+    }
+  });
+}
