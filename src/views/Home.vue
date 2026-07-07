@@ -31,25 +31,36 @@
     <section id="experience" aria-labelledby="experience-title">
       <h2 id="experience-title" class="section-title">Log de Execução Profissional</h2>
       <ol class="timeline">
-        <li v-for="item in experienceData" :key="item.role + item.company" class="timeline-item">
-          <span class="timeline-date">{{ item.period }}</span>
-          <h3 class="timeline-title">{{ item.role }}</h3>
-          <div class="timeline-org">{{ item.company }}</div>
-          <p v-if="item.description" class="timeline-desc">{{ item.description }}</p>
+        <li class="timeline-item">
+          <span class="timeline-date">{{ currentRole.period }}</span>
+          <h3 class="timeline-title">{{ currentRole.role }}</h3>
+          <div class="timeline-org">{{ currentRole.company }}</div>
+          <p v-if="currentRole.description" class="timeline-desc">{{ currentRole.description }}</p>
         </li>
       </ol>
+      <router-link to="/experiencia" class="btn-hud btn-hud--live">Ver histórico completo (experiencia.log) →</router-link>
     </section>
 
     <section id="education" aria-labelledby="education-title">
       <h2 id="education-title" class="section-title">Data Banks & Certificações</h2>
-      <ol class="timeline">
-        <li v-for="item in educationData" :key="item.role" class="timeline-item">
-          <span class="timeline-date">{{ item.period }}</span>
-          <h3 class="timeline-title">{{ item.role }}</h3>
-          <div class="timeline-org">{{ item.company }}</div>
-          <p v-if="item.description" class="timeline-desc" style="color: var(--accent-core); font-size: 0.85rem; margin-top: 4px;">{{ item.description }}</p>
-        </li>
-      </ol>
+      <div class="hud-card">
+        <p class="card-desc">
+          Pós-graduanda em Arquitetura e Desenvolvimento Java (FIAP), mestre em Engenharia de Sistemas e Automação (UFLA)
+          e certificações recentes em AWS, Machine Learning e Agentic AI.
+        </p>
+        <router-link to="/certificacoes" class="btn-hud btn-hud--live">Ver formação e certificações completas →</router-link>
+      </div>
+    </section>
+
+    <section id="publications" aria-labelledby="publications-title">
+      <h2 id="publications-title" class="section-title">Publicações Acadêmicas</h2>
+      <div class="hud-card">
+        <p class="card-desc">
+          {{ publicationsData.length }} publicações em conferências e periódicos científicos — de gestão ambiental e
+          inovação no setor público a saúde digital.
+        </p>
+        <router-link to="/publicacoes" class="btn-hud btn-hud--live">Ver publicações completas →</router-link>
+      </div>
     </section>
 
     <section id="projects" aria-labelledby="projects-title">
@@ -69,7 +80,7 @@
             <a v-if="project.liveUrl" :href="project.liveUrl" target="_blank" rel="noopener noreferrer" class="btn-hud btn-hud--live">
               Acessar App <span class="sr-only"> (Abre em uma nova aba)</span>
             </a>
-            <a :href="project.link" target="_blank" rel="noopener noreferrer" class="btn-hud">
+            <a v-if="project.link" :href="project.link" target="_blank" rel="noopener noreferrer" class="btn-hud">
               Repositório <span class="sr-only"> (Abre em uma nova aba)</span>
             </a>
             <button
@@ -141,7 +152,7 @@
 
 <script>
 import ProjectPreviewModal from '../components/ProjectPreviewModal.vue';
-import { experienceData, educationData, projectsData } from '../data/profileData.js';
+import { experienceData, publicationsData, projectsData } from '../data/profileData.js';
 
 export default {
   name: 'Home',
@@ -150,9 +161,14 @@ export default {
     return {
       previewProject: null,
       experienceData,
-      educationData,
+      publicationsData,
       projectsData,
     };
+  },
+  computed: {
+    currentRole() {
+      return this.experienceData[0];
+    },
   },
   methods: {
     openPreview(project) {

@@ -4,10 +4,22 @@
 
 export const experienceData = [
   {
-    role: 'Application Development Analyst (Senior Backend)',
+    role: 'Software Engineer (Backend)',
+    company: 'Alice (health tech)',
+    period: 'Mar 2026 - Presente',
+    description: 'Desenvolvimento backend em Kotlin (JVM) em arquitetura orientada a eventos, com mensageria, em plataforma de saúde com requisitos de confiabilidade. Fluxo de desenvolvimento AI-native operado via terminal: planejamento, git worktrees, TDD, commits, criação de PRs e monitoramento pós-deploy.'
+  },
+  {
+    role: 'Application Development Specialist (Senior Backend)',
     company: 'Accenture',
-    period: 'Mai 2021 - Presente',
-    description: 'Referência técnica em ambientes de microsserviços (+50 Lambdas) utilizando Node.js, Kotlin e Java. Gerenciamento de incidentes críticos em produção (war rooms) e recuperação de sistemas legados instáveis. Forte atuação em CI/CD, mensageria (SQS/Kafka) e monitoramento (Datadog).'
+    period: 'Mai 2025 - Mar 2026',
+    description: 'Promovida a Especialista em reconhecimento à atuação como referência técnica. Referência técnica em ambiente de microsserviços com +50 Lambdas (Node.js, Kotlin, Java/Spring Boot), recuperação de sistema legado crítico em Kotlin e gerenciamento de incidentes P1/P2 em war rooms.'
+  },
+  {
+    role: 'Application Development Senior Analyst (Backend)',
+    company: 'Accenture',
+    period: 'Mai 2021 - Mai 2025',
+    description: 'Atuação em múltiplos projetos e clientes de consultoria. Upgrade de runtime Node.js (v12→v18), otimização de queries e análise de logs (CloudWatch), mensageria com SQS/Kafka, pipelines CI/CD (CodePipeline, GitHub Actions, Docker) e monitoramento com Datadog.'
   },
   {
     role: 'Engenheira de Software Full Stack',
@@ -17,9 +29,9 @@ export const experienceData = [
   },
   {
     role: 'Analista de Sistemas Full Stack',
-    company: 'Agência Zetta',
+    company: 'FUNDECC/LEMAF',
     period: 'Abr 2019 - Out 2020',
-    description: 'Desenvolvimento de APIs REST (.NET) e interfaces Angular. Gestão de branches complexas no GitLab, refinamento técnico como ponto focal Scrum e integração de gateways de pagamento governamentais.'
+    description: 'APIs REST em C# (.NET) com integrações a gateways de pagamento governamentais. Gestão de branches e deploys entre ambientes (DEV a PROD) e resolução de incidentes críticos em produção.'
   },
   {
     role: 'Analista de Sistemas',
@@ -30,8 +42,8 @@ export const experienceData = [
   {
     role: 'Professora Universitária',
     company: 'Universidade Federal de Lavras (UFLA)',
-    period: 'Nov 2013 - Mai 2015',
-    description: 'Lecionou disciplinas de arquitetura de software, algoritmos e banco de dados (SQL e NoSQL).'
+    period: 'Jan 2013 - Mai 2015',
+    description: 'Lecionou disciplinas de algoritmos, linguagens de programação e bancos de dados (SQL e NoSQL).'
   }
 ];
 
@@ -46,6 +58,12 @@ export const educationData = [
     company: 'Amazon Web Services (AWS)',
     period: 'Jun 2025',
     description: 'Competências: AWS'
+  },
+  {
+    role: 'AWS Certified Cloud Practitioner',
+    company: 'Amazon Web Services (AWS)',
+    period: '2024',
+    description: 'Certificação'
   },
   {
     role: 'Introducing Generative AI with AWS',
@@ -64,6 +82,12 @@ export const educationData = [
     period: 'Certificação'
   },
   {
+    role: 'Scrum Fundamentals',
+    company: 'SCRUMstudy',
+    period: '2017',
+    description: 'Certificação'
+  },
+  {
     role: 'Bertelsmann Data Science Challenge',
     company: 'Udacity',
     period: 'Mar 2022',
@@ -78,6 +102,34 @@ export const educationData = [
     role: 'Bacharelado em Sistemas de Informação',
     company: 'Anhanguera Educacional',
     period: 'Jan 2008 - Dez 2012'
+  },
+  {
+    role: 'Licenciatura em Matemática',
+    company: 'Faculdade Educacional da Lapa',
+    period: '2017'
+  }
+];
+
+export const publicationsData = [
+  {
+    title: 'O Cadastro Ambiental Rural (CAR) como instrumento de controle ambiental de uso e ocupação do imóvel rural',
+    venue: 'XXI ENGEMA — Encontro Internacional sobre Gestão Empresarial e Meio Ambiente',
+    period: 'Dez 2019'
+  },
+  {
+    title: 'Inovação aberta no setor público: como o Ministério da Educação utilizou o crowdstorming para impulsionar a prospecção de soluções inovadoras',
+    venue: 'Capítulo em "Inovação no setor público: teoria, tendências e casos no Brasil"',
+    period: 'Out 2017'
+  },
+  {
+    title: 'Non-invasive method to analyse the risk of developing diabetic foot',
+    venue: 'Healthcare Technology Letters',
+    period: 'Abr 2014'
+  },
+  {
+    title: 'Desenvolvimento de um Sistema Help Desk para a Universidade Vale do Rio Verde',
+    venue: 'Revista da Universidade Vale do Rio Verde',
+    period: 'Ago 2013'
   }
 ];
 
@@ -141,6 +193,12 @@ export const projectsData = [
     description: '<p>API RESTful em Java 21 focada em gerenciamento de usuários. Implementação central baseada em Arquitetura Hexagonal (Ports & Adapters) para isolamento do domínio de negócio.</p><ul style="margin-top: 10px; padding-left: 20px;"><li><strong>Segurança:</strong> Autenticação via Spring Security e JWT com RBAC estruturado.</li><li><strong>Qualidade:</strong> SOLID, MapStruct, tratamento global de exceções e testes automatizados.</li></ul>',
     stack: ['Java 21', 'Arquitetura Hexagonal', 'JWT', 'Spring Security', 'PostgreSQL'],
     link: 'https://github.com/fiap-tech-challenge-java/fiap-tech-challenge'
+  },
+  {
+    title: 'Equinox Solar CRM: Plataforma Full-Stack com NestJS, Next.js e Infra via Docker',
+    period: 'Mar 2023 - Dez 2023',
+    description: '<p>CRM full-stack para gestão comercial de projetos de energia solar, com back-end em NestJS e front-end em Next.js, ambiente totalmente containerizado com Docker.</p>',
+    stack: ['NestJS', 'Next.js', 'Docker']
   },
   {
     title: 'Kube Backend: API Node.js + PostgreSQL no Kubernetes',

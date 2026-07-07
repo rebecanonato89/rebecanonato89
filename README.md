@@ -4,7 +4,7 @@
 
 Engenheira de Software com mais de 7 anos de experiência, focada no desenho, implementação e sustentação de arquiteturas escaláveis. Priorizo a construção de sistemas sob restrições reais: consistência de dados, segurança corporativa, observabilidade e resiliência. 
 
-Possuo amplo histórico no gerenciamento de incidentes críticos (war rooms, P1/P2) em ambientes AWS e aplico rigorosamente padrões como Clean Architecture, Hexagonal e mensageria orientada a eventos. Todo código que produzo reflete decisões técnicas explícitas e mitigação direta de gargalos.
+Atualmente na **Alice (health tech)**, desenvolvendo backend em Kotlin (JVM) com arquitetura orientada a eventos. Antes, 5 anos na Accenture como referência técnica em ambientes de microsserviços, com amplo histórico no gerenciamento de incidentes críticos (war rooms, P1/P2) em AWS. Aplico rigorosamente padrões como Clean Architecture, Hexagonal e mensageria orientada a eventos — todo código que produzo reflete decisões técnicas explícitas e mitigação direta de gargalos.
 
 [Portfólio](https://rebecanonato89.dev) · [LinkedIn](https://www.linkedin.com/in/rebecanonato89/) · [Email](mailto:rebeca.nonato.dev@gmail.com)
 
@@ -28,7 +28,7 @@ Possuo amplo histórico no gerenciamento de incidentes críticos (war rooms, P1/
 | **[Hedge CLI](https://github.com/rebecanonato89/hedge-cli)** | Detector híbrido via AST (tree-sitter) e heurística para identificação de *Eager Test* em suites Java, operando com LLM gating (ativação estrita sob demanda). | Python, AST, LLMs, ML |
 | **[Food Fiapp](https://github.com/fiap-tech-challenge-java/food-fiapp)** | API de gestão seguindo Clean Architecture. Acoplamento mínimo, cobertura de testes automatizados superior a 90% (JUnit 5, Mockito, ArchUnit) e integração com object storage. | Java 21, MinIO, Docker |
 | **[TechChallenge](https://github.com/fiap-tech-challenge-java/fiap-tech-challenge)** | API REST para gestão de usuários. Domínio isolado via Arquitetura Hexagonal, segurança via Spring Security (JWT/RBAC) e contratos expostos via OpenAPI. | Java 21, Spring Security |
-| **Equinox Solar CRM** | CRM full-stack com integrações via Docker. Em paralelo, atua como ambiente de pesquisa para aplicação de técnicas de Machine Learning na otimização de testes de software. | NestJS, ML, Python, NLP |
+| **Equinox Solar CRM** | CRM full-stack para gestão comercial de projetos de energia solar, containerizado com Docker. | NestJS, Next.js, Docker |
 
 ---
 
@@ -44,6 +44,7 @@ Possuo amplo histórico no gerenciamento de incidentes críticos (war rooms, P1/
 * **Reinvention with Agentic AI** (Accenture, Dez 2025)
 * **AWS Educate Machine Learning Foundations** (AWS, Jun 2025)
 * **Introducing Generative AI with AWS** (Udacity, Jun 2025)
+* **AWS Certified Cloud Practitioner** (AWS, 2024)
 * **Especialização em Arquitetura e Desenvolvimento Java** (FIAP, 2024 - 2026)
 
 ---
