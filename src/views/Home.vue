@@ -52,6 +52,17 @@
       </ol>
     </section>
 
+    <section id="publications" aria-labelledby="publications-title">
+      <h2 id="publications-title" class="section-title">Publicações Acadêmicas</h2>
+      <ol class="timeline">
+        <li v-for="item in publicationsData" :key="item.title" class="timeline-item">
+          <span class="timeline-date">{{ item.period }}</span>
+          <h3 class="timeline-title">{{ item.title }}</h3>
+          <div class="timeline-org">{{ item.venue }}</div>
+        </li>
+      </ol>
+    </section>
+
     <section id="projects" aria-labelledby="projects-title">
       <h2 id="projects-title" class="section-title">Deployments & Cases</h2>
       <div class="project-grid">
@@ -69,7 +80,7 @@
             <a v-if="project.liveUrl" :href="project.liveUrl" target="_blank" rel="noopener noreferrer" class="btn-hud btn-hud--live">
               Acessar App <span class="sr-only"> (Abre em uma nova aba)</span>
             </a>
-            <a :href="project.link" target="_blank" rel="noopener noreferrer" class="btn-hud">
+            <a v-if="project.link" :href="project.link" target="_blank" rel="noopener noreferrer" class="btn-hud">
               Repositório <span class="sr-only"> (Abre em uma nova aba)</span>
             </a>
             <button
@@ -141,7 +152,7 @@
 
 <script>
 import ProjectPreviewModal from '../components/ProjectPreviewModal.vue';
-import { experienceData, educationData, projectsData } from '../data/profileData.js';
+import { experienceData, educationData, publicationsData, projectsData } from '../data/profileData.js';
 
 export default {
   name: 'Home',
@@ -151,6 +162,7 @@ export default {
       previewProject: null,
       experienceData,
       educationData,
+      publicationsData,
       projectsData,
     };
   },

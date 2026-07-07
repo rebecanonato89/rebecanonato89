@@ -20,8 +20,8 @@ export default {
           title: project.title,
           period: project.period,
           stack: project.stack,
-          repo: project.link,
         };
+        if (project.link) entry.repo = project.link;
         if (project.liveUrl) entry.live = project.liveUrl;
         return entry;
       });

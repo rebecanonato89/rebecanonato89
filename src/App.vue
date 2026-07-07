@@ -161,6 +161,7 @@ const PATH_META = {
   '/sobre': { label: 'sobre.md', icon: 'md', breadcrumb: ['src', 'views', 'SobreCode.vue'] },
   '/experiencia': { label: 'experiencia.log', icon: 'log', breadcrumb: ['src', 'views', 'ExperienciaCode.vue'] },
   '/certificacoes': { label: 'certificacoes.log', icon: 'log', breadcrumb: ['src', 'views', 'CertificacoesCode.vue'] },
+  '/publicacoes': { label: 'publicacoes.log', icon: 'log', breadcrumb: ['src', 'views', 'PublicacoesCode.vue'] },
   '/projetos': { label: 'deployments.json', icon: 'json', breadcrumb: ['src', 'views', 'DeploymentsCode.vue'] },
   '/contato': { label: 'contato.md', icon: 'md', breadcrumb: ['src', 'views', 'ContatoCode.vue'] },
   '/arcade': { label: 'arcade.vue', icon: 'vue', breadcrumb: ['src', 'views', 'Arcade.vue'] },
@@ -188,6 +189,7 @@ export default {
                 { id: 'sobre', label: 'sobre.md', type: 'file', icon: 'md', path: '/sobre' },
                 { id: 'experiencia', label: 'experiencia.log', type: 'file', icon: 'log', path: '/experiencia' },
                 { id: 'certificacoes', label: 'certificacoes.log', type: 'file', icon: 'log', path: '/certificacoes' },
+                { id: 'publicacoes', label: 'publicacoes.log', type: 'file', icon: 'log', path: '/publicacoes' },
               ],
             },
             {
