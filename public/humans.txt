@@ -1,0 +1,11 @@
+/* TEAM */
+Autora: Rebeca Nonato
+Contato: rebecanonato89@gmail.com
+LinkedIn: https://www.linkedin.com/in/rebecanonato89/
+GitHub: https://github.com/rebecanonato89
+Localização: Brasil
+
+/* SITE */
+Última redesign: 2026
+Stack: Vue 3, Vite, SSR prerender
+Padrões: WCAG 2.1 AA, schema.org/Person, JSON Resume (/resume.json), llms.txt (/llms.txt)

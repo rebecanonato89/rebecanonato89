@@ -6,12 +6,6 @@ import MemoryGame from '../views/MemoryGame.vue';
 import Arcade from '../views/Arcade.vue';
 import Resources from '../views/Resources.vue';
 import Servicos from '../views/Servicos.vue';
-import SobreCode from '../views/SobreCode.vue';
-import ExperienciaCode from '../views/ExperienciaCode.vue';
-import CertificacoesCode from '../views/CertificacoesCode.vue';
-import PublicacoesCode from '../views/PublicacoesCode.vue';
-import DeploymentsCode from '../views/DeploymentsCode.vue';
-import ContatoCode from '../views/ContatoCode.vue';
 
 export const routes = [
   { path: '/', name: 'home', component: Home },
@@ -21,12 +15,16 @@ export const routes = [
   { path: '/memoria', name: 'memory-game', component: MemoryGame },
   { path: '/recursos', name: 'resources', component: Resources },
   { path: '/servicos', name: 'servicos', component: Servicos },
-  { path: '/sobre', name: 'sobre-code', component: SobreCode },
-  { path: '/experiencia', name: 'experiencia-code', component: ExperienciaCode },
-  { path: '/certificacoes', name: 'certificacoes-code', component: CertificacoesCode },
-  { path: '/publicacoes', name: 'publicacoes-code', component: PublicacoesCode },
-  { path: '/projetos', name: 'deployments-code', component: DeploymentsCode },
-  { path: '/contato', name: 'contato-code', component: ContatoCode },
+
+  // O currículo virou um único documento na Home (seções em vez de "arquivos"
+  // separados) — rotas antigas de links já compartilhados redirecionam para
+  // a seção equivalente em vez de 404ar.
+  { path: '/sobre', redirect: { path: '/', hash: '#sobre' } },
+  { path: '/experiencia', redirect: { path: '/', hash: '#experiencia' } },
+  { path: '/certificacoes', redirect: { path: '/', hash: '#certificacoes' } },
+  { path: '/publicacoes', redirect: { path: '/', hash: '#publicacoes' } },
+  { path: '/projetos', redirect: { path: '/', hash: '#projetos' } },
+  { path: '/contato', redirect: { path: '/', hash: '#contato' } },
 ];
 
 // Fábrica de router: o client usa hash history (createWebHashHistory, chamado

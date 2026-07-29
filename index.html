@@ -1,27 +1,113 @@
-<!-- BACKUP DO HTML ORIGINAL ABAIXO -->
-<!--
-[...HTML antigo mantido como backup, consulte o histórico do arquivo para restaurar.]
--->
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rebeca Nonato | Software Engineer</title>
-    <meta name="description" content="Engenheira de Software com +7 anos de experiência em sistemas distribuídos, microsserviços cloud-native e arquitetura orientada a eventos (Kotlin, Java, Node.js, AWS)." />
+    <title>Rebeca Nonato — Currículo | Software Engineer (Backend, Cloud & Sistemas Distribuídos)</title>
+    <meta
+      name="description"
+      content="Currículo de Rebeca Nonato, Engenheira de Software com +7 anos de experiência em sistemas distribuídos, microsserviços cloud-native e arquitetura orientada a eventos (Kotlin, Java, Node.js, AWS). Experiência, projetos, certificações e contato."
+    />
+    <meta name="author" content="Rebeca Nonato" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="https://rebecanonato89.dev/" />
+
+    <!-- Descoberta por agentes de IA: versão machine-readable deste currículo -->
+    <link rel="alternate" type="application/json" href="/resume.json" title="Currículo em formato JSON Resume" />
+    <link rel="author" href="/humans.txt" />
 
     <meta property="og:type" content="profile" />
     <meta property="og:url" content="https://rebecanonato89.dev/" />
+    <meta property="og:site_name" content="Rebeca Nonato — Currículo" />
     <meta property="og:title" content="Rebeca Nonato | Software Engineer" />
-    <meta property="og:description" content="Engenheira de Software com +7 anos de experiência em sistemas distribuídos, microsserviços cloud-native e arquitetura orientada a eventos (Kotlin, Java, Node.js, AWS)." />
+    <meta
+      property="og:description"
+      content="Engenheira de Software com +7 anos de experiência em sistemas distribuídos, microsserviços cloud-native e arquitetura orientada a eventos (Kotlin, Java, Node.js, AWS)."
+    />
     <meta property="og:locale" content="pt_BR" />
+    <meta property="profile:first_name" content="Rebeca" />
+    <meta property="profile:last_name" content="Nonato" />
 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Rebeca Nonato | Software Engineer" />
-    <meta name="twitter:description" content="Engenheira de Software com +7 anos de experiência em sistemas distribuídos, microsserviços cloud-native e arquitetura orientada a eventos (Kotlin, Java, Node.js, AWS)." />
+    <meta
+      name="twitter:description"
+      content="Engenheira de Software com +7 anos de experiência em sistemas distribuídos, microsserviços cloud-native e arquitetura orientada a eventos (Kotlin, Java, Node.js, AWS)."
+    />
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Rajdhani:wght@500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="light dark" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Dados estruturados para buscadores e agentes de IA (schema.org/Person) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Rebeca Nonato",
+        "jobTitle": "Software Engineer",
+        "description": "Engenheira de Software com mais de 7 anos de experiência, focada em sistemas distribuídos, microsserviços cloud-native e arquitetura orientada a eventos.",
+        "url": "https://rebecanonato89.dev/",
+        "email": "mailto:rebecanonato89@gmail.com",
+        "sameAs": [
+          "https://www.linkedin.com/in/rebecanonato89/",
+          "https://github.com/rebecanonato89"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Alice (health tech)"
+        },
+        "alumniOf": [
+          { "@type": "CollegeOrUniversity", "name": "Universidade Federal de Lavras (UFLA)" },
+          { "@type": "CollegeOrUniversity", "name": "FIAP" },
+          { "@type": "CollegeOrUniversity", "name": "Anhanguera Educacional" }
+        ],
+        "knowsAbout": [
+          "Java", "Kotlin", "TypeScript", "C#", "Python", "AWS", "Kafka",
+          "Clean Architecture", "Arquitetura Hexagonal", "Event-Driven Architecture",
+          "CQRS", "Microsserviços", "Docker", "Kubernetes"
+        ],
+        "hasCredential": [
+          { "@type": "EducationalOccupationalCredential", "name": "AWS Certified Cloud Practitioner", "credentialCategory": "certification" },
+          { "@type": "EducationalOccupationalCredential", "name": "Reinvention with Agentic AI", "credentialCategory": "certification" }
+        ]
+      }
+    </script>
+    <script>
+      // Aplica tema/contraste/tamanho de fonte salvos antes do primeiro paint,
+      // evitando flash de tema errado (síncrono, sem depender do Vue montar).
+      (function () {
+        try {
+          var theme = localStorage.getItem('rn-theme');
+          if (!theme) {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', theme);
+
+          if (localStorage.getItem('rn-contrast') === '1') {
+            document.documentElement.setAttribute('data-contrast', 'high');
+          }
+
+          var step = parseInt(localStorage.getItem('rn-font-step') || '0', 10);
+          if (!Number.isNaN(step) && step !== 0) {
+            document.documentElement.style.fontSize = (100 + step * 10) + '%';
+          }
+
+          if (localStorage.getItem('rn-reduced-motion') === '1') {
+            document.documentElement.classList.add('force-reduced-motion');
+          }
+        } catch (e) {
+          /* localStorage indisponível (modo privado, etc.) — segue com os padrões */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="app"></div>

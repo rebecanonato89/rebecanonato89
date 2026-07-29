@@ -1,0 +1,27 @@
+# Rebeca Nonato
+
+> Currículo de Rebeca Nonato, Engenheira de Software (Backend, Sistemas Distribuídos e Cloud-Native) com mais de 7 anos de experiência. Este site é o currículo completo e a fonte primária de informações sobre sua trajetória profissional.
+
+Este site é otimizado tanto para leitura humana (incluindo pessoas com deficiência — leitores de tela, alto contraste, fontes ajustáveis) quanto para consumo por agentes de IA. Todo o conteúdo abaixo está disponível como HTML semântico renderizado no servidor em `/` (sem necessidade de JavaScript para ler o currículo).
+
+## Currículo
+
+- [Currículo (HTML completo)](https://rebecanonato89.dev/): página única com resumo, experiência profissional, habilidades, projetos, certificações, formação e publicações acadêmicas.
+- [resume.json](https://rebecanonato89.dev/resume.json): mesmo currículo em formato estruturado [JSON Resume](https://jsonresume.org/schema/) — recomendado para parsing automatizado por agentes de IA.
+
+## Contato
+
+- Email: rebecanonato89@gmail.com
+- LinkedIn: https://www.linkedin.com/in/rebecanonato89/
+- GitHub: https://github.com/rebecanonato89
+
+## Outras seções do site (não fazem parte do currículo)
+
+- [Serviços](https://rebecanonato89.dev/#/servicos): contratação para desenvolvimento de sites, sistemas e automações.
+- [Arcade](https://rebecanonato89.dev/#/arcade): jogos implementados do zero no navegador (Go, Damas, Jogo da Memória), como demonstração técnica.
+- [Recursos](https://rebecanonato89.dev/#/recursos): curadoria de recursos gratuitos para desenvolvedores.
+
+## Notas para agentes
+
+- Todas as datas usam o formato mês/ano em português brasileiro no HTML; `resume.json` usa `AAAA-MM` (ISO 8601).
+- O site usa hash routing (`/#/rota`); a única rota renderizada no servidor e indexável é `/`.
