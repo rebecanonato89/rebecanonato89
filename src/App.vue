@@ -1,331 +1,216 @@
 <template>
-  <div class="ide-root" :class="[themeClass, { 'high-contrast-mode': isHighContrast, 'app-mode': isGameRoute }]">
+  <div id="app-shell">
     <a href="#main-content" class="skip-link" @click.prevent="skipToMain">Pular para o conteúdo principal</a>
 
-    <!-- ===================== MODO JOGO: tela cheia, sem chrome de IDE ===================== -->
-    <div v-if="isGameRoute" class="game-shell">
+    <!-- Modo jogo: tela cheia, sem cabeçalho/rodapé de currículo (cada jogo tem seu próprio botão de voltar) -->
+    <template v-if="isGameRoute">
       <router-view />
-    </div>
+    </template>
 
-    <!-- ===================== MODO IDE: título, sidebar, abas, editor, terminal, status ===================== -->
     <template v-else>
-      <header class="ide-titlebar">
-        <div class="ide-titlebar-left">
-          <span class="ide-dot ide-dot--red" aria-hidden="true"></span>
-          <span class="ide-dot ide-dot--yellow" aria-hidden="true"></span>
-          <span class="ide-dot ide-dot--green" aria-hidden="true"></span>
-          <router-link to="/" class="ide-titlebar-brand">
-            <IdeIcon type="project" aria-hidden="true" />
-            <span class="ide-titlebar-project">rebecanonato89</span>
-            <span class="ide-titlebar-sep" aria-hidden="true">›</span>
-            <span class="ide-titlebar-file">{{ activeTabMeta.label }}</span>
-          </router-link>
-        </div>
-
-        <nav class="ide-titlebar-menu" aria-label="Navegação Principal">
-          <router-link to="/" class="ide-menu-item" exact-active-class="ide-menu-item--active">Início</router-link>
-          <router-link to="/arcade" class="ide-menu-item" active-class="ide-menu-item--active">Arcade</router-link>
-          <router-link to="/recursos" class="ide-menu-item" active-class="ide-menu-item--active">Recursos</router-link>
-          <router-link to="/servicos" class="ide-menu-item" active-class="ide-menu-item--active">Serviços</router-link>
-          <router-link to="/contato" class="ide-menu-item" active-class="ide-menu-item--active">Contato</router-link>
-        </nav>
-
-        <div class="ide-titlebar-right">
-          <button type="button" class="ide-title-btn" @click="changeFontSize(-1)" aria-label="Diminuir tamanho da fonte">A-</button>
-          <button type="button" class="ide-title-btn" @click="changeFontSize(1)" aria-label="Aumentar tamanho da fonte">A+</button>
+      <div class="a11y-bar" role="group" aria-label="Preferências de leitura">
+        <div class="a11y-bar-inner">
+          <span class="a11y-bar-label">Leitura:</span>
+          <button type="button" class="a11y-btn" @click="changeFontSize(-1)" aria-label="Diminuir tamanho da fonte">
+            A<span aria-hidden="true">−</span>
+          </button>
+          <button type="button" class="a11y-btn" @click="changeFontSize(1)" aria-label="Aumentar tamanho da fonte">
+            A<span aria-hidden="true">+</span>
+          </button>
           <button
             type="button"
-            class="ide-title-btn"
-            :class="{ 'ide-title-btn--active': isHighContrast }"
+            class="a11y-btn"
+            :class="{ 'a11y-btn--active': isHighContrast }"
             :aria-pressed="isHighContrast"
-            aria-label="Alternar modo de alto contraste"
+            aria-label="Alternar alto contraste"
             @click="toggleHighContrast"
           >
-            <IdeIcon type="contrast" />
-          </button>
-          <button type="button" class="ide-theme-toggle" @click="toggleTheme" :aria-label="'Tema: ' + themeLabel + '. Clique para alternar.'">
-            <IdeIcon :type="theme === 'dracula' ? 'bat' : 'cup'" />
-            <span>{{ themeLabel }}</span>
-          </button>
-          <a href="https://github.com/rebecanonato89" target="_blank" rel="noopener noreferrer" class="ide-title-btn" aria-label="Abrir GitHub em nova aba">
-            GH
-          </a>
-        </div>
-      </header>
-
-      <div class="ide-workbench">
-        <div class="ide-activity-bar">
-          <button
-            type="button"
-            class="ide-activity-btn"
-            :class="{ 'ide-activity-btn--active': sidebarOpen }"
-            aria-label="Alternar painel de projeto"
-            :aria-pressed="sidebarOpen"
-            @click="sidebarOpen = !sidebarOpen"
-          >
-            <IdeIcon type="project" />
+            Alto contraste
           </button>
           <button
             type="button"
-            class="ide-activity-btn"
-            :class="{ 'ide-activity-btn--active': terminalOpen }"
-            aria-label="Alternar terminal"
-            :aria-pressed="terminalOpen"
-            @click="terminalOpen = !terminalOpen"
+            class="a11y-btn"
+            :class="{ 'a11y-btn--active': reduceMotion }"
+            :aria-pressed="reduceMotion"
+            aria-label="Reduzir animações e movimento"
+            @click="toggleReduceMotion"
           >
-            <IdeIcon type="terminal" />
+            Reduzir movimento
           </button>
-        </div>
-
-        <div v-if="sidebarOpen" class="ide-sidebar-backdrop" @click="sidebarOpen = false"></div>
-
-        <IdeSidebar
-          v-if="sidebarOpen"
-          :tree="sidebarTree"
-          :active-node-id="activeNodeId"
-          @open="openNode"
-          @collapse="sidebarOpen = false"
-        />
-
-        <div class="ide-main">
-          <div class="ide-tabbar" role="tablist" aria-label="Abas abertas">
-            <button
-              v-for="tab in openTabs"
-              :key="tab.path"
-              type="button"
-              role="tab"
-              class="ide-tab"
-              :class="{ 'ide-tab--active': tab.path === $route.path }"
-              :aria-selected="tab.path === $route.path"
-              @click="activateTab(tab)"
-            >
-              <IdeIcon :type="tab.icon" class="ide-tab-icon" :class="'ide-tab-icon--' + tab.icon" />
-              <span>{{ tab.label }}</span>
-              <span
-                v-if="openTabs.length > 1"
-                class="ide-tab-close"
-                role="button"
-                :aria-label="'Fechar aba ' + tab.label"
-                @click.stop="closeTab(tab)"
-              >
-                <IdeIcon type="close" />
-              </span>
-            </button>
-          </div>
-
-          <div class="ide-breadcrumb" aria-hidden="true">
-            <IdeIcon type="project" />
-            <span>rebecanonato89</span>
-            <template v-for="crumb in breadcrumb" :key="crumb">
-              <span class="ide-breadcrumb-sep">›</span>
-              <span>{{ crumb }}</span>
-            </template>
-          </div>
-
-          <div id="ide-editor-content" class="ide-editor-content">
-            <router-view />
-          </div>
-
-          <div v-if="terminalOpen" class="ide-terminal-dock">
-            <IdeTerminal @collapse="terminalOpen = false" />
-          </div>
+          <button
+            type="button"
+            class="a11y-btn"
+            aria-label="Alternar tema claro ou escuro"
+            :aria-pressed="theme === 'dark'"
+            @click="toggleTheme"
+          >
+            {{ theme === 'dark' ? 'Tema escuro' : 'Tema claro' }}
+          </button>
         </div>
       </div>
 
-      <footer class="ide-statusbar">
-        <div class="ide-statusbar-left">
-          <span class="ide-statusbar-item"><IdeIcon type="branch" /> main</span>
-          <span class="ide-statusbar-item ide-statusbar-item--ok"><IdeIcon type="check" /> Claude Code pronto</span>
-        </div>
-        <div class="ide-statusbar-right">
-          <span class="ide-statusbar-item">UTF-8</span>
-          <span class="ide-statusbar-item">Vue 3</span>
-          <button type="button" class="ide-statusbar-item ide-statusbar-btn" @click="terminalOpen = !terminalOpen">
-            <IdeIcon type="terminal" /> Terminal
+      <header class="site-header">
+        <div class="site-header-inner">
+          <router-link to="/" class="brand">
+            <span class="brand-name">Rebeca Nonato</span>
+            <span class="brand-role">Software Engineer</span>
+          </router-link>
+
+          <button
+            type="button"
+            class="nav-toggle"
+            :aria-expanded="navOpen"
+            aria-controls="primary-nav"
+            @click="navOpen = !navOpen"
+          >
+            <span aria-hidden="true">{{ navOpen ? '✕' : '☰' }}</span>
+            <span class="sr-only">{{ navOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação' }}</span>
           </button>
+
+          <nav id="primary-nav" class="primary-nav" :class="{ 'primary-nav--open': navOpen }" aria-label="Seções do currículo">
+            <router-link
+              v-for="item in resumeNav"
+              :key="item.hash"
+              :to="{ path: '/', hash: item.hash }"
+              class="nav-link"
+              @click="navOpen = false"
+            >{{ item.label }}</router-link>
+            <span class="nav-divider" aria-hidden="true"></span>
+            <router-link to="/servicos" class="nav-link" active-class="nav-link--active" @click="navOpen = false">Serviços</router-link>
+            <router-link to="/arcade" class="nav-link" active-class="nav-link--active" @click="navOpen = false">Arcade</router-link>
+            <router-link to="/recursos" class="nav-link" active-class="nav-link--active" @click="navOpen = false">Recursos</router-link>
+          </nav>
         </div>
+      </header>
+
+      <router-view />
+
+      <footer class="site-footer">
+        <div class="site-footer-inner">
+          <div class="site-footer-col">
+            <p class="footer-name">Rebeca Nonato</p>
+            <p class="footer-tagline">Software Engineer — Backend, Distributed Systems &amp; Cloud-Native</p>
+            <ul class="footer-links" aria-label="Contato">
+              <li><a href="mailto:rebecanonato89@gmail.com">rebecanonato89@gmail.com</a></li>
+              <li><a href="https://www.linkedin.com/in/rebecanonato89/" target="_blank" rel="noopener noreferrer">LinkedIn<span class="sr-only"> (abre em nova aba)</span></a></li>
+              <li><a href="https://github.com/rebecanonato89" target="_blank" rel="noopener noreferrer">GitHub<span class="sr-only"> (abre em nova aba)</span></a></li>
+            </ul>
+          </div>
+
+          <div class="site-footer-col">
+            <p class="footer-heading">Explorar</p>
+            <ul class="footer-links">
+              <li><router-link to="/servicos">Serviços</router-link></li>
+              <li><router-link to="/arcade">Arcade</router-link></li>
+              <li><router-link to="/recursos">Recursos</router-link></li>
+            </ul>
+          </div>
+
+          <div class="site-footer-col">
+            <p class="footer-heading">Para agentes de IA</p>
+            <ul class="footer-links">
+              <li><a href="/resume.json">resume.json</a></li>
+              <li><a href="/llms.txt">llms.txt</a></li>
+              <li><a href="/sitemap.xml">sitemap.xml</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer-note">
+          Site construído com práticas de acessibilidade (WCAG) e leitura por agentes de IA em mente.
+        </p>
       </footer>
     </template>
   </div>
 </template>
 
 <script>
-import IdeIcon from './components/IdeIcon.vue';
-import IdeSidebar from './components/IdeSidebar.vue';
-import IdeTerminal from './components/IdeTerminal.vue';
-
-// Metadados das "abas" abertáveis (rotas que viram arquivo na barra de abas).
-// Rotas de jogo (/go, /damas, /memoria) ficam fora disso: abrem em tela cheia.
-const PATH_META = {
-  '/': { label: 'home.vue', icon: 'vue', breadcrumb: ['src', 'views', 'Home.vue'] },
-  '/sobre': { label: 'sobre.md', icon: 'md', breadcrumb: ['src', 'views', 'SobreCode.vue'] },
-  '/experiencia': { label: 'experiencia.log', icon: 'log', breadcrumb: ['src', 'views', 'ExperienciaCode.vue'] },
-  '/certificacoes': { label: 'certificacoes.log', icon: 'log', breadcrumb: ['src', 'views', 'CertificacoesCode.vue'] },
-  '/publicacoes': { label: 'publicacoes.log', icon: 'log', breadcrumb: ['src', 'views', 'PublicacoesCode.vue'] },
-  '/projetos': { label: 'deployments.json', icon: 'json', breadcrumb: ['src', 'views', 'DeploymentsCode.vue'] },
-  '/contato': { label: 'contato.md', icon: 'md', breadcrumb: ['src', 'views', 'ContatoCode.vue'] },
-  '/arcade': { label: 'arcade.vue', icon: 'vue', breadcrumb: ['src', 'views', 'Arcade.vue'] },
-  '/recursos': { label: 'recursos.vue', icon: 'vue', breadcrumb: ['src', 'views', 'Resources.vue'] },
-  '/servicos': { label: 'servicos.vue', icon: 'vue', breadcrumb: ['src', 'views', 'Servicos.vue'] },
-};
 const GAME_ROUTES = ['/go', '/damas', '/memoria'];
+
+const RESUME_NAV = [
+  { hash: '#sobre', label: 'Sobre' },
+  { hash: '#experiencia', label: 'Experiência' },
+  { hash: '#projetos', label: 'Projetos' },
+  { hash: '#skills', label: 'Skills' },
+  { hash: '#certificacoes', label: 'Certificações' },
+  { hash: '#publicacoes', label: 'Publicações' },
+  { hash: '#contato', label: 'Contato' },
+];
+
+const ROUTE_TITLES = {
+  '/': 'Rebeca Nonato — Currículo | Software Engineer',
+  '/servicos': 'Serviços | Rebeca Nonato',
+  '/arcade': 'Arcade | Rebeca Nonato',
+  '/recursos': 'Recursos | Rebeca Nonato',
+  '/go': 'Go | Arcade | Rebeca Nonato',
+  '/damas': 'Damas | Arcade | Rebeca Nonato',
+  '/memoria': 'Jogo da Memória | Arcade | Rebeca Nonato',
+};
 
 export default {
   name: 'App',
-  components: { IdeIcon, IdeSidebar, IdeTerminal },
   data() {
     return {
+      resumeNav: RESUME_NAV,
+      navOpen: false,
       fontSizeStep: 0,
       isHighContrast: false,
-      theme: 'dracula',
-      sidebarOpen: true,
-      terminalOpen: true,
-      openTabs: [{ path: '/', label: PATH_META['/'].label, icon: PATH_META['/'].icon }],
-      sidebarTree: [
-        {
-          id: 'root', label: 'rebecanonato89', type: 'folder', expanded: true, children: [
-            {
-              id: 'perfil', label: 'perfil', type: 'folder', expanded: true, children: [
-                { id: 'sobre', label: 'sobre.md', type: 'file', icon: 'md', path: '/sobre' },
-                { id: 'experiencia', label: 'experiencia.log', type: 'file', icon: 'log', path: '/experiencia' },
-                { id: 'certificacoes', label: 'certificacoes.log', type: 'file', icon: 'log', path: '/certificacoes' },
-                { id: 'publicacoes', label: 'publicacoes.log', type: 'file', icon: 'log', path: '/publicacoes' },
-              ],
-            },
-            {
-              id: 'projetos', label: 'projetos', type: 'folder', expanded: true, children: [
-                { id: 'deployments', label: 'deployments.json', type: 'file', icon: 'json', path: '/projetos' },
-              ],
-            },
-            {
-              id: 'arcade', label: 'arcade', type: 'folder', expanded: false, children: [
-                { id: 'arcade-index', label: 'arcade.vue', type: 'file', icon: 'vue', path: '/arcade' },
-                { id: 'go', label: 'go.js', type: 'file', icon: 'game', path: '/go' },
-                { id: 'damas', label: 'damas.js', type: 'file', icon: 'game', path: '/damas' },
-                { id: 'memoria', label: 'memoria.js', type: 'file', icon: 'game', path: '/memoria' },
-              ],
-            },
-            { id: 'servicos', label: 'servicos.vue', type: 'file', icon: 'vue', path: '/servicos' },
-            { id: 'recursos', label: 'recursos.vue', type: 'file', icon: 'vue', path: '/recursos' },
-            { id: 'contato', label: 'contato.md', type: 'file', icon: 'md', path: '/contato' },
-          ],
-        },
-      ],
+      reduceMotion: false,
+      theme: 'light',
     };
   },
   computed: {
-    // Rotas de jogo entram em "modo app": tela cheia, sem chrome de IDE
-    // (cada jogo já tem sua própria barra de volta ao Arcade).
     isGameRoute() {
       return GAME_ROUTES.includes(this.$route.path);
-    },
-    themeClass() {
-      return this.theme === 'cappuccino' ? 'theme-cappuccino' : 'theme-dracula';
-    },
-    themeLabel() {
-      return this.theme === 'cappuccino' ? 'Cappuccino' : 'Dracula';
-    },
-    activeTabMeta() {
-      return this.openTabs.find((t) => t.path === this.$route.path) || PATH_META['/'];
-    },
-    breadcrumb() {
-      const meta = PATH_META[this.$route.path];
-      return meta ? meta.breadcrumb : PATH_META['/'].breadcrumb;
-    },
-    // Deriva o item selecionado no sidebar a partir da rota atual, em vez de
-    // rastrear em estado à parte — assim fica correto mesmo vindo do terminal,
-    // de um clique numa aba, ou do botão voltar/avançar do navegador.
-    activeNodeId() {
-      const path = this.$route.path;
-      const findId = (nodes) => {
-        for (const n of nodes) {
-          if (n.type === 'folder') {
-            const found = findId(n.children);
-            if (found) return found;
-          } else if (n.path === path) {
-            return n.id;
-          }
-        }
-        return '';
-      };
-      return findId(this.sidebarTree);
     },
   },
   watch: {
     '$route'(to) {
-      if (GAME_ROUTES.includes(to.path)) return;
-      const meta = PATH_META[to.path];
-      if (meta && !this.openTabs.some((t) => t.path === to.path)) {
-        this.openTabs.push({ path: to.path, label: meta.label, icon: meta.icon });
-      }
-      // Cada rota é um "arquivo" à parte: sempre abre do topo, nunca herda o
-      // scroll de onde a aba anterior tinha ficado.
-      this.$nextTick(() => {
-        const container = document.getElementById('ide-editor-content');
-        if (container) container.scrollTop = 0;
-      });
+      this.navOpen = false;
+      document.title = ROUTE_TITLES[to.path] || ROUTE_TITLES['/'];
     },
   },
   mounted() {
-    const savedTheme = localStorage.getItem('rebeca-ide-theme');
-    if (savedTheme === 'cappuccino' || savedTheme === 'dracula') {
-      this.theme = savedTheme;
-    }
-    this.applyBodyClass();
-    if (window.innerWidth <= 900) {
-      this.sidebarOpen = false;
-    }
-    if (window.innerWidth <= 640) {
-      this.terminalOpen = false;
-    }
+    document.title = ROUTE_TITLES[this.$route.path] || ROUTE_TITLES['/'];
+
+    // O tema e o contraste já foram aplicados via script inline em index.html
+    // (evita flash de tema errado); aqui só sincronizamos o estado reativo.
+    this.theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    this.isHighContrast = document.documentElement.getAttribute('data-contrast') === 'high';
+
+    const savedStep = parseInt(localStorage.getItem('rn-font-step') || '0', 10);
+    if (!Number.isNaN(savedStep)) this.fontSizeStep = savedStep;
+
+    this.reduceMotion = localStorage.getItem('rn-reduced-motion') === '1';
+    this.applyReduceMotionClass();
   },
   methods: {
     toggleTheme() {
-      this.theme = this.theme === 'dracula' ? 'cappuccino' : 'dracula';
-      localStorage.setItem('rebeca-ide-theme', this.theme);
-      this.applyBodyClass();
-    },
-    applyBodyClass() {
-      // Sincroniza o fundo real do body pra evitar tapumes claros/escuros no overscroll.
-      if (this.isHighContrast) {
-        document.body.style.backgroundColor = '#000000';
-      } else if (this.theme === 'cappuccino') {
-        document.body.style.backgroundColor = '#f7f1e8';
-      } else {
-        document.body.style.backgroundColor = '#282a36';
-      }
+      this.theme = this.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', this.theme);
+      localStorage.setItem('rn-theme', this.theme);
     },
     toggleHighContrast() {
       this.isHighContrast = !this.isHighContrast;
-      this.applyBodyClass();
+      if (this.isHighContrast) {
+        document.documentElement.setAttribute('data-contrast', 'high');
+        localStorage.setItem('rn-contrast', '1');
+      } else {
+        document.documentElement.removeAttribute('data-contrast');
+        localStorage.setItem('rn-contrast', '0');
+      }
+    },
+    toggleReduceMotion() {
+      this.reduceMotion = !this.reduceMotion;
+      localStorage.setItem('rn-reduced-motion', this.reduceMotion ? '1' : '0');
+      this.applyReduceMotionClass();
+    },
+    applyReduceMotionClass() {
+      document.documentElement.classList.toggle('force-reduced-motion', this.reduceMotion);
     },
     changeFontSize(step) {
-      this.fontSizeStep += step;
-      if (this.fontSizeStep > 4) this.fontSizeStep = 4;
-      if (this.fontSizeStep < -2) this.fontSizeStep = -2;
-      const newSize = 100 + this.fontSizeStep * 10;
-      document.documentElement.style.fontSize = `${newSize}%`;
-    },
-    // Clique num item do sidebar: cada arquivo é uma página própria, que abre
-    // (ou ativa, se já aberta) numa aba no meio — igual abrir um arquivo numa IDE.
-    openNode(node) {
-      if (this.$route.path !== node.path) {
-        this.$router.push(node.path);
-      }
-      if (window.innerWidth <= 900) this.sidebarOpen = false;
-    },
-    activateTab(tab) {
-      if (this.$route.path !== tab.path) this.$router.push(tab.path);
-    },
-    closeTab(tab) {
-      const idx = this.openTabs.findIndex((t) => t.path === tab.path);
-      if (idx === -1 || this.openTabs.length === 1) return;
-      const wasActive = this.$route.path === tab.path;
-      this.openTabs.splice(idx, 1);
-      if (wasActive) {
-        const next = this.openTabs[idx] || this.openTabs[idx - 1];
-        this.$router.push(next.path);
-      }
+      this.fontSizeStep = Math.min(4, Math.max(-2, this.fontSizeStep + step));
+      localStorage.setItem('rn-font-step', String(this.fontSizeStep));
+      document.documentElement.style.fontSize = `${100 + this.fontSizeStep * 10}%`;
     },
     skipToMain() {
       const el = document.getElementById('main-content');
@@ -339,474 +224,459 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+/* =========================================================================
+   Design tokens — tema claro (padrão) / escuro / alto contraste
+   ========================================================================= */
+:root {
+  --bg-base: #ffffff;
+  --bg-surface: #f6f7f9;
+  --bg-surface-raised: #ffffff;
+  --text-main: #14161a;
+  --text-muted: #52596b;
+  --accent-core: #1d4ed8;
+  --accent-hover: #1e40af;
+  --accent-dim: rgba(29, 78, 216, 0.1);
+  --accent-border: #d9dce3;
+  --card-shadow: rgba(15, 23, 42, 0.08);
+  --scrim-overlay: rgba(15, 23, 42, 0.6);
 
-/* =========================================
-   TEMA DRACULA (ESCURO) — padrão
-   ========================================= */
-:root,
-.theme-dracula {
-  --bg-base: #282a36;
-  --bg-surface: rgba(68, 71, 90, 0.45);
-  --accent-core: #bd93f9;
-  --accent-dim: rgba(189, 147, 249, 0.15);
-  --accent-border: rgba(189, 147, 249, 0.35);
-  --accent-warm: #ffb86c;
-  --text-main: #f8f8f2;
-  --text-muted: #6272a4;
-  --scrim-overlay: rgba(33, 34, 44, 0.92);
-  --card-shadow: rgba(0, 0, 0, 0.45);
-
-  --ide-titlebar-bg: #21222c;
-  --ide-sidebar-bg: #21222c;
-  --ide-sidebar-hover: rgba(98, 114, 164, 0.18);
-  --ide-sidebar-active-bg: rgba(189, 147, 249, 0.18);
-  --ide-sidebar-active-text: #bd93f9;
-  --ide-tab-bg: #191a21;
-  --ide-tab-active-bg: #282a36;
-  --ide-statusbar-bg: #21222c;
-  --ide-border: #14151b;
-  --ide-icon-vue: #50fa7b;
-  --ide-icon-js: #f1fa8c;
-  --ide-icon-json: #ffb86c;
-  --ide-icon-md: #8be9fd;
-  --ide-icon-log: #8b8fa3;
-  --ide-icon-folder: #90a4d4;
-
-  --code-bg: #21222c;
-  --code-plain: #f8f8f2;
-  --code-heading: #ff79c6;
-  --code-comment: #6272a4;
-  --code-string: #f1fa8c;
-  --code-key: #8be9fd;
-  --code-num: #bd93f9;
-  --code-bool: #50fa7b;
-  --code-punct: #f8f8f2;
-  --code-lineno: #6272a4;
-
-  --font-ui: 'Space Grotesk', sans-serif;
-  --font-read: 'Inter', sans-serif;
-  --font-code: 'JetBrains Mono', monospace;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
 
   --space-sm: 0.5rem;
   --space-md: 1rem;
-  --space-lg: 2rem;
-  --space-xl: clamp(3rem, 6vw, 5.5rem);
+  --space-lg: 1.75rem;
+  --space-xl: 3rem;
 
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 18px;
+  --font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-read: 'Atkinson Hyperlegible', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-code: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  --focus-ring: 3px solid var(--accent-core);
+  color-scheme: light;
 }
 
-/* =========================================
-   TEMA CAPPUCCINO (CLARO)
-   ========================================= */
-.theme-cappuccino {
-  --bg-base: #f7f1e8;
-  --bg-surface: rgba(255, 250, 243, 0.85);
-  --accent-core: #6f4e37;
-  --accent-dim: rgba(111, 78, 55, 0.08);
-  --accent-border: rgba(111, 78, 55, 0.25);
-  --accent-warm: #c17a3d;
-  --text-main: #4a3728;
-  --text-muted: #8a7361;
-  --scrim-overlay: rgba(239, 230, 216, 0.9);
-  --card-shadow: rgba(111, 78, 55, 0.12);
-
-  --ide-titlebar-bg: #efe6d8;
-  --ide-sidebar-bg: #efe6d8;
-  --ide-sidebar-hover: rgba(111, 78, 55, 0.08);
-  --ide-sidebar-active-bg: rgba(111, 78, 55, 0.16);
-  --ide-sidebar-active-text: #6f4e37;
-  --ide-tab-bg: #e7dcc9;
-  --ide-tab-active-bg: #fffaf3;
-  --ide-statusbar-bg: #efe6d8;
-  --ide-border: #ddcfb8;
-  --ide-icon-vue: #2f9e63;
-  --ide-icon-js: #a8790a;
-  --ide-icon-json: #b5651d;
-  --ide-icon-md: #2b7a9e;
-  --ide-icon-log: #8a7361;
-  --ide-icon-folder: #a9652e;
-
-  --code-bg: #fffaf3;
-  --code-plain: #4a3728;
-  --code-heading: #9a3f6b;
-  --code-comment: #8a7361;
-  --code-string: #b5651d;
-  --code-key: #2b7a9e;
-  --code-num: #6f4e37;
-  --code-bool: #2f9e63;
-  --code-punct: #4a3728;
-  --code-lineno: #8a7361;
+:root[data-theme='dark'] {
+  --bg-base: #101216;
+  --bg-surface: #181b21;
+  --bg-surface-raised: #1e222a;
+  --text-main: #f2f4f8;
+  --text-muted: #a9b0c0;
+  --accent-core: #7fa4ff;
+  --accent-hover: #a4c0ff;
+  --accent-dim: rgba(127, 164, 255, 0.16);
+  --accent-border: #2b3040;
+  --card-shadow: rgba(0, 0, 0, 0.45);
+  --scrim-overlay: rgba(0, 0, 0, 0.7);
+  color-scheme: dark;
 }
 
-/* =========================================
-   ALTO CONTRASTE (ACESSIBILIDADE — prioridade máxima)
-   ========================================= */
-.high-contrast-mode {
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg-base: #101216;
+    --bg-surface: #181b21;
+    --bg-surface-raised: #1e222a;
+    --text-main: #f2f4f8;
+    --text-muted: #a9b0c0;
+    --accent-core: #7fa4ff;
+    --accent-hover: #a4c0ff;
+    --accent-dim: rgba(127, 164, 255, 0.16);
+    --accent-border: #2b3040;
+    --card-shadow: rgba(0, 0, 0, 0.45);
+    --scrim-overlay: rgba(0, 0, 0, 0.7);
+    color-scheme: dark;
+  }
+}
+
+:root[data-contrast='high'] {
   --bg-base: #000000;
   --bg-surface: #000000;
-  --accent-core: #FFFF00;
-  --accent-dim: transparent;
-  --accent-border: #FFFF00;
-  --accent-warm: #FFFF00;
-  --text-main: #FFFFFF;
-  --text-muted: #FFFFFF;
-  --scrim-overlay: #000000;
+  --bg-surface-raised: #0a0a0a;
+  --text-main: #ffffff;
+  --text-muted: #f2f2f2;
+  --accent-core: #ffd60a;
+  --accent-hover: #ffe066;
+  --accent-dim: rgba(255, 214, 10, 0.2);
+  --accent-border: #ffffff;
   --card-shadow: transparent;
-
-  --ide-titlebar-bg: #000000;
-  --ide-sidebar-bg: #000000;
-  --ide-sidebar-hover: rgba(255, 255, 0, 0.15);
-  --ide-sidebar-active-bg: rgba(255, 255, 0, 0.25);
-  --ide-sidebar-active-text: #FFFF00;
-  --ide-tab-bg: #000000;
-  --ide-tab-active-bg: #000000;
-  --ide-statusbar-bg: #000000;
-  --ide-border: #FFFF00;
-  --ide-icon-vue: #FFFF00;
-  --ide-icon-js: #FFFF00;
-  --ide-icon-json: #FFFF00;
-  --ide-icon-md: #FFFF00;
-  --ide-icon-log: #FFFF00;
-  --ide-icon-folder: #FFFF00;
-
-  --code-bg: #000000;
-  --code-plain: #FFFFFF;
-  --code-heading: #FFFF00;
-  --code-comment: #FFFFFF;
-  --code-string: #FFFF00;
-  --code-key: #FFFF00;
-  --code-num: #FFFFFF;
-  --code-bool: #FFFF00;
-  --code-punct: #FFFFFF;
-  --code-lineno: #FFFFFF;
+  --scrim-overlay: rgba(0, 0, 0, 0.9);
+  --focus-ring: 3px solid #ffd60a;
+  color-scheme: dark;
 }
 
-/* RESET */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { font-size: 100%; }
+/* =========================================================================
+   Reset & base
+   ========================================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+html, body { margin: 0; padding: 0; }
 
 body {
-  font-family: var(--font-read);
-  background-color: var(--bg-base);
+  background: var(--bg-base);
   color: var(--text-main);
-  line-height: 1.6;
-}
-
-.ide-root {
+  font-family: var(--font-read);
+  font-size: 1.0625rem;
+  line-height: 1.65;
   min-height: 100vh;
-  background-color: var(--bg-base);
-  transition: background-color 0.3s ease;
 }
 
-/* =========================================
-   ACESSIBILIDADE
-   ========================================= */
-.skip-link {
-  position: absolute; top: -100px; left: 0;
-  background: var(--accent-core); color: var(--bg-base);
-  padding: var(--space-md); z-index: 9999;
-  font-family: var(--font-ui); font-weight: bold; text-transform: uppercase;
-  transition: top 0.2s; text-decoration: none;
-}
-.skip-link:focus { top: 0; }
+img { max-width: 100%; display: block; }
+
+h1, h2, h3, h4 { font-family: var(--font-ui); font-weight: 700; line-height: 1.25; color: var(--text-main); }
+
+a { color: var(--accent-core); }
+a:hover { color: var(--accent-hover); }
+
+:focus-visible { outline: var(--focus-ring); outline-offset: 3px; border-radius: 2px; }
 
 .sr-only {
-  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-*:focus-visible {
-  outline: 2px dashed var(--accent-core); outline-offset: 2px;
-  box-shadow: 0 0 15px var(--accent-dim); border-radius: 4px;
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-md);
+  z-index: 3000;
+  background: var(--accent-core);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.15s ease;
 }
+.skip-link:focus { top: var(--space-md); }
 
+/* =========================================================================
+   Reduced motion
+   ========================================================================= */
 @media (prefers-reduced-motion: reduce) {
-  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
 }
+html.force-reduced-motion *, html.force-reduced-motion *::before, html.force-reduced-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+html { scroll-behavior: smooth; }
 
-/* =========================================
-   BARRA DE TÍTULO (estilo IntelliJ IDEA)
-   ========================================= */
-.ide-titlebar {
-  height: 48px;
+/* =========================================================================
+   Accessibility preferences bar
+   ========================================================================= */
+.a11y-bar {
+  background: var(--text-main);
+  color: var(--bg-base);
+}
+.a11y-bar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.4rem var(--space-md);
   display: flex;
   align-items: center;
-  gap: var(--space-lg);
-  padding: 0 var(--space-md);
-  background: var(--ide-titlebar-bg);
-  border-bottom: 1px solid var(--ide-border);
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
 }
-.ide-titlebar-left { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.ide-dot { width: 11px; height: 11px; border-radius: 50%; }
-.ide-dot--red { background: #ff5f57; }
-.ide-dot--yellow { background: #febc2e; }
-.ide-dot--green { background: #28c840; }
-.ide-titlebar-brand {
-  display: flex; align-items: center; gap: 6px; margin-left: 10px;
-  color: var(--text-main); text-decoration: none;
-  font-family: var(--font-ui); font-weight: 600; font-size: 0.95rem;
+.a11y-bar-label { opacity: 0.75; margin-right: 0.15rem; }
+.a11y-btn {
+  background: transparent;
+  color: inherit;
+  border: 1px solid currentColor;
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.6rem;
+  min-height: 24px;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  opacity: 0.85;
 }
-.ide-titlebar-brand svg { color: var(--accent-core); width: 16px; height: 16px; }
-.ide-titlebar-project { color: var(--text-muted); }
-.ide-titlebar-sep { color: var(--text-muted); }
-.ide-titlebar-file { color: var(--text-main); }
+.a11y-btn:hover { opacity: 1; }
+.a11y-btn--active { background: var(--accent-core); border-color: var(--accent-core); color: #101216; opacity: 1; font-weight: 600; }
 
-.ide-titlebar-menu {
-  display: flex; align-items: center; gap: 4px; flex: 1;
-  overflow-x: auto;
-}
-.ide-menu-item {
-  color: var(--text-muted); text-decoration: none; font-family: var(--font-ui);
-  font-size: 0.85rem; padding: 6px 12px; border-radius: var(--radius-sm);
-  white-space: nowrap; transition: background 0.2s, color 0.2s;
-}
-.ide-menu-item:hover { background: var(--ide-sidebar-hover); color: var(--text-main); }
-.ide-menu-item--active { color: var(--accent-core); font-weight: 600; }
-
-.ide-titlebar-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-.ide-title-btn {
-  background: transparent; color: var(--text-muted);
-  border: 1px solid var(--accent-border); border-radius: var(--radius-sm);
-  padding: 5px 10px; font-family: var(--font-code); font-size: 0.8rem; font-weight: 700;
-  cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center;
-  transition: background 0.2s, color 0.2s;
-}
-.ide-title-btn svg { width: 15px; height: 15px; }
-.ide-title-btn:hover, .ide-title-btn--active { background: var(--accent-core); color: var(--bg-base); }
-
-.ide-theme-toggle {
-  display: flex; align-items: center; gap: 6px;
-  background: var(--accent-dim); color: var(--accent-core);
-  border: 1px solid var(--accent-border); border-radius: var(--radius-sm);
-  padding: 5px 12px; font-family: var(--font-ui); font-weight: 600; font-size: 0.8rem;
-  cursor: pointer; transition: background 0.2s, transform 0.2s;
-}
-.ide-theme-toggle svg { width: 16px; height: 16px; }
-.ide-theme-toggle:hover { background: var(--accent-core); color: var(--bg-base); transform: translateY(-1px); }
-
-/* =========================================
-   WORKBENCH (sidebar + editor + terminal)
-   ========================================= */
-.ide-workbench {
-  display: flex;
-  height: calc(100vh - 48px - 30px);
-  height: calc(100dvh - 48px - 30px);
-}
-
-.ide-activity-bar {
-  width: 42px; flex-shrink: 0;
-  background: var(--ide-titlebar-bg);
-  border-right: 1px solid var(--ide-border);
-  display: flex; flex-direction: column; align-items: center;
-  padding-top: var(--space-sm); gap: 4px;
-}
-.ide-activity-btn {
-  width: 32px; height: 32px; border-radius: var(--radius-sm);
-  background: transparent; border: none; color: var(--text-muted);
-  display: flex; align-items: center; justify-content: center; cursor: pointer;
-}
-.ide-activity-btn svg { width: 18px; height: 18px; }
-.ide-activity-btn:hover { background: var(--ide-sidebar-hover); color: var(--text-main); }
-.ide-activity-btn--active { color: var(--accent-core); background: var(--accent-dim); }
-
-.ide-sidebar-backdrop { display: none; }
-
-.ide-main {
-  flex: 1; min-width: 0;
-  display: flex; flex-direction: column;
-}
-
-.ide-tabbar {
-  display: flex; align-items: stretch; overflow-x: auto;
-  background: var(--ide-tab-bg); border-bottom: 1px solid var(--ide-border);
-  flex-shrink: 0;
-}
-.ide-tab {
-  display: flex; align-items: center; gap: 7px;
-  background: transparent; border: none; border-right: 1px solid var(--ide-border);
-  color: var(--text-muted); font-family: var(--font-code); font-size: 0.82rem;
-  padding: 9px 10px 9px 14px; cursor: pointer; white-space: nowrap;
-  border-bottom: 2px solid transparent;
-}
-.ide-tab:hover { color: var(--text-main); }
-.ide-tab--active {
-  background: var(--ide-tab-active-bg); color: var(--text-main);
-  border-bottom-color: var(--accent-core);
-}
-.ide-tab-icon--vue { color: var(--ide-icon-vue); }
-.ide-tab-icon--js { color: var(--ide-icon-js); }
-.ide-tab-close {
-  display: flex; align-items: center; justify-content: center;
-  width: 16px; height: 16px; border-radius: 3px; color: var(--text-muted);
-}
-.ide-tab-close:hover { background: var(--ide-sidebar-hover); color: var(--text-main); }
-.ide-tab-close svg { width: 10px; height: 10px; }
-
-.ide-breadcrumb {
-  display: flex; align-items: center; gap: 6px; flex-shrink: 0;
-  padding: 5px 14px; font-family: var(--font-code); font-size: 0.72rem;
-  color: var(--text-muted); background: var(--bg-base); border-bottom: 1px solid var(--ide-border);
-}
-.ide-breadcrumb svg { width: 12px; height: 12px; color: var(--accent-core); }
-.ide-breadcrumb-sep { opacity: 0.6; }
-
-.ide-editor-content {
-  flex: 1; min-height: 0; overflow-y: auto;
+/* =========================================================================
+   Site header
+   ========================================================================= */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   background: var(--bg-base);
-  padding: var(--space-lg);
-}
-.ide-editor-content #main-content {
-  max-width: 1000px; margin: 0 auto;
-}
-@media (min-width: 1440px) { .ide-editor-content #main-content { max-width: 1150px; } }
-@media (min-width: 1800px) { .ide-editor-content #main-content { max-width: 1320px; } }
-
-.ide-terminal-dock {
-  height: 260px; flex-shrink: 0;
-}
-
-/* =========================================
-   BARRA DE STATUS
-   ========================================= */
-.ide-statusbar {
-  height: 30px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 var(--space-md);
-  background: var(--ide-statusbar-bg);
-  border-top: 1px solid var(--ide-border);
-  font-family: var(--font-code); font-size: 0.72rem; color: var(--text-muted);
-}
-.ide-statusbar-left, .ide-statusbar-right { display: flex; align-items: center; gap: var(--space-md); }
-.ide-statusbar-item { display: flex; align-items: center; gap: 5px; }
-.ide-statusbar-item svg { width: 12px; height: 12px; }
-.ide-statusbar-item--ok { color: var(--ide-icon-vue); }
-.ide-statusbar-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-family: var(--font-code); font-size: 0.72rem; }
-.ide-statusbar-btn:hover { color: var(--accent-core); }
-
-/* =========================================
-   MODO JOGO (tela cheia, layout de página normal)
-   ========================================= */
-.game-shell {
-  max-width: 1000px; margin: 0 auto; padding: 0 var(--space-lg);
-  min-height: 100dvh; background: var(--bg-base);
-}
-@media (min-width: 1440px) { .game-shell { max-width: 1200px; } }
-
-/* =========================================
-   COMPONENTES COMPARTILHADOS (usados pelas páginas)
-   ========================================= */
-section { margin-bottom: var(--space-xl); }
-.section-title {
-  font-family: var(--font-ui); font-size: 2.2rem; color: var(--text-main);
-  margin-bottom: var(--space-lg); padding-bottom: var(--space-md);
-  display: flex; align-items: center; gap: var(--space-md);
   border-bottom: 1px solid var(--accent-border);
 }
-.section-title::before {
-  content: ''; display: block; width: 10px; height: 10px; border-radius: 50%;
-  background: var(--accent-core); box-shadow: 0 0 10px var(--accent-dim); flex-shrink: 0;
+.site-header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+.brand {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  text-decoration: none;
+  margin-right: auto;
+}
+.brand-name { font-family: var(--font-ui); font-weight: 700; font-size: 1.05rem; color: var(--text-main); }
+.brand-role { font-size: 0.75rem; color: var(--text-muted); }
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  width: 40px;
+  height: 40px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.primary-nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+.nav-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--accent-border);
+  margin: 0 0.35rem;
+}
+.nav-link {
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-main);
+  text-decoration: none;
+  padding: 0.45rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+.nav-link:hover { background: var(--accent-dim); color: var(--accent-core); }
+.nav-link--active { color: var(--accent-core); font-weight: 700; }
+
+@media (max-width: 780px) {
+  .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
+  .primary-nav {
+    display: none;
+    position: absolute;
+    left: 0; right: 0; top: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    background: var(--bg-base);
+    border-bottom: 1px solid var(--accent-border);
+    padding: var(--space-sm) var(--space-md) var(--space-md);
+  }
+  .primary-nav--open { display: flex; }
+  .nav-divider { display: none; }
+  .site-header { position: relative; }
+  .nav-link { padding: 0.65rem 0.4rem; border-bottom: 1px solid var(--accent-border); border-radius: 0; }
+}
+
+/* =========================================================================
+   Layout / typography helpers shared by every page
+   ========================================================================= */
+main {
+  display: block;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-md) var(--space-xl);
+}
+
+section { margin-bottom: var(--space-xl); scroll-margin-top: 5.5rem; }
+section:last-child { margin-bottom: 0; }
+
+.section-title {
+  font-size: 1.4rem;
+  margin: 0 0 var(--space-md);
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent-border);
 }
 
 .hud-card {
   background: var(--bg-surface);
   border: 1px solid var(--accent-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: var(--space-lg);
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 20px var(--card-shadow);
-  transition: transform 0.35s cubic-bezier(.2,.8,.2,1), border-color 0.35s cubic-bezier(.2,.8,.2,1),
-    box-shadow 0.35s cubic-bezier(.2,.8,.2,1), background 0.3s ease;
-  backdrop-filter: blur(10px);
-  color: var(--text-main);
+  box-shadow: 0 1px 3px var(--card-shadow);
 }
-.hud-card p, .hud-card strong { color: var(--text-main); }
-.hud-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--accent-core);
-  box-shadow: 0 8px 28px var(--accent-dim);
+
+.card-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem; }
+.card-title { font-size: 1.1rem; margin: 0; }
+.card-period { font-family: var(--font-ui); font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; }
+.card-desc { color: var(--text-main); }
+.card-desc p { margin: 0 0 0.6rem; }
+.card-desc p:last-child { margin-bottom: 0; }
+.card-desc ul { margin: 0; }
+
+.tech-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0; margin: var(--space-sm) 0 0; }
+.tech-tag {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent-core);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
 }
-.high-contrast-mode .hud-card { border-width: 2px; box-shadow: none !important; }
 
-.card-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--space-md); border-bottom: 1px solid var(--accent-dim); padding-bottom: var(--space-sm); }
-.card-title { font-family: var(--font-ui); font-size: 1.6rem; color: var(--text-main); margin-bottom: 0; }
-.card-period { font-family: var(--font-code); font-size: 0.85rem; color: var(--accent-core); }
-
-.card-desc { color: var(--text-main); font-size: 0.95rem; flex-grow: 1; margin-bottom: var(--space-lg); }
-.card-desc p, .card-desc ul, .card-desc li { color: var(--text-main) !important; }
-
-.project-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-lg); }
-
-.tech-list { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-bottom: var(--space-lg); }
-.tech-tag { font-family: var(--font-code); font-size: 0.75rem; color: var(--accent-core); background: var(--accent-dim); border: 1px solid var(--accent-border); padding: 4px 10px; border-radius: var(--radius-sm); }
+.project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-md); }
 
 .btn-hud {
-  display: inline-flex; align-items: center; gap: 8px; background: var(--accent-dim); color: var(--accent-core);
-  border: 1px solid var(--accent-border); border-radius: var(--radius-md); padding: 8px 18px; font-family: var(--font-ui); font-size: 1.1rem;
-  text-decoration: none; text-transform: uppercase; align-self: flex-start;
-  transition: background 0.3s cubic-bezier(.2,.8,.2,1), color 0.3s cubic-bezier(.2,.8,.2,1),
-    box-shadow 0.3s cubic-bezier(.2,.8,.2,1), transform 0.3s cubic-bezier(.2,.8,.2,1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: var(--text-main);
+  background: var(--bg-surface-raised);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+  line-height: 1.2;
 }
-.btn-hud:hover {
-  background: var(--accent-core); color: var(--bg-base);
-  box-shadow: 0 0 18px var(--accent-dim); transform: translateY(-2px) scale(1.02);
-}
-.btn-hud--live { background: var(--accent-core); color: var(--bg-base); font-weight: 700; }
-.btn-hud--live:hover {
-  box-shadow: 0 0 26px var(--accent-warm); background: var(--accent-warm);
-  transform: translateY(-2px) scale(1.02);
-}
+.btn-hud:hover { border-color: var(--accent-core); color: var(--accent-core); }
+.btn-hud--live { background: var(--accent-core); border-color: var(--accent-core); color: #ffffff; }
+.btn-hud--live:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: #ffffff; }
 
-.timeline { list-style: none; position: relative; padding-left: 30px; }
-.timeline::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
-  background: linear-gradient(to bottom, var(--accent-core), transparent);
-}
-.timeline-item { position: relative; margin-bottom: var(--space-lg); }
+.timeline { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--accent-border); }
+.timeline-item { position: relative; padding: 0 0 var(--space-lg) var(--space-lg); }
+.timeline-item:last-child { padding-bottom: 0; }
 .timeline-item::before {
-  content: ''; position: absolute; left: -36px; top: 6px; width: 14px; height: 14px;
-  background: var(--bg-base); border: 2px solid var(--accent-core); border-radius: 50%;
-  box-shadow: 0 0 10px var(--accent-dim); transition: background 0.3s;
+  content: '';
+  position: absolute;
+  left: -7px; top: 0.35rem;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--accent-core);
+  border: 2px solid var(--bg-base);
 }
-.timeline-date { font-family: var(--font-code); font-size: 0.85rem; color: var(--accent-core); margin-bottom: 4px; display: block; }
-.timeline-title { font-family: var(--font-ui); font-size: 1.3rem; color: var(--text-main); margin-bottom: 2px; }
-.timeline-org { font-weight: 600; color: var(--text-main); font-size: 1rem; margin-bottom: 8px; }
-.timeline-desc { color: var(--text-muted); font-size: 0.95rem; }
+.timeline-date { font-family: var(--font-ui); font-size: 0.78rem; font-weight: 600; color: var(--accent-core); text-transform: uppercase; letter-spacing: 0.02em; }
+.timeline-title { font-size: 1.05rem; margin: 0.15rem 0 0.1rem; }
+.timeline-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--accent-core);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+  vertical-align: middle;
+}
+.timeline-org { font-family: var(--font-ui); font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.4rem; }
+.timeline-desc { margin: 0; }
 
-/* =========================================
-   RESPONSIVIDADE
-   ========================================= */
-@media (max-width: 900px) {
-  .ide-titlebar-menu { display: none; }
-  .ide-sidebar-backdrop {
-    display: block; position: fixed; inset: 48px 0 30px 0;
-    background: rgba(0, 0, 0, 0.45); z-index: 40;
-  }
-  .ide-workbench .ide-sidebar {
-    position: fixed; top: 48px; bottom: 30px; left: 42px;
-    width: min(80vw, 300px); z-index: 41; box-shadow: 4px 0 24px rgba(0,0,0,0.35);
-  }
+/* =========================================================================
+   Hero / stats (usados pela Home)
+   ========================================================================= */
+.hero { margin-bottom: var(--space-xl); }
+.hero-eyebrow {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-core);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.5rem;
+}
+.hero h1 { font-size: 2.1rem; margin: 0 0 0.4rem; }
+.hero-role { font-family: var(--font-ui); font-size: 1.1rem; color: var(--text-muted); margin: 0 0 var(--space-md); }
+.hero-summary { max-width: 62ch; margin: 0 0 var(--space-md); }
+.hero-actions { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-md); }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-sm);
+  margin: var(--space-lg) 0 0;
+}
+.stat-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  text-align: left;
+}
+.stat-value {
+  font-family: var(--font-ui);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--accent-core);
+  font-variant-numeric: tabular-nums;
+  display: block;
+}
+.stat-label { font-size: 0.82rem; color: var(--text-muted); }
+
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-md); }
+.skill-group-title { font-family: var(--font-ui); font-size: 0.95rem; margin: 0 0 0.5rem; }
+
+.publication-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-sm); }
+.note-secondary { font-size: 0.9rem; color: var(--text-muted); margin-top: var(--space-md); }
+
+/* Modo jogo: ocupa a tela inteira sem cabeçalho/rodapé */
+.game-shell { min-height: 100vh; }
+
+/* =========================================================================
+   Footer
+   ========================================================================= */
+.site-footer {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--accent-border);
+  padding: var(--space-xl) var(--space-md) var(--space-lg);
+}
+.site-footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-lg);
+}
+.footer-name { font-family: var(--font-ui); font-weight: 700; margin: 0 0 0.2rem; }
+.footer-tagline { color: var(--text-muted); font-size: 0.9rem; margin: 0; }
+.footer-heading { font-family: var(--font-ui); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin: 0 0 0.5rem; }
+.footer-links { list-style: none; margin: 0.6rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.92rem; }
+.footer-links a { color: var(--text-main); text-decoration: none; }
+.footer-links a:hover { color: var(--accent-core); text-decoration: underline; }
+.footer-note {
+  max-width: 1100px;
+  margin: var(--space-lg) auto 0;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--accent-border);
+  color: var(--text-muted);
+  font-size: 0.8rem;
 }
 
-@media (max-width: 640px) {
-  .ide-titlebar { gap: var(--space-sm); padding: 0 8px; }
-  .ide-titlebar-brand { margin-left: 4px; }
-  .ide-titlebar-project { display: none; }
-  .ide-titlebar-sep { display: none; }
-  .ide-title-btn:nth-of-type(1), .ide-title-btn:nth-of-type(2) { display: none; }
-  .ide-theme-toggle span { display: none; }
-  .ide-terminal-dock { height: 200px; }
-  .ide-editor-content { padding: var(--space-md); }
-  .section-title { font-size: 1.7rem; }
-  .card-header { flex-direction: column; }
-  .ide-statusbar { font-size: 0.65rem; padding: 0 8px; }
-  .ide-statusbar-left, .ide-statusbar-right { gap: var(--space-sm); }
-}
-
-@media (max-width: 768px) {
-  .game-shell { padding: 0; }
+/* =========================================================================
+   Print — o currículo precisa ficar apresentável impresso / salvo em PDF
+   ========================================================================= */
+@media print {
+  .a11y-bar, .site-header, .site-footer, .skip-link { display: none !important; }
+  body { font-size: 12pt; color: #000; background: #fff; }
+  main { max-width: 100%; padding: 0; }
+  a { color: #000; text-decoration: underline; }
+  .hud-card { box-shadow: none; border: 1px solid #999; break-inside: avoid; }
+  section { break-inside: avoid-page; }
 }
 </style>

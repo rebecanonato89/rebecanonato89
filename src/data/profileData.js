@@ -1,18 +1,61 @@
-// Dados compartilhados entre a Home (narrativa em cards) e as visões "código"
-// abertas a partir do sidebar (sobre.md, experiencia.log, certificacoes.log,
-// deployments.json, contato.md) — uma única fonte de verdade para não duplicar.
+// Fonte única de dados do currículo: alimenta a Home (páginas em Vue),
+// public/resume.json (JSON Resume, para agentes de IA) e o JSON-LD embutido
+// em index.html (para buscadores). Editar aqui é o suficiente para atualizar
+// os três.
+
+export const basicsData = {
+  name: 'Rebeca Nonato',
+  label: 'Software Engineer — Backend, Distributed Systems & Cloud-Native',
+  summary:
+    'Engenheira de Software com mais de 7 anos de experiência, focada no desenho, implementação e sustentação de arquiteturas escaláveis. Prioriza a construção de sistemas sob restrições reais: consistência de dados, segurança corporativa, observabilidade e resiliência.',
+  email: 'rebecanonato89@gmail.com',
+  url: 'https://rebecanonato89.dev',
+  location: { countryName: 'Brasil' },
+  profiles: [
+    { network: 'LinkedIn', username: 'rebecanonato89', url: 'https://www.linkedin.com/in/rebecanonato89/' },
+    { network: 'GitHub', username: 'rebecanonato89', url: 'https://github.com/rebecanonato89' },
+  ],
+};
+
+export const highlightsData = [
+  { value: '7+', label: 'anos de experiência' },
+  { value: '50+', label: 'Lambdas em produção sustentadas' },
+  { value: '9', label: 'projetos em destaque' },
+  { value: '4', label: 'publicações acadêmicas' },
+];
+
+export const skillsData = [
+  {
+    category: 'Linguagens',
+    items: ['Java', 'Kotlin', 'TypeScript', 'C#', 'Python'],
+  },
+  {
+    category: 'Infraestrutura & Dados',
+    items: ['AWS (Lambda, ECS, EKS, EC2)', 'PostgreSQL', 'Kafka', 'SQS', 'MinIO', 'Docker', 'Kubernetes'],
+  },
+  {
+    category: 'Padrões Arquiteturais',
+    items: ['Clean Architecture', 'Arquitetura Hexagonal', 'Event-Driven Architecture', 'CQRS', 'Microsserviços', 'Multi-Tenant', 'DDD'],
+  },
+  {
+    category: 'Práticas & Operações',
+    items: ['TDD', 'CI/CD (GitHub Actions)', 'Outbox Pattern', 'Observabilidade (Datadog, CloudWatch)', 'RBAC', 'Gestão de incidentes (P1/P2)'],
+  },
+];
 
 export const experienceData = [
   {
     role: 'Software Engineer (Backend)',
     company: 'Alice (health tech)',
     period: 'Mar 2026 - Presente',
+    evolution: 'Atual',
     description: 'Desenvolvimento backend em Kotlin (JVM) em arquitetura orientada a eventos, com mensageria, em plataforma de saúde com requisitos de confiabilidade. Fluxo de desenvolvimento AI-native operado via terminal: planejamento, git worktrees, TDD, commits, criação de PRs e monitoramento pós-deploy.'
   },
   {
     role: 'Application Development Specialist (Senior Backend)',
     company: 'Accenture',
     period: 'Mai 2025 - Mar 2026',
+    evolution: 'Promoção',
     description: 'Promovida a Especialista em reconhecimento à atuação como referência técnica. Referência técnica em ambiente de microsserviços com +50 Lambdas (Node.js, Kotlin, Java/Spring Boot), recuperação de sistema legado crítico em Kotlin e gerenciamento de incidentes P1/P2 em war rooms.'
   },
   {
@@ -43,6 +86,7 @@ export const experienceData = [
     role: 'Professora Universitária',
     company: 'Universidade Federal de Lavras (UFLA)',
     period: 'Jan 2013 - Mai 2015',
+    evolution: 'Início de carreira',
     description: 'Lecionou disciplinas de algoritmos, linguagens de programação e bancos de dados (SQL e NoSQL).'
   }
 ];
