@@ -107,9 +107,11 @@
           </div>
 
           <div class="site-footer-col">
-            <p class="footer-heading">Para agentes de IA</p>
+            <p class="footer-heading">Currículo em outros formatos</p>
             <ul class="footer-links">
-              <li><a href="/resume.json">resume.json</a></li>
+              <li><a href="/rebeca-nonato-curriculo.pdf" download>PDF</a></li>
+              <li><a href="/resume.md" download>Markdown</a></li>
+              <li><a href="/resume.json">JSON (resume.json)</a></li>
               <li><a href="/llms.txt">llms.txt</a></li>
               <li><a href="/sitemap.xml">sitemap.xml</a></li>
             </ul>
@@ -634,6 +636,17 @@ section:last-child { margin-bottom: 0; }
 
 .publication-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-sm); }
 .note-secondary { font-size: 0.9rem; color: var(--text-muted); margin-top: var(--space-md); }
+.link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: var(--accent-core);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.link-btn:hover { color: var(--accent-hover); }
 
 /* Modo jogo: ocupa a tela inteira sem cabeçalho/rodapé */
 .game-shell { min-height: 100vh; }
