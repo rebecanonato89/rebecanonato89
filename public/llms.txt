@@ -8,6 +8,8 @@ Este site é otimizado tanto para leitura humana (incluindo pessoas com deficiê
 
 - [Currículo (HTML completo)](https://rebecanonato89.dev/): página única com resumo, experiência profissional, habilidades, projetos, certificações, formação e publicações acadêmicas.
 - [resume.json](https://rebecanonato89.dev/resume.json): mesmo currículo em formato estruturado [JSON Resume](https://jsonresume.org/schema/) — recomendado para parsing automatizado por agentes de IA.
+- [resume.md](https://rebecanonato89.dev/resume.md): mesmo currículo em Markdown simples, para agentes que preferem texto plano a HTML.
+- [rebeca-nonato-curriculo.pdf](https://rebecanonato89.dev/rebeca-nonato-curriculo.pdf): versão para download/impressão.
 
 ## Contato
 

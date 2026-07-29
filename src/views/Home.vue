@@ -8,9 +8,12 @@
 
       <div class="hero-actions">
         <a href="mailto:rebecanonato89@gmail.com" class="btn-hud btn-hud--live">Entrar em contato</a>
-        <button type="button" class="btn-hud" @click="printResume">
-          Baixar / imprimir currículo
-        </button>
+        <a href="/rebeca-nonato-curriculo.pdf" download class="btn-hud">
+          Baixar em PDF<span class="sr-only"> (arquivo rebeca-nonato-curriculo.pdf)</span>
+        </a>
+        <a href="/resume.md" download class="btn-hud">
+          Baixar em Markdown<span class="sr-only"> (arquivo resume.md)</span>
+        </a>
         <a href="https://www.linkedin.com/in/rebecanonato89/" target="_blank" rel="noopener noreferrer" class="btn-hud">
           LinkedIn<span class="sr-only"> (abre em nova aba)</span>
         </a>
@@ -18,6 +21,10 @@
           GitHub<span class="sr-only"> (abre em nova aba)</span>
         </a>
       </div>
+      <p class="note-secondary">
+        Prefere imprimir direto do navegador?
+        <button type="button" class="link-btn" @click="printResume">Imprimir esta página</button>.
+      </p>
 
       <div class="stats-grid" role="list" aria-label="Números em destaque">
         <div v-for="h in highlightsData" :key="h.label" class="stat-item" role="listitem">
