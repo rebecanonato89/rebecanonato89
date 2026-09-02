@@ -2,16 +2,16 @@
   "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/master/schema.json",
   "meta": {
     "canonical": "https://rebecanonato89.dev/resume.json",
-    "version": "v1.0.0",
-    "lastModified": "2026-07-29T00:00:00Z"
+    "version": "v1.1.0",
+    "lastModified": "2026-09-02T00:00:00Z"
   },
   "basics": {
     "name": "Rebeca Nonato",
-    "label": "Software Engineer — Backend, Distributed Systems & Cloud-Native",
+    "label": "Software Engineer — Backend & Distributed Systems",
     "image": "",
     "email": "rebecanonato89@gmail.com",
     "url": "https://rebecanonato89.dev",
-    "summary": "Engenheira de Software com mais de 7 anos de experiência, focada no desenho, implementação e sustentação de arquiteturas escaláveis. Prioriza a construção de sistemas sob restrições reais: consistência de dados, segurança corporativa, observabilidade e resiliência. Atualmente na Alice (health tech), desenvolvendo backend em Kotlin (JVM) em arquitetura orientada a eventos.",
+    "summary": "Engenheira de Software com mais de 10 anos de experiência em desenvolvimento de sistemas, com foco atual em backend, sistemas distribuídos e confiabilidade de produção. Atua com Kotlin, Java e Node.js/TypeScript em arquiteturas orientadas a eventos, integrações assíncronas e ambientes cloud.",
     "location": { "countryCode": "BR" },
     "profiles": [
       { "network": "LinkedIn", "username": "rebecanonato89", "url": "https://www.linkedin.com/in/rebecanonato89/" },
@@ -20,84 +20,60 @@
   },
   "work": [
     {
-      "name": "Alice (health tech)",
+      "name": "Alice",
       "position": "Software Engineer (Backend)",
       "startDate": "2026-03",
       "endDate": null,
-      "summary": "Desenvolvimento backend em Kotlin (JVM) em arquitetura orientada a eventos, com mensageria, em plataforma de saúde com requisitos de confiabilidade. Fluxo de desenvolvimento AI-native operado via terminal: planejamento, git worktrees, TDD, commits, criação de PRs e monitoramento pós-deploy."
+      "summary": "Desenvolvimento backend com Kotlin e Spring Boot, atuando em features end-to-end desde modelagem e definição técnica até implementação, testes, deploy e acompanhamento em produção. Participação como feature lead em frentes de maior complexidade, com sistemas orientados a eventos, PostgreSQL, mensageria, confiabilidade, investigação de incidentes, mentoria e colaboração cross-team. Uso de AI-assisted development em planejamento, implementação, testes, debugging, documentação e code review."
     },
     {
       "name": "Accenture",
       "position": "Application Development Specialist (Senior Backend)",
       "startDate": "2025-05",
       "endDate": "2026-03",
-      "summary": "Promovida a Especialista em reconhecimento à atuação como referência técnica em ambiente de microsserviços com +50 Lambdas (Node.js, Kotlin, Java/Spring Boot), recuperação de sistema legado crítico em Kotlin e gerenciamento de incidentes P1/P2 em war rooms."
+      "summary": "Promovida a Especialista em reconhecimento à atuação como referência técnica. Referência em ambiente de microsserviços com mais de 50 Lambdas usando Node.js, Kotlin e Java/Spring Boot, incluindo recuperação de sistema legado crítico em Kotlin e atuação em incidentes P1/P2."
     },
     {
       "name": "Accenture",
       "position": "Application Development Senior Analyst (Backend)",
       "startDate": "2021-05",
       "endDate": "2025-05",
-      "summary": "Atuação em múltiplos projetos e clientes de consultoria. Upgrade de runtime Node.js (v12→v18), otimização de queries e análise de logs (CloudWatch), mensageria com SQS/Kafka, pipelines CI/CD (CodePipeline, GitHub Actions, Docker) e monitoramento com Datadog."
+      "summary": "Atuação em múltiplos projetos de consultoria com backend distribuído e serverless. Modernização de runtime Node.js, otimização de queries, análise de logs com CloudWatch, mensageria com SQS/Kafka, pipelines CI/CD e observabilidade com Datadog."
     },
     {
       "name": "Vetta",
       "position": "Engenheira de Software Full Stack",
       "startDate": "2020-10",
       "endDate": "2021-05",
-      "summary": "Desenvolvimento em C# (.NET), React e Angular. Otimização pesada de queries (SQL Server tuning) e recuperação de projetos legados através de engenharia reversa e refatoração arquitetural."
+      "summary": "Desenvolvimento em C#/.NET, React e Angular, com foco em performance, tuning de SQL Server e recuperação de projetos legados por engenharia reversa e refatoração."
     },
     {
       "name": "FUNDECC/LEMAF",
       "position": "Analista de Sistemas Full Stack",
       "startDate": "2019-04",
       "endDate": "2020-10",
-      "summary": "APIs REST em C# (.NET) com integrações a gateways de pagamento governamentais. Gestão de branches e deploys entre ambientes (DEV a PROD) e resolução de incidentes críticos em produção."
+      "summary": "APIs REST em C#/.NET com integrações a gateways de pagamento, gestão de branches e deploys entre ambientes e resolução de incidentes em produção."
     },
     {
       "name": "Accenture",
       "position": "Analista de Sistemas",
       "startDate": "2016-01",
       "endDate": "2019-04",
-      "summary": "Manutenção de sistemas corporativos de alta disponibilidade (Mainframe, Natural/Adabas). Análise de logs, otimização batch e criação de jobs críticos (JCLs)."
+      "summary": "Manutenção de sistemas corporativos de alta disponibilidade em Mainframe com Natural/Adabas, análise de logs, otimização batch e criação de jobs críticos em JCL."
     },
     {
       "name": "Universidade Federal de Lavras (UFLA)",
       "position": "Professora Universitária",
       "startDate": "2013-01",
       "endDate": "2015-05",
-      "summary": "Lecionou disciplinas de algoritmos, linguagens de programação e bancos de dados (SQL e NoSQL)."
+      "summary": "Lecionou disciplinas de algoritmos, linguagens de programação e bancos de dados SQL e NoSQL."
     }
   ],
   "education": [
-    {
-      "institution": "FIAP",
-      "area": "Arquitetura e Desenvolvimento Java",
-      "studyType": "Especialização",
-      "startDate": "2024-01",
-      "endDate": "2026-12"
-    },
-    {
-      "institution": "Universidade Federal de Lavras (UFLA)",
-      "area": "Engenharia de Sistemas e Automação",
-      "studyType": "Mestrado",
-      "startDate": "2012-01",
-      "endDate": "2014-12"
-    },
-    {
-      "institution": "Anhanguera Educacional",
-      "area": "Sistemas de Informação",
-      "studyType": "Bacharelado",
-      "startDate": "2008-01",
-      "endDate": "2012-12"
-    },
-    {
-      "institution": "Faculdade Educacional da Lapa",
-      "area": "Matemática",
-      "studyType": "Licenciatura",
-      "startDate": "2017-01",
-      "endDate": "2017-12"
-    }
+    { "institution": "FIAP", "area": "Arquitetura e Desenvolvimento Java", "studyType": "Especialização", "startDate": "2024-01", "endDate": "2026-12" },
+    { "institution": "Universidade Federal de Lavras (UFLA)", "area": "Engenharia de Sistemas e Automação", "studyType": "Mestrado", "startDate": "2012-01", "endDate": "2014-12" },
+    { "institution": "Anhanguera Educacional", "area": "Sistemas de Informação", "studyType": "Bacharelado", "startDate": "2008-01", "endDate": "2012-12" },
+    { "institution": "Faculdade Educacional da Lapa", "area": "Matemática", "studyType": "Licenciatura", "startDate": "2017-01", "endDate": "2017-12" }
   ],
   "certificates": [
     { "name": "Reinvention with Agentic AI", "date": "2025-12", "issuer": "Accenture" },
@@ -109,96 +85,80 @@
     { "name": "Scrum Fundamentals", "date": "2017-01", "issuer": "SCRUMstudy" }
   ],
   "publications": [
-    {
-      "name": "O Cadastro Ambiental Rural (CAR) como instrumento de controle ambiental de uso e ocupação do imóvel rural",
-      "publisher": "XXI ENGEMA — Encontro Internacional sobre Gestão Empresarial e Meio Ambiente",
-      "releaseDate": "2019-12"
-    },
-    {
-      "name": "Inovação aberta no setor público: como o Ministério da Educação utilizou o crowdstorming para impulsionar a prospecção de soluções inovadoras",
-      "publisher": "Capítulo em \"Inovação no setor público: teoria, tendências e casos no Brasil\"",
-      "releaseDate": "2017-10"
-    },
-    {
-      "name": "Non-invasive method to analyse the risk of developing diabetic foot",
-      "publisher": "Healthcare Technology Letters",
-      "releaseDate": "2014-04"
-    },
-    {
-      "name": "Desenvolvimento de um Sistema Help Desk para a Universidade Vale do Rio Verde",
-      "publisher": "Revista da Universidade Vale do Rio Verde",
-      "releaseDate": "2013-08"
-    }
+    { "name": "O Cadastro Ambiental Rural (CAR) como instrumento de controle ambiental de uso e ocupação do imóvel rural", "publisher": "XXI ENGEMA — Encontro Internacional sobre Gestão Empresarial e Meio Ambiente", "releaseDate": "2019-12" },
+    { "name": "Inovação aberta no setor público: como o Ministério da Educação utilizou o crowdstorming para impulsionar a prospecção de soluções inovadoras", "publisher": "Capítulo em \"Inovação no setor público: teoria, tendências e casos no Brasil\"", "releaseDate": "2017-10" },
+    { "name": "Non-invasive method to analyse the risk of developing diabetic foot", "publisher": "Healthcare Technology Letters", "releaseDate": "2014-04" },
+    { "name": "Desenvolvimento de um Sistema Help Desk para a Universidade Vale do Rio Verde", "publisher": "Revista da Universidade Vale do Rio Verde", "releaseDate": "2013-08" }
   ],
   "skills": [
-    { "name": "Linguagens", "keywords": ["Java", "Kotlin", "TypeScript", "C#", "Python"] },
-    { "name": "Infraestrutura & Dados", "keywords": ["AWS (Lambda, ECS, EKS, EC2)", "PostgreSQL", "Kafka", "SQS", "MinIO", "Docker", "Kubernetes"] },
-    { "name": "Padrões Arquiteturais", "keywords": ["Clean Architecture", "Arquitetura Hexagonal", "Event-Driven Architecture", "CQRS", "Microsserviços", "Multi-Tenant", "DDD"] },
-    { "name": "Práticas & Operações", "keywords": ["TDD", "CI/CD (GitHub Actions)", "Outbox Pattern", "Observabilidade (Datadog, CloudWatch)", "RBAC", "Gestão de incidentes (P1/P2)"] }
+    { "name": "Backend", "keywords": ["Kotlin", "Java", "Node.js", "TypeScript", "Spring Boot", "NestJS", "PostgreSQL"] },
+    { "name": "Sistemas Distribuídos & Cloud", "keywords": ["Event-Driven Architecture", "Kafka", "SQS", "AWS Lambda", "ECS", "EKS", "EC2", "Docker", "Kubernetes"] },
+    { "name": "Arquitetura", "keywords": ["DDD", "Clean Architecture", "Arquitetura Hexagonal", "CQRS", "Outbox Pattern", "Microsserviços", "Multi-Tenant"] },
+    { "name": "Qualidade & Operações", "keywords": ["TDD", "CI/CD", "Observabilidade", "Datadog", "CloudWatch", "Idempotência", "DLQ", "RBAC", "Gestão de incidentes P1/P2"] }
   ],
   "projects": [
     {
-      "name": "ConcursoTrack",
-      "description": "Tracker de estudos para concursos públicos de alto nível (TCU, TCE-SP, CGU, SEFAZ-CE). Fila inteligente que une conteúdos de múltiplos concursos sem duplicação, checagem de tópico propagada, dashboard com streak/heatmap e auth via Google OAuth 2.0.",
-      "keywords": ["Node.js", "Express", "Prisma", "PostgreSQL", "React", "Vite", "Tailwind CSS", "Docker"],
-      "startDate": "2026-05",
-      "url": "https://github.com/rebecanonato89/concursotrack"
-    },
-    {
-      "name": "Hedge CLI",
-      "description": "CLI de pesquisa de doutorado: detector híbrido de \"Eager Test\" smells combinando análise estática via AST (tree-sitter) com LLM gating — o modelo de linguagem só é acionado quando o score heurístico é incerto.",
-      "keywords": ["Python", "AST", "LLMs", "Pesquisa", "Machine Learning"],
-      "startDate": "2025-09",
-      "url": "https://github.com/rebecanonato89/hedge-cli"
-    },
-    {
-      "name": "AllRev",
-      "description": "Plataforma SaaS multi-tenant em produção (cliente real: FN Monografias). Back-end em NestJS/TypeScript com PostgreSQL, JWT e RBAC; front-end SPA em Angular 17 com NgRx.",
-      "keywords": ["NestJS", "Angular 17", "PostgreSQL", "Multi-Tenant", "JWT"],
-      "startDate": "2025-04",
-      "url": "https://github.com/Devs-IO/allrev-backend"
-    },
-    {
-      "name": "Quotes Service",
-      "description": "MVP de domínio de seguros (Auto e Vida) em Kotlin explorando Domain-Driven Design, motor de cotação com aprovação/rejeição automática e emissão de apólice via eventos de domínio e coroutines.",
-      "keywords": ["Kotlin", "Spring Boot 3", "Java 17", "DDD", "Coroutines"],
-      "startDate": "2026-01",
-      "url": "https://github.com/rebecanonato89/quotes-service"
-    },
-    {
       "name": "ClinicFiapApp",
-      "description": "Microsserviços de agendamento hospitalar (Scheduler, Notification, History) com Outbox Pattern, CQRS, consumidores Kafka idempotentes e Dead Letter Queues.",
-      "keywords": ["Java", "Spring", "Kafka", "GraphQL", "CQRS"],
+      "description": "Projeto acadêmico colaborativo de backend distribuído com Outbox Pattern, CQRS, Kafka, consumidores idempotentes e DLQ.",
+      "keywords": ["Java", "Spring", "Kafka", "CQRS", "Outbox Pattern"],
       "startDate": "2025-08",
       "endDate": "2025-12",
       "url": "https://github.com/fiap-tech-challenge-java/clinicfiapp-monorepo"
     },
     {
       "name": "Food Fiapp",
-      "description": "API de gestão de restaurantes em Java 21/Spring Boot 3.5.5 seguindo Clean Architecture, cobertura de testes >90% (JUnit 5, Mockito, ArchUnit) e integração com object storage MinIO.",
-      "keywords": ["Java 21", "Clean Architecture", "MinIO", "Docker", "JUnit 5"],
+      "description": "Projeto acadêmico em Java 21/Spring Boot com Clean Architecture, ArchUnit, testes unitários e de integração e quality gate de cobertura no build via JaCoCo.",
+      "keywords": ["Java 21", "Spring Boot", "Clean Architecture", "ArchUnit", "Docker"],
       "startDate": "2025-07",
       "endDate": "2025-10",
       "url": "https://github.com/fiap-tech-challenge-java/food-fiapp"
     },
     {
+      "name": "Hedge CLI",
+      "description": "Pesquisa independente em Engenharia de Software que combina análise estática de testes Java via AST/tree-sitter, heurística, LLM gating e ensemble para detecção de Eager Test.",
+      "keywords": ["Python", "tree-sitter", "AST", "LLMs", "Machine Learning"],
+      "startDate": "2025-09",
+      "url": "https://github.com/rebecanonato89/hedge-cli"
+    },
+    {
+      "name": "AllRev",
+      "description": "Plataforma SaaS multi-tenant com backend NestJS/TypeScript, PostgreSQL, autenticação JWT e RBAC e frontend Angular 17.",
+      "keywords": ["NestJS", "Angular 17", "PostgreSQL", "Multi-Tenant", "JWT", "RBAC"],
+      "startDate": "2025-04",
+      "url": "https://github.com/Devs-IO/allrev-backend"
+    },
+    {
+      "name": "Quotes Service",
+      "description": "MVP em Kotlin explorando DDD, regras de domínio, eventos e processamento assíncrono com coroutines.",
+      "keywords": ["Kotlin", "Spring Boot", "DDD", "Coroutines"],
+      "startDate": "2026-01",
+      "url": "https://github.com/rebecanonato89/quotes-service"
+    },
+    {
       "name": "TechChallenge",
-      "description": "API REST de gestão de usuários em Java 21 com Arquitetura Hexagonal, autenticação via Spring Security e JWT com RBAC estruturado.",
-      "keywords": ["Java 21", "Arquitetura Hexagonal", "JWT", "Spring Security", "PostgreSQL"],
+      "description": "Projeto acadêmico Java 21 com Arquitetura Hexagonal, Spring Security, JWT/RBAC e PostgreSQL.",
+      "keywords": ["Java 21", "Spring Boot", "Arquitetura Hexagonal", "JWT", "PostgreSQL"],
       "startDate": "2025-05",
       "endDate": "2025-07",
       "url": "https://github.com/fiap-tech-challenge-java/fiap-tech-challenge"
     },
     {
+      "name": "ConcursoTrack",
+      "description": "Aplicação pessoal full-stack para organização de estudos, com fila unificada, progresso compartilhado, dashboard e Google OAuth.",
+      "keywords": ["Node.js", "Express", "Prisma", "PostgreSQL", "React", "Docker"],
+      "startDate": "2026-05",
+      "url": "https://github.com/rebecanonato89/concursotrack"
+    },
+    {
       "name": "Equinox Solar CRM",
-      "description": "CRM full-stack para gestão comercial de projetos de energia solar, back-end em NestJS e front-end em Next.js, ambiente containerizado com Docker.",
+      "description": "CRM full-stack para gestão comercial de projetos de energia solar, com backend NestJS, frontend Next.js e Docker.",
       "keywords": ["NestJS", "Next.js", "Docker"],
       "startDate": "2023-03",
       "endDate": "2023-12"
     },
     {
       "name": "Kube Backend",
-      "description": "Laboratório de infraestrutura: deploy de backend Node.js/Express com PostgreSQL em cluster Kubernetes local (Minikube), com ConfigMaps e Secrets para configuração sensível.",
+      "description": "Laboratório de infraestrutura com backend Node.js/Express e PostgreSQL em Kubernetes local.",
       "keywords": ["Node.js", "Express", "PostgreSQL", "Docker", "Kubernetes"],
       "startDate": "2025-11",
       "url": "https://github.com/rebecanonato89/kube-backend"
