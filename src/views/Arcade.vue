@@ -65,6 +65,15 @@ export default {
             'Jogo da memória com as tecnologias do meu dia a dia. Três dificuldades (16, 24 ou 36 cartas), cronômetro, contador de jogadas e recorde pessoal salvo no navegador.',
           stack: ['Vue 3', 'Animações CSS 3D', 'localStorage'],
         },
+        {
+          icon: '🔢',
+          title: '2048',
+          tag: 'CASUAL',
+          route: '/2048',
+          description:
+            'O clássico dos números. Setas ou WASD no desktop, swipe no celular. Pontuação, recorde salvo no navegador e opção de continuar jogando depois de alcançar o 2048.',
+          stack: ['Vue 3', 'Manipulação de matriz', 'localStorage'],
+        },
       ],
     };
   },
