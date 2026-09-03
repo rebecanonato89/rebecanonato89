@@ -2,87 +2,87 @@
   <main id="main-content">
     <section id="inicio" class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">Software Engineer · Backend &amp; Distributed Systems</p>
-        <h1 id="hero-title">I build backend systems<br><span>that need to keep working.</span></h1>
-        <p class="hero-name">Rebeca Nonato <span aria-hidden="true">/</span> Software Engineer</p>
-        <p class="hero-subheadline">Backend · Distributed Systems · Event-Driven · Cloud</p>
-        <p class="hero-stack" aria-label="Stack principal">Kotlin · Java · Node.js · AWS · Kafka</p>
-        <div class="actions" aria-label="Ações principais">
-          <a href="#projetos" class="button primary">Ver projetos</a>
-          <a href="https://github.com/rebecanonato89" target="_blank" rel="noopener noreferrer" class="button">GitHub<span class="sr-only"> (abre em nova aba)</span></a>
-          <a href="https://www.linkedin.com/in/rebecanonato89/" target="_blank" rel="noopener noreferrer" class="button">LinkedIn<span class="sr-only"> (abre em nova aba)</span></a>
-          <a :href="`mailto:${basicsData.email}`" class="button">Contato</a>
+        <p class="eyebrow">{{ copy.hero.eyebrow }}</p>
+        <h1 id="hero-title">{{ copy.hero.headline }}<br><span>{{ copy.hero.headlineAccent }}</span></h1>
+        <p class="hero-name">{{ copy.hero.nameRole }}</p>
+        <p class="hero-subheadline">{{ copy.hero.focus }}</p>
+        <p class="hero-stack" :aria-label="copy.hero.stack">{{ copy.hero.stack }}</p>
+        <div class="tech-strip" :aria-label="copy.hero.techLabel"><span v-for="technology in technologyLogos" :key="technology.name" class="tech-logo-item"><img :src="technology.src" :alt="technology.name" :class="{ 'tech-logo--mono': technology.mono }" loading="eager"/> <span>{{ technology.name }}</span></span></div>
+        <div class="actions" :aria-label="copy.hero.projects">
+          <a href="#projetos" class="button primary">{{ copy.hero.projects }}</a>
+          <a href="https://github.com/rebecanonato89" target="_blank" rel="noopener noreferrer" class="button">GitHub<span class="sr-only"> ({{ copy.a11y.external }})</span></a>
+          <a href="https://www.linkedin.com/in/rebecanonato89/" target="_blank" rel="noopener noreferrer" class="button">LinkedIn<span class="sr-only"> ({{ copy.a11y.external }})</span></a>
+          <a :href="`mailto:${basicsData.email}`" class="button">{{ copy.hero.contact }}</a>
         </div>
-        <div class="resume-links" aria-label="Currículo em outros formatos"><span>Currículo</span><a href="/rebeca-nonato-curriculo.pdf" download>PDF</a><a href="/resume.md" download>Markdown</a><a href="/resume.json">JSON</a><button type="button" @click="printResume">Imprimir</button></div>
+        <div class="resume-links" :aria-label="copy.footer.formats"><span>{{ copy.hero.resume }}</span><a href="/rebeca-nonato-curriculo.pdf" download>{{ copy.hero.pdf }}</a><a href="/resume.md" download>{{ copy.hero.markdown }}</a><a href="/resume.json">{{ copy.hero.json }}</a><button type="button" @click="printResume">{{ copy.hero.print }}</button></div>
       </div>
       <div class="system-visual" aria-hidden="true">
         <svg viewBox="0 0 620 470"><defs><linearGradient id="flow" x1="0" x2="1"><stop offset="0" stop-color="var(--accent-core)"/><stop offset="1" stop-color="var(--accent-cyan)"/></linearGradient></defs><g fill="none" stroke="url(#flow)" stroke-width="2"><path d="M92 105H242C278 105 278 190 314 190H475"/><path d="M92 344H220C266 344 266 265 312 265H520"/><path d="M314 190V265"/></g><g class="nodes"><rect x="42" y="70" width="110" height="70" rx="14"/><rect x="252" y="155" width="124" height="70" rx="14"/><rect x="250" y="230" width="128" height="70" rx="14"/><rect x="440" y="155" width="132" height="70" rx="14"/><rect x="458" y="309" width="114" height="70" rx="14"/></g><g class="labels" text-anchor="middle"><text x="97" y="111">REQUEST</text><text x="314" y="196">EVENT</text><text x="314" y="271">QUEUE</text><text x="506" y="196">CONSUMER</text><text x="515" y="350">STORE</text></g><g class="dots"><circle cx="202" cy="105" r="5"/><circle cx="411" cy="190" r="5"/><circle cx="184" cy="344" r="5"/><circle cx="415" cy="265" r="5"/></g></svg>
-        <p><span></span> designed for failure, recovery and change</p>
+        <p><span></span> {{ copy.hero.diagramNote }}</p>
       </div>
     </section>
 
     <section id="projetos" class="section projects" aria-labelledby="projetos-title">
-      <header class="section-heading"><div><p class="eyebrow">Selected Engineering Work</p><h2 id="projetos-title">Projetos em Destaque</h2></div><p>Decisões de engenharia documentadas em código público — do domínio ao deploy.</p></header>
+      <header class="section-heading"><div><p class="eyebrow">{{ copy.sections.selectedEyebrow }}</p><h2 id="projetos-title">{{ copy.sections.projectsTitle }}</h2></div><p>{{ copy.sections.projectsIntro }}</p></header>
       <div class="projects-layout">
         <article v-for="(project, index) in featuredProjects" :key="project.title" class="project-card" :class="{ lead: index === 0, closing: index === featuredProjects.length - 1 }">
           <div class="project-index" aria-hidden="true">0{{ index + 1 }}</div>
           <div class="project-content">
             <div class="project-meta"><span>{{ projectContext(project.title) }}</span><time>{{ project.period }}</time></div>
             <h3>{{ shortTitle(project.title) }}</h3>
-            <div class="project-description" v-html="project.description"></div>
-            <div v-if="projectFlow(project.title)" class="mini-flow" :aria-label="`Fluxo simplificado de ${shortTitle(project.title)}`"><template v-for="(step, i) in projectFlow(project.title)" :key="step"><span>{{ step }}</span><i v-if="i < projectFlow(project.title).length - 1" aria-hidden="true">→</i></template></div>
-            <ul class="tech-list" aria-label="Tecnologias e padrões"><li v-for="tech in project.stack" :key="tech">{{ tech }}</li></ul>
-            <a v-if="project.link" :href="project.link" target="_blank" rel="noopener noreferrer" class="project-link">Ver repositório ↗<span class="sr-only"> (abre em nova aba)</span></a>
+            <div class="project-description" v-html="localizedDescription(project)"></div>
+            <div v-if="projectFlow(project.title)" class="mini-flow" :aria-label="`${copy.flowLabel} ${shortTitle(project.title)}`"><template v-for="(step, i) in projectFlow(project.title)" :key="step"><span>{{ step }}</span><i v-if="i < projectFlow(project.title).length - 1" aria-hidden="true">→</i></template></div>
+            <ul class="tech-list" :aria-label="copy.stackLabel"><li v-for="tech in project.stack" :key="tech">{{ tech }}</li></ul>
+            <a v-if="project.link" :href="project.link" target="_blank" rel="noopener noreferrer" class="project-link">{{ copy.projectLink }} ↗<span class="sr-only"> ({{ copy.a11y.external }})</span></a>
           </div>
         </article>
       </div>
     </section>
 
-    <section id="sobre" class="section about" aria-labelledby="sobre-title"><div class="section-heading compact"><p class="eyebrow">Profile</p><h2 id="sobre-title">Engenharia para sistemas reais.</h2></div><div class="about-copy"><p>{{ aboutData.paragraphs[0] }}</p><p>{{ aboutData.paragraphs[1] }}</p></div></section>
+    <section id="sobre" class="section about" aria-labelledby="sobre-title"><div class="section-heading compact"><p class="eyebrow">{{ copy.sections.profileEyebrow }}</p><h2 id="sobre-title">{{ copy.sections.aboutTitle }}</h2></div><div class="about-copy"><p>{{ copy.about[0] }}</p><p>{{ copy.about[1] }}</p></div></section>
 
     <section id="experiencia" class="section surface-alt" aria-labelledby="experiencia-title">
-      <header class="section-heading"><div><p class="eyebrow">Experience</p><h2 id="experiencia-title">Trajetória profissional</h2></div><p>Mais de 10 anos construindo, modernizando e sustentando sistemas.</p></header>
-      <ol class="career"><li v-for="job in experienceData" :key="job.role + job.company + job.period"><i aria-hidden="true"></i><time>{{ job.period }}</time><div><div class="career-title"><h3>{{ job.role }}</h3><span v-if="job.evolution">{{ job.evolution }}</span></div><p class="company">{{ job.company }}</p><p>{{ compactExperience(job) }}</p></div></li></ol>
+      <header class="section-heading"><div><p class="eyebrow">{{ copy.sections.experienceEyebrow }}</p><h2 id="experiencia-title">{{ copy.sections.experienceTitle }}</h2></div><p>{{ copy.sections.experienceIntro }}</p></header>
+      <ol class="career"><li v-for="job in experienceData" :key="job.role + job.company + job.period"><i aria-hidden="true"></i><time>{{ job.period }}</time><div><div class="career-title"><h3>{{ job.role }}</h3><span v-if="job.evolution">{{ job.evolution }}</span></div><p class="company">{{ job.company }}</p><p>{{ localizedExperience(job) }}</p></div></li></ol>
     </section>
 
     <section id="skills" class="section" aria-labelledby="skills-title">
-      <header class="section-heading"><div><p class="eyebrow">Capabilities</p><h2 id="skills-title">Competências por domínio</h2></div><p>Ferramentas a serviço de arquitetura, confiabilidade e evolução.</p></header>
-      <div class="skills"><article v-for="group in domainSkills" :key="group.category"><span aria-hidden="true">{{ group.number }}</span><h3>{{ group.category }}</h3><p>{{ group.primary }}</p><ul class="tech-list" :aria-label="group.category"><li v-for="item in group.items" :key="item">{{ item }}</li></ul></article></div>
+      <header class="section-heading"><div><p class="eyebrow">{{ copy.sections.capabilitiesEyebrow }}</p><h2 id="skills-title">{{ copy.sections.capabilitiesTitle }}</h2></div><p>{{ copy.sections.capabilitiesIntro }}</p></header>
+      <div class="skills"><article v-for="group in domainSkills" :key="group.category"><span aria-hidden="true">{{ group.number }}</span><h3>{{ group.category }}</h3><div v-if="skillLogos(group.category).length" class="skill-logos"><img v-for="technology in skillLogos(group.category)" :key="technology.name" :src="technology.src" :alt="technology.name" :class="{ 'tech-logo--mono': technology.mono }" loading="lazy"/></div><p>{{ group.primary }}</p><ul class="tech-list" :aria-label="group.category"><li v-for="item in group.items" :key="item">{{ item }}</li></ul></article></div>
     </section>
 
     <section class="section compact-area surface-alt" aria-label="Formação e publicações">
-      <div id="certificacoes"><div class="section-heading compact"><p class="eyebrow">Learning</p><h2>Formação &amp; Certificações</h2></div><ul class="compact-list"><li v-for="edu in educationData" :key="edu.role + edu.company"><div><strong>{{ edu.role }}</strong><span>{{ edu.company }}</span></div><time>{{ edu.period }}</time></li></ul></div>
-      <div id="publicacoes"><div class="section-heading compact"><p class="eyebrow">Writing</p><h2>Publicações</h2></div><ul class="compact-list"><li v-for="pub in publicationsData" :key="pub.title"><div><strong>{{ pub.title }}</strong><span>{{ pub.venue }}</span></div><time>{{ pub.period }}</time></li></ul></div>
+      <div id="certificacoes"><div class="section-heading compact"><p class="eyebrow">{{ copy.sections.learningEyebrow }}</p><h2>{{ copy.sections.educationTitle }}</h2></div><ul class="compact-list"><li v-for="edu in educationData" :key="edu.role + edu.company"><div><strong>{{ edu.role }}</strong><span>{{ edu.company }}</span></div><time>{{ edu.period }}</time></li></ul></div>
+      <div id="publicacoes"><div class="section-heading compact"><p class="eyebrow">{{ copy.sections.writingEyebrow }}</p><h2>{{ copy.sections.publicationsTitle }}</h2></div><ul class="compact-list"><li v-for="pub in publicationsData" :key="pub.title"><div><strong>{{ pub.title }}</strong><span>{{ pub.venue }}</span></div><time>{{ pub.period }}</time></li></ul></div>
     </section>
 
-    <section class="section machine" aria-labelledby="machine-title"><div><p class="eyebrow">Under the hood</p><h2 id="machine-title">Built for humans and machines</h2><p>Este portfólio usa HTML semântico e conteúdo prerenderizado para ser legível por pessoas, mecanismos de busca e agentes — sem abrir mão de acessibilidade.</p></div><ul aria-label="Características técnicas do portfólio"><li>Accessibility</li><li>Semantic HTML</li><li>Structured Data</li><li>JSON Resume</li><li>LLM-readable</li><li>Prerendered content</li></ul></section>
+    <section class="section machine" aria-labelledby="machine-title"><div><p class="eyebrow">{{ copy.sections.underEyebrow }}</p><h2 id="machine-title">{{ copy.sections.machineTitle }}</h2><p>{{ copy.sections.machineText }}</p></div><ul :aria-label="copy.sections.machineTitle"><li v-for="item in copy.machineItems" :key="item">{{ item }}</li></ul></section>
 
-    <section id="contato" class="contact" aria-labelledby="contato-title"><p class="eyebrow">Start a conversation</p><h2 id="contato-title">Let’s build reliable systems.</h2><p>{{ contactData.intro }}</p><div class="actions"><a v-for="channel in contactData.channels" :key="channel.label" :href="channel.url" :target="channel.url.startsWith('http') ? '_blank' : null" :rel="channel.url.startsWith('http') ? 'noopener noreferrer' : null" class="button primary">{{ channel.label }}<span v-if="channel.url.startsWith('http')" class="sr-only"> (abre em nova aba)</span></a></div></section>
+    <section id="contato" class="contact" aria-labelledby="contato-title"><p class="eyebrow">{{ copy.sections.contactEyebrow }}</p><h2 id="contato-title">{{ copy.sections.contactTitle }}</h2><p>{{ copy.contactIntro }}</p><div class="actions"><a v-for="channel in contactData.channels" :key="channel.label" :href="channel.url" :target="channel.url.startsWith('http') ? '_blank' : null" :rel="channel.url.startsWith('http') ? 'noopener noreferrer' : null" class="button primary">{{ channel.label }}<span v-if="channel.url.startsWith('http')" class="sr-only"> ({{ copy.a11y.external }})</span></a></div></section>
   </main>
 </template>
 
 <script>
 import { basicsData, aboutData, experienceData, educationData, publicationsData, projectsData, contactData } from '../data/profileData.js';
+import { LOCALES, getLocale } from '../i18n/index.js';
 const FEATURED = ['ClinicFiapApp - Microsserviços de Agendamento Hospitalar','Food Fiapp: API de Gestão de Restaurantes','Hedge CLI: Análise Estática + IA para Eager Test','Quotes Service: Cotação e Emissão de Apólices','TechChallenge: API de Gestão de Usuários','Kube Backend: API Node.js + PostgreSQL no Kubernetes'];
 const CONTEXT = { ClinicFiapApp: 'Projeto acadêmico colaborativo', Food: 'Projeto acadêmico', Hedge: 'Independent Software Engineering Research', Quotes: 'Projeto pessoal · MVP', TechChallenge: 'Projeto acadêmico', Kube: 'Laboratório de infraestrutura' };
 const FLOWS = { ClinicFiapApp: ['API','Command','Kafka','Consumer','Outbox','Database'], Food: ['HTTP','Use Case','Domain','Adapter'], Hedge: ['Java tests','AST','Heuristics','LLM gate','Ensemble'], Quotes: ['Quote','Domain rules','Event','Coroutine'], Kube: ['Application','Docker','Kubernetes','PostgreSQL'] };
 export default {
-  name: 'Home', data() { return { basicsData, aboutData, experienceData, educationData, publicationsData, projectsData, contactData }; },
+  name: 'Home', data() { return { basicsData, aboutData, experienceData, educationData, publicationsData, projectsData, contactData, locale: getLocale(this.$route.params.locale || (typeof window !== 'undefined' ? localStorage.getItem('rn-locale') : null)), technologyLogos: [{ name: 'Kotlin', src: '/tech-icons/kotlin.svg' }, { name: 'Java', src: '/tech-icons/java.svg', mono: true }, { name: 'Node.js', src: '/tech-icons/nodejs.svg' }, { name: 'AWS', src: '/tech-icons/aws.svg' }, { name: 'Kafka', src: '/tech-icons/kafka.svg', mono: true }] }; },
+  watch: { '$route'(route) { this.locale = getLocale(route.params.locale || localStorage.getItem('rn-locale')); } },
   computed: {
     featuredProjects() { return FEATURED.map(title => this.projectsData.find(project => project.title === title)).filter(Boolean); },
-    domainSkills() { return [
-      { number:'01', category:'Backend', primary:'Kotlin · Java · Node.js', items:['Spring Boot','NestJS','PostgreSQL'] },
-      { number:'02', category:'Distributed Systems', primary:'Kafka · SQS', items:['Event-Driven','CQRS','Outbox','Idempotência'] },
-      { number:'03', category:'Architecture', primary:'DDD · Clean Architecture', items:['Hexagonal','Microsserviços','Multi-Tenant'] },
-      { number:'04', category:'Cloud & Reliability', primary:'AWS · Docker · Kubernetes', items:['Datadog','CloudWatch','CI/CD','DLQ'] },
-      { number:'05', category:'Engineering Quality', primary:'TDD · Testes automatizados', items:['ArchUnit','Observabilidade','Code review'] },
-    ]; },
+    copy() { return LOCALES[this.locale]; },
+    domainSkills() { return this.copy.domains; },
   },
   methods: {
     shortTitle(title) { return title.split(/:| - /)[0]; },
-    projectContext(title) { const key = Object.keys(CONTEXT).find(item => title.startsWith(item)); return CONTEXT[key] || 'Projeto público'; },
+    projectContext(title) { const key = Object.keys(CONTEXT).find(item => title.startsWith(item)); return this.copy.contexts[key] || this.copy.contexts.default; },
     projectFlow(title) { const key = Object.keys(FLOWS).find(item => title.startsWith(item)); return FLOWS[key] || null; },
-    compactExperience(job) { return job.description.split(/(?<=[.!?])\s+/).slice(0, 2).join(' '); },
+    localizedDescription(project) { const key = Object.keys(this.copy.projectDescriptions).find(item => project.title.startsWith(item)); return this.copy.projectDescriptions[key] || project.description; },
+    localizedExperience(job) { const role = job.role; const key = role.includes('Specialist') ? 'AccentureSpecialist' : role.includes('Senior Analyst') ? 'AccentureSenior' : role.includes('Alice') ? 'Alice' : role.includes('Vetta') ? 'Vetta' : role.includes('FUNDECC') ? 'FUNDECC' : role === 'Analista de Sistemas' ? 'AccentureLegacy' : role.includes('Professora') ? 'UFLA' : null; return this.copy.experienceIntro[key] || job.description; },
+    skillLogos(category) { if (category === 'Backend') return this.technologyLogos.slice(0, 3); if (category === 'Distributed Systems') return [this.technologyLogos[4]]; if (category === 'Cloud & Reliability') return [this.technologyLogos[3]]; return []; },
     printResume() { window.print(); },
   },
 };
@@ -108,9 +108,17 @@ main{max-width:none;margin:0;padding:0}
 .mini-flow span{min-width:0;flex:1 1 76px;white-space:normal;text-align:center}
 .mini-flow i{flex:0 0 auto;text-align:center}
 .contact{width:calc(100% - 96px);max-width:1480px;border-radius:20px;background:var(--bg-alternate)}
+.machine{padding-inline:clamp(2.5rem,6vw,6rem)}
 @media(max-width:1366px){.hero,.section,.contact{width:calc(100% - 64px)}.hero{gap:3rem}.hero h1{font-size:clamp(2.8rem,5.25vw,4.65rem)}}
 @media(max-width:1024px){.hero,.section,.contact{width:calc(100% - 40px)}.hero{grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:2rem}.hero .button{padding-inline:.8rem}.site-header-inner,.site-footer-inner,.footer-note{width:calc(100% - 40px)}}
 @media(max-width:900px){.hero{grid-template-columns:1fr}.hero .actions{flex-wrap:wrap}.project-card.closing{display:block}.mini-flow{grid-template-columns:repeat(2,minmax(0,1fr))}.mini-flow i{display:none}}
 @media(max-width:700px){.hero,.section,.contact{width:calc(100% - 32px)}.project-card.lead{display:block}.site-header-inner,.site-footer-inner,.footer-note{width:calc(100% - 32px)}}
 @media(max-width:430px){.hero,.section,.contact{padding-left:0;padding-right:0}.mini-flow{grid-template-columns:1fr}.system-visual{margin-inline:0}}
+.tech-strip{display:flex;flex-wrap:wrap;gap:1rem 1.2rem;margin-top:1.25rem;color:var(--text-muted);font:600 .7rem var(--font-code)}
+.tech-logo-item{display:inline-flex;align-items:center;gap:.4rem}
+.tech-logo-item img{width:18px;height:18px;object-fit:contain}
+.skill-logos{display:flex;gap:.65rem;margin:1rem 0 .7rem;min-height:24px}
+.skill-logos img{width:22px;height:22px;object-fit:contain}
+:global(:root[data-theme='dark']) .tech-logo--mono{filter:invert(1)}
+@media(max-width:700px){.tech-strip{gap:.7rem .9rem}.tech-logo-item img{width:16px;height:16px}}
 </style>

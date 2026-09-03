@@ -10,6 +10,7 @@ import Servicos from '../views/Servicos.vue';
 
 export const routes = [
   { path: '/', name: 'home', component: Home },
+  { path: '/:locale(pt-BR|en|zh-CN)/', name: 'localized-home', component: Home },
   { path: '/arcade', name: 'arcade', component: Arcade },
   { path: '/go', name: 'go-game', component: GoGame },
   { path: '/damas', name: 'checkers-game', component: CheckersGame },
