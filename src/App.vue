@@ -67,7 +67,7 @@
             <span class="sr-only">{{ navOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação' }}</span>
           </button>
 
-          <nav id="primary-nav" class="primary-nav" :class="{ 'primary-nav--open': navOpen }" aria-label="Seções do currículo">
+          <nav id="primary-nav" class="primary-nav" :class="{ 'primary-nav--open': navOpen }" aria-label="Seções do portfólio">
             <router-link
               v-for="item in resumeNav"
               :key="item.hash"
@@ -130,8 +130,8 @@ const GAME_ROUTES = ['/go', '/damas', '/memoria'];
 
 const RESUME_NAV = [
   { hash: '#sobre', label: 'Sobre' },
-  { hash: '#experiencia', label: 'Experiência' },
   { hash: '#projetos', label: 'Projetos' },
+  { hash: '#experiencia', label: 'Experiência' },
   { hash: '#skills', label: 'Skills' },
   { hash: '#certificacoes', label: 'Certificações' },
   { hash: '#publicacoes', label: 'Publicações' },
@@ -139,7 +139,7 @@ const RESUME_NAV = [
 ];
 
 const ROUTE_TITLES = {
-  '/': 'Rebeca Nonato — Currículo | Software Engineer',
+  '/': 'Rebeca Nonato — Software Engineer | Backend & Distributed Systems',
   '/servicos': 'Serviços | Rebeca Nonato',
   '/arcade': 'Arcade | Rebeca Nonato',
   '/recursos': 'Recursos | Rebeca Nonato',
@@ -157,7 +157,7 @@ export default {
       fontSizeStep: 0,
       isHighContrast: false,
       reduceMotion: false,
-      theme: 'light',
+      theme: 'dark',
     };
   },
   computed: {
@@ -230,15 +230,22 @@ export default {
    Design tokens — tema claro (padrão) / escuro / alto contraste
    ========================================================================= */
 :root {
-  --bg-base: #ffffff;
-  --bg-surface: #f6f7f9;
+  --bg-base: #f7f9fc;
+  --bg-surface: #eef2f8;
   --bg-surface-raised: #ffffff;
-  --text-main: #14161a;
-  --text-muted: #52596b;
-  --accent-core: #1d4ed8;
-  --accent-hover: #1e40af;
+  --text-main: #101828;
+  --text-muted: #475467;
+  --text-subtle: #667085;
+  --accent-core: #3157d5;
+  --accent-hover: #2546b8;
+  --accent-cyan: #087e8b;
+  --accent-soft: #98a2b3;
+  --accent-glow: rgba(49, 87, 213, 0.14);
   --accent-dim: rgba(29, 78, 216, 0.1);
-  --accent-border: #d9dce3;
+  --accent-border: #d7deea;
+  --code-bg: #e9eef7;
+  --status-ok: #138a63;
+  --button-text: #ffffff;
   --card-shadow: rgba(15, 23, 42, 0.08);
   --scrim-overlay: rgba(15, 23, 42, 0.6);
 
@@ -260,15 +267,22 @@ export default {
 }
 
 :root[data-theme='dark'] {
-  --bg-base: #101216;
-  --bg-surface: #181b21;
-  --bg-surface-raised: #1e222a;
-  --text-main: #f2f4f8;
-  --text-muted: #a9b0c0;
-  --accent-core: #7fa4ff;
-  --accent-hover: #a4c0ff;
-  --accent-dim: rgba(127, 164, 255, 0.16);
-  --accent-border: #2b3040;
+  --bg-base: #080d18;
+  --bg-surface: #0d1524;
+  --bg-surface-raised: #111c2e;
+  --text-main: #f0f5ff;
+  --text-muted: #a8b5ca;
+  --text-subtle: #7d8da7;
+  --accent-core: #6f8cff;
+  --accent-hover: #91a7ff;
+  --accent-cyan: #55d7e5;
+  --accent-soft: #40506c;
+  --accent-glow: rgba(69, 102, 240, 0.24);
+  --accent-dim: rgba(111, 140, 255, 0.13);
+  --accent-border: #26344b;
+  --code-bg: #09111f;
+  --status-ok: #4bd6a2;
+  --button-text: #07101d;
   --card-shadow: rgba(0, 0, 0, 0.45);
   --scrim-overlay: rgba(0, 0, 0, 0.7);
   color-scheme: dark;
@@ -299,8 +313,14 @@ export default {
   --text-muted: #f2f2f2;
   --accent-core: #ffd60a;
   --accent-hover: #ffe066;
+  --accent-cyan: #ffffff;
+  --accent-soft: #ffffff;
+  --accent-glow: transparent;
   --accent-dim: rgba(255, 214, 10, 0.2);
   --accent-border: #ffffff;
+  --code-bg: #000000;
+  --status-ok: #ffffff;
+  --button-text: #000000;
   --card-shadow: transparent;
   --scrim-overlay: rgba(0, 0, 0, 0.9);
   --focus-ring: 3px solid #ffd60a;
@@ -413,7 +433,8 @@ html { scroll-behavior: smooth; }
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--bg-base);
+  background: color-mix(in srgb, var(--bg-base) 88%, transparent);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--accent-border);
 }
 .site-header-inner {

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Rebeca Nonato — Software Engineer</title>
+  <desc id="desc">Backend, Distributed Systems, Event-Driven e Cloud</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#080d18"/><stop offset="1" stop-color="#111c2e"/></linearGradient>
+    <linearGradient id="line"><stop stop-color="#6f8cff"/><stop offset="1" stop-color="#55d7e5"/></linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <path d="M760 150h120c45 0 45 85 90 85h130M760 450h110c50 0 50-105 100-105h130M970 235v110" fill="none" stroke="url(#line)" stroke-width="3" opacity=".75"/>
+  <g fill="#111c2e" stroke="#334568" stroke-width="2"><rect x="710" y="112" width="120" height="76" rx="14"/><rect x="906" y="197" width="130" height="76" rx="14"/><rect x="906" y="307" width="130" height="76" rx="14"/><rect x="1034" y="412" width="120" height="76" rx="14"/></g>
+  <g fill="#55d7e5"><circle cx="864" cy="150" r="6"/><circle cx="1057" cy="235" r="6"/><circle cx="855" cy="450" r="6"/></g>
+  <text x="88" y="130" fill="#55d7e5" font-family="monospace" font-size="20" font-weight="700" letter-spacing="3">SOFTWARE ENGINEER</text>
+  <text x="88" y="245" fill="#f0f5ff" font-family="Arial, sans-serif" font-size="74" font-weight="700">Rebeca Nonato</text>
+  <text x="88" y="330" fill="#a8b5ca" font-family="Arial, sans-serif" font-size="38">I build backend systems</text>
+  <text x="88" y="378" fill="#a8b5ca" font-family="Arial, sans-serif" font-size="38">that need to keep working.</text>
+  <text x="88" y="495" fill="#6f8cff" font-family="monospace" font-size="22">Backend · Distributed Systems · Event-Driven · Cloud</text>
+</svg>
