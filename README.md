@@ -29,17 +29,17 @@ Este GitHub concentra projetos públicos que demonstram decisões de arquitetura
 | **[ClinicFiapApp](https://github.com/fiap-tech-challenge-java/clinicfiapp-monorepo)** | Acadêmico — FIAP | Backend distribuído com comunicação assíncrona, Outbox Pattern, CQRS, consumidores idempotentes e tratamento de falhas com DLQ. | Java, Spring, Kafka, CQRS |
 | **[Food Fiapp](https://github.com/rebecanonato89/food-fiapp)** | Acadêmico — FIAP | Clean Architecture validada com ArchUnit, testes unitários e de integração e quality gate de cobertura no build. | Java 21, Spring Boot, PostgreSQL, MinIO, Docker |
 | **[Hedge CLI](https://github.com/rebecanonato89/hedge-cli)** | Projeto independente | Análise estática de testes Java com AST, heurística, LLM gating e ensemble para detecção de Eager Test. | Python, tree-sitter, AST, LLMs |
-| **[AllRev SaaS](https://github.com/Devs-IO/allrev-backend)** | SaaS | Plataforma multi-tenant com autenticação, autorização baseada em papéis e separação entre clientes. | NestJS, PostgreSQL, Angular 17, JWT/RBAC |
 | **[Quotes Service](https://github.com/rebecanonato89/quotes-service)** | Projeto pessoal | Modelagem de domínio em Kotlin, validação funcional com Either, eventos de domínio e coroutines. | Kotlin, Spring Boot, DDD, Coroutines |
 | **[TechChallenge](https://github.com/rebecanonato89/fiap-tech-challenge)** | Acadêmico — FIAP | API Java com Arquitetura Hexagonal, domínio isolado, Spring Security, JWT/RBAC e contratos OpenAPI. | Java 21, Spring Boot, PostgreSQL |
+| **[Kube Backend](https://github.com/rebecanonato89/kube-backend)** | Laboratório técnico | Containerização e execução local de uma API Node.js/PostgreSQL no Kubernetes, com ConfigMap, Secret e Services. | Node.js, PostgreSQL, Docker, Kubernetes |
 
-Essa é também a ordem recomendada para os repositórios fixados no perfil.
+Essa é a ordem recomendada para os repositórios públicos fixados no perfil.
 
 ---
 
 ## Projetos complementares
 
-Projetos como **Kube Backend**, **ConcursoTrack**, **Equinox Solar CRM** e os experimentos do Arcade continuam públicos como evidência complementar, mas não competem com os seis projetos acima pelo espaço principal do perfil.
+**AllRev SaaS** continua relevante como case de produto multi-tenant, mas o repositório de backend é privado e por isso não deve ocupar um dos slots públicos fixados. **ConcursoTrack**, **Equinox Solar CRM** e os experimentos do Arcade permanecem como evidência complementar no portfólio.
 
 ---
 
