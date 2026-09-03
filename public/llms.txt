@@ -4,6 +4,13 @@
 
 Este site é otimizado tanto para leitura humana — incluindo acessibilidade para leitores de tela, alto contraste e fontes ajustáveis — quanto para consumo por agentes de IA. O conteúdo principal está disponível como HTML semântico renderizado no servidor em `/`.
 
+## Idiomas
+
+- Idioma padrão: Português do Brasil (`pt-BR`) em https://rebecanonato89.dev/#/
+- English: https://rebecanonato89.dev/#/en/
+- 简体中文: https://rebecanonato89.dev/#/zh-CN/
+- A interface troca o idioma sem API externa e persiste a preferência localmente. Como o site usa hash routing, o canonical indexável permanece na raiz; as rotas de idioma são links compartilháveis para a experiência client-side.
+
 ## Posicionamento profissional
 
 - Software Engineer — Backend & Distributed Systems

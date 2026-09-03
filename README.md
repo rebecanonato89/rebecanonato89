@@ -3,6 +3,10 @@
 </p>
 
 <p align="center">
+  Portfolio: <a href="https://rebecanonato89.dev/#/pt-BR/">Português</a> · <a href="https://rebecanonato89.dev/#/en/">English</a> · <a href="https://rebecanonato89.dev/#/zh-CN/">中文</a>
+</p>
+
+<p align="center">
   <a href="https://rebecanonato89.dev"><strong>Portfólio</strong></a>
   &nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="https://www.linkedin.com/in/rebecanonato89/"><strong>LinkedIn</strong></a>
@@ -12,9 +16,9 @@
 
 ## About
 
-Software Engineer com **10+ anos construindo, modernizando e sustentando sistemas backend**. Foco atual em sistemas distribuídos, arquitetura orientada a eventos, confiabilidade e evolução de software.
+Software Engineer with **10+ years building, modernizing and operating backend systems**. Currently focused on distributed systems, event-driven architecture, reliability and software evolution.
 
-Trabalho principalmente com **Kotlin, Java, Node.js/TypeScript e AWS**, conectando decisões de arquitetura ao comportamento real dos sistemas em produção.
+Main stack: **Kotlin · Java · Node.js/TypeScript · AWS**, connecting architectural decisions to real system behavior in production.
 
 ## Selected Engineering Work
 

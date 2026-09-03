@@ -1,6 +1,6 @@
 <template>
   <div id="app-shell">
-    <a href="#main-content" class="skip-link" @click.prevent="skipToMain">Pular para o conteúdo principal</a>
+    <a href="#main-content" class="skip-link" @click.prevent="skipToMain">{{ copy.a11y.skip }}</a>
 
     <!-- Modo jogo: tela cheia, sem cabeçalho/rodapé de currículo (cada jogo tem seu próprio botão de voltar) -->
     <template v-if="isGameRoute">
@@ -8,13 +8,13 @@
     </template>
 
     <template v-else>
-      <div class="a11y-bar" role="group" aria-label="Preferências de leitura">
+      <div class="a11y-bar" role="group" :aria-label="copy.a11y.reading">
         <div class="a11y-bar-inner">
-          <span class="a11y-bar-label">Leitura:</span>
-          <button type="button" class="a11y-btn" @click="changeFontSize(-1)" aria-label="Diminuir tamanho da fonte">
+          <span class="a11y-bar-label">{{ copy.a11y.reading }}</span>
+          <button type="button" class="a11y-btn" @click="changeFontSize(-1)" :aria-label="copy.a11y.decrease">
             A<span aria-hidden="true">−</span>
           </button>
-          <button type="button" class="a11y-btn" @click="changeFontSize(1)" aria-label="Aumentar tamanho da fonte">
+          <button type="button" class="a11y-btn" @click="changeFontSize(1)" :aria-label="copy.a11y.increase">
             A<span aria-hidden="true">+</span>
           </button>
           <button
@@ -22,7 +22,7 @@
             class="a11y-btn"
             :class="{ 'a11y-btn--active': isHighContrast }"
             :aria-pressed="isHighContrast"
-            aria-label="Alternar alto contraste"
+            :aria-label="copy.a11y.contrast"
             @click="toggleHighContrast"
           >
             Alto contraste
@@ -32,7 +32,7 @@
             class="a11y-btn"
             :class="{ 'a11y-btn--active': reduceMotion }"
             :aria-pressed="reduceMotion"
-            aria-label="Reduzir animações e movimento"
+            :aria-label="copy.a11y.motion"
             @click="toggleReduceMotion"
           >
             Reduzir movimento
@@ -40,18 +40,18 @@
           <button
             type="button"
             class="a11y-btn"
-            aria-label="Alternar tema claro ou escuro"
+            :aria-label="theme === 'dark' ? copy.a11y.dark : copy.a11y.light"
             :aria-pressed="theme === 'dark'"
             @click="toggleTheme"
           >
-            {{ theme === 'dark' ? 'Tema escuro' : 'Tema claro' }}
+            {{ theme === 'dark' ? copy.a11y.dark : copy.a11y.light }}
           </button>
         </div>
       </div>
 
       <header class="site-header">
         <div class="site-header-inner">
-          <router-link to="/" class="brand">
+          <router-link :to="locale === 'pt-BR' ? '/' : { name: 'localized-home', params: { locale } }" class="brand">
             <span class="brand-name">Rebeca Nonato</span>
             <span class="brand-role">Software Engineer</span>
           </router-link>
@@ -64,21 +64,22 @@
             @click="navOpen = !navOpen"
           >
             <span aria-hidden="true">{{ navOpen ? '✕' : '☰' }}</span>
-            <span class="sr-only">{{ navOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação' }}</span>
+            <span class="sr-only">{{ navOpen ? copy.a11y.close : copy.a11y.open }}</span>
           </button>
 
-          <nav id="primary-nav" class="primary-nav" :class="{ 'primary-nav--open': navOpen }" aria-label="Seções do portfólio">
+          <nav id="primary-nav" class="primary-nav" :class="{ 'primary-nav--open': navOpen }" :aria-label="copy.navLabel">
             <router-link
-              v-for="item in resumeNav"
+              v-for="item in resumeNavLocalized"
               :key="item.hash"
               :to="{ path: '/', hash: item.hash }"
               class="nav-link"
               @click="navOpen = false"
             >{{ item.label }}</router-link>
             <span class="nav-divider" aria-hidden="true"></span>
-            <router-link to="/servicos" class="nav-link" active-class="nav-link--active" @click="navOpen = false">Serviços</router-link>
-            <router-link to="/arcade" class="nav-link" active-class="nav-link--active" @click="navOpen = false">Arcade</router-link>
-            <router-link to="/recursos" class="nav-link" active-class="nav-link--active" @click="navOpen = false">Recursos</router-link>
+            <router-link to="/servicos" class="nav-link" active-class="nav-link--active" @click="navOpen = false">{{ copy.nav.services }}</router-link>
+            <router-link to="/arcade" class="nav-link" active-class="nav-link--active" @click="navOpen = false">{{ copy.nav.arcade }}</router-link>
+            <router-link to="/recursos" class="nav-link" active-class="nav-link--active" @click="navOpen = false">{{ copy.nav.resources }}</router-link>
+            <div class="locale-picker" role="group" :aria-label="copy.languageLabel"><button v-for="option in localeOptions" :key="option" type="button" :class="{ 'locale-active': option === locale }" :aria-pressed="option === locale" @click="setLocale(option)">{{ LOCALES[option].languageName }}</button></div>
           </nav>
         </div>
       </header>
@@ -90,35 +91,35 @@
           <div class="site-footer-col">
             <p class="footer-name">Rebeca Nonato</p>
             <p class="footer-tagline">Software Engineer — Backend, Distributed Systems &amp; Cloud-Native</p>
-            <ul class="footer-links" aria-label="Contato">
+            <ul class="footer-links" :aria-label="copy.footer.contact">
               <li><a href="mailto:rebecanonato89@gmail.com">rebecanonato89@gmail.com</a></li>
-              <li><a href="https://www.linkedin.com/in/rebecanonato89/" target="_blank" rel="noopener noreferrer">LinkedIn<span class="sr-only"> (abre em nova aba)</span></a></li>
-              <li><a href="https://github.com/rebecanonato89" target="_blank" rel="noopener noreferrer">GitHub<span class="sr-only"> (abre em nova aba)</span></a></li>
+              <li><a href="https://www.linkedin.com/in/rebecanonato89/" target="_blank" rel="noopener noreferrer">LinkedIn<span class="sr-only"> ({{ copy.a11y.external }})</span></a></li>
+              <li><a href="https://github.com/rebecanonato89" target="_blank" rel="noopener noreferrer">GitHub<span class="sr-only"> ({{ copy.a11y.external }})</span></a></li>
             </ul>
           </div>
 
           <div class="site-footer-col">
-            <p class="footer-heading">Explorar</p>
+            <p class="footer-heading">{{ copy.footer.explore }}</p>
             <ul class="footer-links">
-              <li><router-link to="/servicos">Serviços</router-link></li>
-              <li><router-link to="/arcade">Arcade</router-link></li>
-              <li><router-link to="/recursos">Recursos</router-link></li>
+              <li><router-link to="/servicos">{{ copy.nav.services }}</router-link></li>
+              <li><router-link to="/arcade">{{ copy.nav.arcade }}</router-link></li>
+              <li><router-link to="/recursos">{{ copy.nav.resources }}</router-link></li>
             </ul>
           </div>
 
           <div class="site-footer-col">
-            <p class="footer-heading">Currículo em outros formatos</p>
+            <p class="footer-heading">{{ copy.footer.formats }}</p>
             <ul class="footer-links">
               <li><a href="/rebeca-nonato-curriculo.pdf" download>PDF</a></li>
               <li><a href="/resume.md" download>Markdown</a></li>
-              <li><a href="/resume.json">JSON (resume.json)</a></li>
+              <li><a href="/resume.json">{{ copy.footer.resumeJson }}</a></li>
               <li><a href="/llms.txt">llms.txt</a></li>
               <li><a href="/sitemap.xml">sitemap.xml</a></li>
             </ul>
           </div>
         </div>
         <p class="footer-note">
-          Site construído com práticas de acessibilidade (WCAG) e leitura por agentes de IA em mente.
+          {{ copy.footer.note }}
         </p>
       </footer>
     </template>
@@ -126,15 +127,16 @@
 </template>
 
 <script>
+import { LOCALES, LOCALE_OPTIONS, DEFAULT_LOCALE, getLocale } from './i18n/index.js';
 const GAME_ROUTES = ['/go', '/damas', '/memoria'];
 
 const RESUME_NAV = [
-  { hash: '#sobre', label: 'Sobre' },
-  { hash: '#projetos', label: 'Projetos' },
-  { hash: '#experiencia', label: 'Experiência' },
-  { hash: '#skills', label: 'Skills' },
-  { hash: '#certificacoes', label: 'Formação' },
-  { hash: '#contato', label: 'Contato' },
+  { hash: '#sobre', key: 'about' },
+  { hash: '#projetos', key: 'projects' },
+  { hash: '#experiencia', key: 'experience' },
+  { hash: '#skills', key: 'skills' },
+  { hash: '#certificacoes', key: 'education' },
+  { hash: '#contato', key: 'contact' },
 ];
 
 const ROUTE_TITLES = {
@@ -152,6 +154,9 @@ export default {
   data() {
     return {
       resumeNav: RESUME_NAV,
+      localeOptions: LOCALE_OPTIONS,
+      LOCALES,
+      locale: getLocale(this.$route.params.locale || (typeof window !== 'undefined' ? localStorage.getItem('rn-locale') : null) || DEFAULT_LOCALE),
       navOpen: false,
       fontSizeStep: 0,
       isHighContrast: false,
@@ -160,6 +165,8 @@ export default {
     };
   },
   computed: {
+    copy() { return LOCALES[this.locale]; },
+    resumeNavLocalized() { return this.resumeNav.map(item => ({ ...item, label: this.copy.nav[item.key] })); },
     isGameRoute() {
       return GAME_ROUTES.includes(this.$route.path);
     },
@@ -167,11 +174,13 @@ export default {
   watch: {
     '$route'(to) {
       this.navOpen = false;
-      document.title = ROUTE_TITLES[to.path] || ROUTE_TITLES['/'];
+      this.syncLocale(to);
+      this.updateMetadata(to);
     },
   },
   mounted() {
-    document.title = ROUTE_TITLES[this.$route.path] || ROUTE_TITLES['/'];
+    this.syncLocale(this.$route);
+    this.updateMetadata(this.$route);
 
     // O tema e o contraste já foram aplicados via script inline em index.html
     // (evita flash de tema errado); aqui só sincronizamos o estado reativo.
@@ -185,6 +194,36 @@ export default {
     this.applyReduceMotionClass();
   },
   methods: {
+    syncLocale(route) {
+      const routeLocale = route.params && route.params.locale;
+      this.locale = getLocale(routeLocale || localStorage.getItem('rn-locale') || DEFAULT_LOCALE);
+      localStorage.setItem('rn-locale', this.locale);
+    },
+    setLocale(locale) {
+      const next = getLocale(locale);
+      localStorage.setItem('rn-locale', next);
+      this.locale = next;
+      if (this.isGameRoute) return;
+      this.$router.push({ name: 'localized-home', params: { locale: next } });
+    },
+    updateMetadata(route) {
+      const isHome = route.path === '/' || route.name === 'localized-home';
+      const meta = isHome ? this.copy : LOCALES[DEFAULT_LOCALE];
+      document.documentElement.setAttribute('lang', meta.htmlLang);
+      document.title = isHome ? meta.title : ROUTE_TITLES[route.path] || ROUTE_TITLES['/'];
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute('content', meta.description);
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute('content', meta.title);
+      const ogDescription = document.querySelector('meta[property="og:description"]');
+      if (ogDescription) ogDescription.setAttribute('content', meta.description);
+      const ogLocale = document.querySelector('meta[property="og:locale"]');
+      if (ogLocale) ogLocale.setAttribute('content', meta.ogLocale);
+      const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+      if (twitterTitle) twitterTitle.setAttribute('content', meta.title);
+      const twitterDescription = document.querySelector('meta[name="twitter:description"]');
+      if (twitterDescription) twitterDescription.setAttribute('content', meta.description);
+    },
     toggleTheme() {
       this.theme = this.theme === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', this.theme);
@@ -494,6 +533,10 @@ html { scroll-behavior: smooth; }
 .nav-link:hover { background: var(--accent-dim); color: var(--accent-core); }
 .nav-link--active { color: var(--accent-core); font-weight: 700; }
 
+.locale-picker { display: inline-flex; gap: 0.15rem; margin-left: 0.35rem; padding-left: 0.45rem; border-left: 1px solid var(--accent-border); }
+.locale-picker button { border: 0; border-radius: var(--radius-sm); padding: 0.4rem 0.45rem; background: transparent; color: var(--text-muted); font: 600 0.72rem var(--font-code); cursor: pointer; }
+.locale-picker button:hover, .locale-picker button.locale-active { background: var(--accent-dim); color: var(--accent-core); }
+
 @media (max-width: 1080px) {
   .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
   .primary-nav {
@@ -508,6 +551,7 @@ html { scroll-behavior: smooth; }
   }
   .primary-nav--open { display: flex; }
   .nav-divider { display: none; }
+  .locale-picker { margin: 0.35rem 0 0; padding: 0.35rem 0 0; border-left: 0; border-top: 1px solid var(--accent-border); }
   .site-header { position: relative; }
   .nav-link { padding: 0.65rem 0.4rem; border-bottom: 1px solid var(--accent-border); border-radius: 0; }
 }
