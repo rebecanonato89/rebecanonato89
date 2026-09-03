@@ -22,22 +22,24 @@ Este GitHub concentra projetos públicos que demonstram decisões de arquitetura
 
 ---
 
-## Projetos em destaque
+## Projetos prioritários
 
-| Projeto | O que demonstra | Stack principal |
-| :--- | :--- | :--- |
-| **[ClinicFiapApp](https://github.com/fiap-tech-challenge-java/clinicfiapp-monorepo)** | Backend distribuído com comunicação assíncrona, Outbox Pattern, CQRS, consumidores idempotentes e tratamento de falhas com DLQ. | Java, Spring, Kafka, CQRS |
-| **[Food Fiapp](https://github.com/fiap-tech-challenge-java/food-fiapp)** | Clean Architecture validada com ArchUnit, testes unitários e de integração e quality gate de cobertura no build. | Java 21, Spring Boot, PostgreSQL, MinIO, Docker |
-| **[Hedge CLI](https://github.com/rebecanonato89/hedge-cli)** | Pesquisa independente em Engenharia de Software: análise estática de testes Java com AST, heurística, LLM gating e ensemble para detecção de Eager Test. | Python, tree-sitter, AST, LLMs |
-| **[AllRev SaaS](https://github.com/Devs-IO/allrev-backend)** | Plataforma SaaS multi-tenant com autenticação, autorização baseada em papéis e separação entre clientes. | NestJS, PostgreSQL, Angular 17, JWT/RBAC |
-| **[TechChallenge](https://github.com/fiap-tech-challenge-java/fiap-tech-challenge)** | API Java com Arquitetura Hexagonal, domínio isolado, Spring Security, JWT/RBAC e contratos OpenAPI. | Java 21, Spring Boot, PostgreSQL |
-| **Equinox Solar CRM** | Produto full-stack para gestão comercial, com backend NestJS, frontend Next.js e ambiente containerizado. | NestJS, Next.js, Docker |
+| Projeto | Contexto | O que demonstra | Stack principal |
+| :--- | :--- | :--- | :--- |
+| **[ClinicFiapApp](https://github.com/fiap-tech-challenge-java/clinicfiapp-monorepo)** | Acadêmico — FIAP | Backend distribuído com comunicação assíncrona, Outbox Pattern, CQRS, consumidores idempotentes e tratamento de falhas com DLQ. | Java, Spring, Kafka, CQRS |
+| **[Food Fiapp](https://github.com/rebecanonato89/food-fiapp)** | Acadêmico — FIAP | Clean Architecture validada com ArchUnit, testes unitários e de integração e quality gate de cobertura no build. | Java 21, Spring Boot, PostgreSQL, MinIO, Docker |
+| **[Hedge CLI](https://github.com/rebecanonato89/hedge-cli)** | Projeto independente | Análise estática de testes Java com AST, heurística, LLM gating e ensemble para detecção de Eager Test. | Python, tree-sitter, AST, LLMs |
+| **[AllRev SaaS](https://github.com/Devs-IO/allrev-backend)** | SaaS | Plataforma multi-tenant com autenticação, autorização baseada em papéis e separação entre clientes. | NestJS, PostgreSQL, Angular 17, JWT/RBAC |
+| **[Quotes Service](https://github.com/rebecanonato89/quotes-service)** | Projeto pessoal | Modelagem de domínio em Kotlin, validação funcional com Either, eventos de domínio e coroutines. | Kotlin, Spring Boot, DDD, Coroutines |
+| **[TechChallenge](https://github.com/rebecanonato89/fiap-tech-challenge)** | Acadêmico — FIAP | API Java com Arquitetura Hexagonal, domínio isolado, Spring Security, JWT/RBAC e contratos OpenAPI. | Java 21, Spring Boot, PostgreSQL |
+
+Essa é também a ordem recomendada para os repositórios fixados no perfil.
 
 ---
 
-## Além do backend
+## Projetos complementares
 
-No [portfólio](https://rebecanonato89.dev) também mantenho projetos de estudo e experimentação, incluindo jogos implementados no navegador, recursos para desenvolvedores e aplicações pessoais. Eles ficam como evidência complementar; meu foco profissional principal é backend e sistemas distribuídos.
+Projetos como **Kube Backend**, **ConcursoTrack**, **Equinox Solar CRM** e os experimentos do Arcade continuam públicos como evidência complementar, mas não competem com os seis projetos acima pelo espaço principal do perfil.
 
 ---
 
