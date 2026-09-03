@@ -20,7 +20,7 @@ export const basicsData = {
 export const highlightsData = [
   { value: '10+', label: 'anos em desenvolvimento de sistemas' },
   { value: '50+', label: 'Lambdas em produção sustentadas' },
-  { value: '9', label: 'projetos em destaque' },
+  { value: '9', label: 'projetos documentados' },
   { value: '4', label: 'publicações acadêmicas' },
 ];
 

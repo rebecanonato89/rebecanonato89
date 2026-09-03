@@ -133,8 +133,7 @@ const RESUME_NAV = [
   { hash: '#projetos', label: 'Projetos' },
   { hash: '#experiencia', label: 'Experiência' },
   { hash: '#skills', label: 'Skills' },
-  { hash: '#certificacoes', label: 'Certificações' },
-  { hash: '#publicacoes', label: 'Publicações' },
+  { hash: '#certificacoes', label: 'Formação' },
   { hash: '#contato', label: 'Contato' },
 ];
 
