@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">RN — Rebeca Nonato</title>
+  <rect width="64" height="64" rx="14" fill="#0b1321"/>
+  <path d="M12 43 28 30l11 10 13-16" fill="none" stroke="#6f8cff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="12" cy="43" r="4" fill="#55d7e5"/><circle cx="28" cy="30" r="4" fill="#6f8cff"/><circle cx="39" cy="40" r="4" fill="#55d7e5"/><circle cx="52" cy="24" r="4" fill="#6f8cff"/>
+  <text x="8" y="22" fill="#f0f5ff" font-family="Arial,sans-serif" font-size="16" font-weight="700">RN</text>
+</svg>
