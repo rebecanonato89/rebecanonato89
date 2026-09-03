@@ -4,106 +4,91 @@
 
 <p align="center">
   <a href="https://rebecanonato89.dev"><strong>Portfólio</strong></a>
-  &nbsp;·&nbsp;
+  &nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="https://www.linkedin.com/in/rebecanonato89/"><strong>LinkedIn</strong></a>
-  &nbsp;·&nbsp;
+  &nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="mailto:rebecanonato89@gmail.com"><strong>Contato</strong></a>
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white" alt="Kotlin" />
-  <img src="https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white" alt="Java" />
-  <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js" />
-  <img src="https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazonwebservices&logoColor=white" alt="AWS" />
-  <img src="https://img.shields.io/badge/Kafka-231F20?style=flat-square&logo=apachekafka&logoColor=white" alt="Kafka" />
-  <img src="https://img.shields.io/badge/Kubernetes-326CE5?style=flat-square&logo=kubernetes&logoColor=white" alt="Kubernetes" />
-</p>
+## About
 
-## Engenharia que me interessa
+Software Engineer com **10+ anos construindo, modernizando e sustentando sistemas backend**. Foco atual em sistemas distribuídos, arquitetura orientada a eventos, confiabilidade e evolução de software.
 
-Engenheira de Software com **10+ anos em desenvolvimento de sistemas**, hoje concentrada em backend, sistemas distribuídos, integração assíncrona e confiabilidade de produção. Trabalho principalmente com **Kotlin/JVM, Java, Node.js/TypeScript e AWS**, conectando decisões de arquitetura ao comportamento real do sistema em produção.
+Trabalho principalmente com **Kotlin, Java, Node.js/TypeScript e AWS**, conectando decisões de arquitetura ao comportamento real dos sistemas em produção.
+
+## Selected Engineering Work
 
 <table>
   <tr>
-    <td width="33%" valign="top">
-      <strong>Backend & Domain</strong><br/><br/>
-      Kotlin · Java · Node.js<br/>
-      Spring Boot · NestJS<br/>
-      DDD · Clean · Hexagonal
+    <td colspan="2" valign="top">
+      <h3>01 · <a href="https://github.com/fiap-tech-challenge-java/clinicfiapp-monorepo">ClinicFiapApp</a></h3>
+      <p><strong>Academic collaborative project</strong></p>
+      <p>Backend distribuído com comunicação assíncrona, consistência confiável e leitura orientada a eventos.</p>
+      <code>Java</code> <code>Spring</code> <code>Kafka</code> <code>CQRS</code> <code>Outbox</code> <code>Idempotency</code> <code>DLQ</code>
     </td>
-    <td width="33%" valign="top">
-      <strong>Distributed Systems</strong><br/><br/>
-      Kafka · SQS · Event-Driven<br/>
-      CQRS · Outbox Pattern<br/>
-      Idempotência · DLQ
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>02 · <a href="https://github.com/fiap-tech-challenge-java/food-fiapp">Food Fiapp</a></h3>
+      <p><strong>Academic project</strong></p>
+      <p>Clean Architecture protegida por regras automatizadas e quality gate no build.</p>
+      <code>Java 21</code> <code>Spring Boot</code> <code>Clean Architecture</code> <code>ArchUnit</code>
     </td>
-    <td width="33%" valign="top">
-      <strong>Cloud & Reliability</strong><br/><br/>
-      AWS · Docker · Kubernetes<br/>
-      CI/CD · Datadog<br/>
-      CloudWatch · Incidentes
+    <td width="50%" valign="top">
+      <h3>03 · <a href="https://github.com/rebecanonato89/hedge-cli">Hedge CLI</a></h3>
+      <p><strong>Independent Software Engineering Research</strong></p>
+      <p>Análise estática seletivamente combinada a LLM para detectar Eager Test em código Java.</p>
+      <code>Static Analysis</code> <code>AST</code> <code>Heuristics</code> <code>LLM</code>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>04 · <a href="https://github.com/rebecanonato89/quotes-service">Quotes Service</a></h3>
+      <p><strong>Personal project</strong></p>
+      <p>Modelagem de regras de negócio, eventos de domínio e processamento assíncrono.</p>
+      <code>Kotlin</code> <code>DDD</code> <code>Coroutines</code> <code>Domain Events</code>
+    </td>
+    <td width="50%" valign="top">
+      <h3>05 · <a href="https://github.com/fiap-tech-challenge-java/fiap-tech-challenge">TechChallenge</a></h3>
+      <p><strong>Academic project</strong></p>
+      <p>Domínio isolado por Arquitetura Hexagonal, com autenticação e autorização.</p>
+      <code>Java 21</code> <code>Hexagonal Architecture</code> <code>Spring Security</code> <code>JWT</code>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" valign="top">
+      <h3>06 · <a href="https://github.com/rebecanonato89/kube-backend">Kube Backend</a></h3>
+      <p><strong>Infrastructure lab</strong></p>
+      <p>API Node.js/Express e PostgreSQL executados em Kubernetes local com recursos declarativos de infraestrutura.</p>
+      <code>Node.js</code> <code>Express</code> <code>Docker</code> <code>Kubernetes</code> <code>PostgreSQL</code>
     </td>
   </tr>
 </table>
 
-## Selected engineering work
+## Engineering Capabilities
 
 <table>
   <tr>
-    <td width="50%" valign="top">
-      <h3><a href="https://github.com/fiap-tech-challenge-java/clinicfiapp-monorepo">ClinicFiapApp</a></h3>
-      <p><strong>Distributed backend · FIAP</strong></p>
-      <p>Comunicação assíncrona com Kafka, CQRS, Outbox Pattern, consumidores idempotentes e estratégia de falhas com DLQ.</p>
-      <code>Java</code> <code>Spring</code> <code>Kafka</code> <code>CQRS</code>
-    </td>
-    <td width="50%" valign="top">
-      <h3><a href="https://github.com/rebecanonato89/food-fiapp">Food Fiapp</a></h3>
-      <p><strong>Architecture & quality · FIAP</strong></p>
-      <p>Clean Architecture protegida por ArchUnit, testes unitários e de integração e quality gate de cobertura no build.</p>
-      <code>Java 21</code> <code>Spring Boot</code> <code>ArchUnit</code> <code>PostgreSQL</code>
-    </td>
+    <td width="33%" valign="top"><strong>Backend</strong><br/><br/>Kotlin · Java · Node.js<br/>Spring Boot · NestJS<br/>PostgreSQL</td>
+    <td width="34%" valign="top"><strong>Distributed Systems</strong><br/><br/>Kafka · SQS · Event-Driven<br/>CQRS · Outbox<br/>Idempotency · DLQ</td>
+    <td width="33%" valign="top"><strong>Architecture</strong><br/><br/>DDD · Clean Architecture<br/>Hexagonal · Microservices<br/>Multi-Tenant</td>
   </tr>
   <tr>
-    <td width="50%" valign="top">
-      <h3><a href="https://github.com/rebecanonato89/hedge-cli">Hedge CLI</a></h3>
-      <p><strong>Software engineering research</strong></p>
-      <p>Pipeline híbrido de análise estática + LLM para detectar Eager Test em código Java, usando AST, heurísticas e ensemble.</p>
-      <code>Python</code> <code>tree-sitter</code> <code>AST</code> <code>LLMs</code>
-    </td>
-    <td width="50%" valign="top">
-      <h3><a href="https://github.com/rebecanonato89/quotes-service">Quotes Service</a></h3>
-      <p><strong>Kotlin domain modeling · Personal lab</strong></p>
-      <p>Modelagem de domínio, validação funcional com Either, eventos de domínio e execução assíncrona com coroutines.</p>
-      <code>Kotlin</code> <code>Spring Boot</code> <code>DDD</code> <code>Coroutines</code>
-    </td>
+    <td colspan="2" valign="top"><strong>Cloud & Reliability</strong><br/><br/>AWS · Docker · Kubernetes · Datadog · CloudWatch · CI/CD</td>
+    <td valign="top"><strong>Engineering Quality</strong><br/><br/>TDD · Automated Tests · ArchUnit · Observability · Code Review</td>
   </tr>
 </table>
 
-<details>
-  <summary><strong>Mais projetos de arquitetura e infraestrutura</strong></summary>
-  <br/>
+## Experience, briefly
 
-  - **[TechChallenge](https://github.com/rebecanonato89/fiap-tech-challenge)** — Java 21, Arquitetura Hexagonal, Spring Security, JWT/RBAC, PostgreSQL e OpenAPI.
-  - **[Kube Backend](https://github.com/rebecanonato89/kube-backend)** — Node.js/PostgreSQL containerizado e executado localmente com Docker e Kubernetes.
-  - **AllRev SaaS** — produto multi-tenant com backend privado; o case público está disponível no [portfólio](https://rebecanonato89.dev).
-  - **ConcursoTrack, Equinox Solar CRM e Arcade** — evidências complementares de produto e implementação disponíveis no portfólio.
-</details>
+`Health tech / Kotlin & Event-Driven` → `Accenture / distributed & serverless AWS` → `backend, integrations & corporate systems`
 
-## Experiência em uma linha
+Minha trajetória inclui evolução de sistemas em produção, observabilidade, incidentes, code review, decisões de arquitetura e colaboração entre engenharia e produto. A experiência completa está no [portfólio](https://rebecanonato89.dev/#experiencia) e no [LinkedIn](https://www.linkedin.com/in/rebecanonato89/).
 
-`Health tech / Kotlin & Event-Driven` → `Accenture / distributed & serverless AWS` → `backend, integrações e sistemas corporativos`
+## Built for humans and machines
 
-Além da implementação de features, minha atuação inclui evolução de sistemas em produção, observabilidade, incidentes críticos, code review, decisões de arquitetura e colaboração entre engenharia e produto.
-
-## Formação & pesquisa
-
-- **Especialização em Arquitetura e Desenvolvimento Java** — FIAP, 2024–2026
-- **Mestrado em Engenharia de Sistemas e Automação** — UFLA
-- Publicações em tecnologia, inovação e engenharia; detalhes no [portfólio](https://rebecanonato89.dev)
-- Formação complementar em AWS, Machine Learning, Generative AI e Agentic AI
-
----
+O [portfólio](https://rebecanonato89.dev) foi estruturado para pessoas, mecanismos de busca e agentes: **Accessibility · Structured Data · JSON Resume · LLM-readable · Prerendered content**.
 
 <p align="center">
-  <sub>Mais contexto, experiência completa, publicações e projetos em <a href="https://rebecanonato89.dev">rebecanonato89.dev</a>.</sub>
+  <sub>Backend · Distributed Systems · Event-Driven · Cloud & Reliability</sub>
 </p>
