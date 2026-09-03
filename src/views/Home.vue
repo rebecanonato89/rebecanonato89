@@ -1,29 +1,29 @@
 <template>
   <main id="main-content">
     <section id="inicio" class="hero" aria-labelledby="hero-title">
-      <p class="hero-eyebrow">Currículo</p>
+      <p class="hero-eyebrow">Software Engineering Portfolio</p>
       <h1 id="hero-title">{{ basicsData.name }}</h1>
       <p class="hero-role">{{ basicsData.label }}</p>
       <p class="hero-summary">{{ basicsData.summary }}</p>
 
       <div class="hero-actions">
         <a href="mailto:rebecanonato89@gmail.com" class="btn-hud btn-hud--live">Entrar em contato</a>
-        <a href="/rebeca-nonato-curriculo.pdf" download class="btn-hud">
-          Baixar em PDF<span class="sr-only"> (arquivo rebeca-nonato-curriculo.pdf)</span>
-        </a>
-        <a href="/resume.md" download class="btn-hud">
-          Baixar em Markdown<span class="sr-only"> (arquivo resume.md)</span>
+        <a href="https://github.com/rebecanonato89" target="_blank" rel="noopener noreferrer" class="btn-hud">
+          GitHub<span class="sr-only"> (abre em nova aba)</span>
         </a>
         <a href="https://www.linkedin.com/in/rebecanonato89/" target="_blank" rel="noopener noreferrer" class="btn-hud">
           LinkedIn<span class="sr-only"> (abre em nova aba)</span>
         </a>
-        <a href="https://github.com/rebecanonato89" target="_blank" rel="noopener noreferrer" class="btn-hud">
-          GitHub<span class="sr-only"> (abre em nova aba)</span>
-        </a>
       </div>
-      <p class="note-secondary">
-        Prefere imprimir direto do navegador?
-        <button type="button" class="link-btn" @click="printResume">Imprimir esta página</button>.
+      <p class="note-secondary hero-resume-links">
+        Currículo:
+        <a href="/rebeca-nonato-curriculo.pdf" download>PDF</a>
+        <span aria-hidden="true">·</span>
+        <a href="/resume.md" download>Markdown</a>
+        <span aria-hidden="true">·</span>
+        <a href="/resume.json">JSON</a>
+        <span aria-hidden="true">·</span>
+        <button type="button" class="link-btn" @click="printResume">Imprimir</button>
       </p>
 
       <div class="stats-grid" role="list" aria-label="Números em destaque">
@@ -61,14 +61,51 @@
     </section>
 
     <section id="projetos" aria-labelledby="projetos-title">
-      <h2 id="projetos-title" class="section-title">Arquiteturas &amp; Projetos</h2>
-      <div class="project-grid">
-        <article v-for="project in projectsData" :key="project.title" class="hud-card">
+      <h2 id="projetos-title" class="section-title">Engenharia &amp; Projetos</h2>
+      <p class="section-intro">
+        Uma seleção de projetos públicos que evidencia arquitetura, sistemas distribuídos, qualidade de software,
+        Kotlin/Java e infraestrutura. O contexto de cada projeto é identificado para diferenciar trabalho acadêmico,
+        laboratório técnico, pesquisa independente e produto.
+      </p>
+
+      <h3 class="project-group-title">Projetos em destaque</h3>
+      <div class="project-grid project-grid--featured">
+        <article v-for="project in featuredProjects" :key="project.title" class="hud-card project-card project-card--featured">
           <header class="card-header">
-            <h3 class="card-title">{{ project.title }}</h3>
+            <h4 class="card-title">{{ project.title }}</h4>
             <span class="card-period">{{ project.period }}</span>
           </header>
 
+          <div class="card-desc" v-html="project.description"></div>
+          <ul class="tech-list" aria-label="Stack técnica">
+            <li v-for="tech in project.stack" :key="tech" class="tech-tag">{{ tech }}</li>
+          </ul>
+          <div class="hero-actions">
+            <a v-if="project.liveUrl" :href="project.liveUrl" target="_blank" rel="noopener noreferrer" class="btn-hud btn-hud--live">
+              Acessar app<span class="sr-only"> (abre em nova aba)</span>
+            </a>
+            <a v-if="project.link" :href="project.link" target="_blank" rel="noopener noreferrer" class="btn-hud">
+              Repositório<span class="sr-only"> (abre em nova aba)</span>
+            </a>
+            <button
+              v-if="project.images && project.images.length"
+              type="button"
+              class="btn-hud"
+              @click="openPreview(project)"
+            >
+              Ver prévia
+            </button>
+          </div>
+        </article>
+      </div>
+
+      <h3 v-if="complementaryProjects.length" class="project-group-title project-group-title--secondary">Outros projetos</h3>
+      <div v-if="complementaryProjects.length" class="project-grid project-grid--secondary">
+        <article v-for="project in complementaryProjects" :key="project.title" class="hud-card project-card project-card--secondary">
+          <header class="card-header">
+            <h4 class="card-title">{{ project.title }}</h4>
+            <span class="card-period">{{ project.period }}</span>
+          </header>
           <div class="card-desc" v-html="project.description"></div>
           <ul class="tech-list" aria-label="Stack técnica">
             <li v-for="tech in project.stack" :key="tech" class="tech-tag">{{ tech }}</li>
@@ -190,6 +227,15 @@ import {
   contactData,
 } from '../data/profileData.js';
 
+const FEATURED_PROJECT_TITLES = [
+  'ClinicFiapApp - Microsserviços de Agendamento Hospitalar',
+  'Food Fiapp: API de Gestão de Restaurantes',
+  'Hedge CLI: Análise Estática + IA para Eager Test',
+  'Quotes Service: Cotação e Emissão de Apólices',
+  'TechChallenge: API de Gestão de Usuários',
+  'Kube Backend: API Node.js + PostgreSQL no Kubernetes',
+];
+
 export default {
   name: 'Home',
   components: { ProjectPreviewModal },
@@ -206,6 +252,16 @@ export default {
       projectsData,
       contactData,
     };
+  },
+  computed: {
+    featuredProjects() {
+      return FEATURED_PROJECT_TITLES
+        .map((title) => this.projectsData.find((project) => project.title === title))
+        .filter(Boolean);
+    },
+    complementaryProjects() {
+      return this.projectsData.filter((project) => !FEATURED_PROJECT_TITLES.includes(project.title));
+    },
   },
   methods: {
     openPreview(project) {
@@ -224,4 +280,16 @@ export default {
 <style scoped>
 .lede-note { color: var(--text-muted); font-size: 0.9rem; margin: -0.5rem 0 var(--space-md); }
 .lede-note a { color: var(--text-muted); text-decoration: underline; }
+.hero-resume-links { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: center; }
+.hero-resume-links a { color: var(--text-muted); text-decoration: underline; text-underline-offset: 0.18em; }
+.section-intro { max-width: 74ch; color: var(--text-muted); margin: -0.35rem 0 var(--space-lg); }
+.project-group-title { margin: 0 0 var(--space-md); font-size: 1.05rem; letter-spacing: 0.02em; }
+.project-group-title--secondary { margin-top: var(--space-xl); }
+.project-card { height: 100%; }
+.project-card--featured { border-color: color-mix(in srgb, var(--accent-core) 35%, var(--accent-border)); }
+.project-card--secondary { background: var(--bg-surface); }
+.project-grid--secondary { opacity: 0.96; }
+@media (max-width: 640px) {
+  .hero-resume-links { align-items: flex-start; }
+}
 </style>
