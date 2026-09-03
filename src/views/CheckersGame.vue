@@ -283,10 +283,10 @@ export default {
   margin: 0 calc(-1 * var(--space-lg)) var(--space-md);
   background: var(--bg-surface);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--cyan-border);
+  border-bottom: 1px solid var(--accent-border);
 }
 .dm-app-back {
-  color: var(--cyan-core);
+  color: var(--accent-core);
   text-decoration: none;
   font-family: var(--font-ui);
   font-size: 1rem;
@@ -332,20 +332,20 @@ export default {
 .dm-control-row label {
   font-family: var(--font-code);
   font-size: 0.75rem;
-  color: var(--cyan-core);
+  color: var(--accent-core);
   text-transform: uppercase;
 }
 .dm-control-row select {
   background: var(--bg-surface);
   color: var(--text-main);
-  border: 1px solid var(--cyan-border);
+  border: 1px solid var(--accent-border);
   border-radius: 4px;
   padding: 6px 8px;
   font-family: var(--font-read);
   font-size: 0.9rem;
 }
 .dm-panel-divider {
-  border-top: 1px dashed var(--cyan-dim);
+  border-top: 1px dashed var(--accent-dim);
   margin: var(--space-sm) 0;
 }
 .dm-message {
@@ -372,8 +372,8 @@ export default {
   grid-template-columns: repeat(8, 1fr);
   width: min(92vw, 560px);
   aspect-ratio: 1;
-  border: 2px solid var(--cyan-border);
-  box-shadow: 0 0 25px var(--cyan-dim);
+  border: 2px solid var(--accent-border);
+  box-shadow: 0 0 25px var(--accent-dim);
 }
 .dm-square {
   position: relative;
@@ -386,17 +386,17 @@ export default {
   justify-content: center;
 }
 .dm-square--dark {
-  background: rgba(0, 229, 255, 0.14);
+  background: var(--accent-dim);
 }
 .light-mode .dm-square { background: #e8eef6; }
 .light-mode .dm-square--dark { background: #9db8d4; }
 .dm-square:not(:disabled) { cursor: pointer; }
 .dm-square--selected {
-  outline: 2px solid var(--cyan-core);
+  outline: 2px solid var(--accent-core);
   outline-offset: -2px;
 }
 .dm-square--last {
-  box-shadow: inset 0 0 0 2px rgba(0, 229, 255, 0.45);
+  box-shadow: inset 0 0 0 2px var(--accent-core);
 }
 
 .dm-piece {
@@ -417,7 +417,7 @@ export default {
 .dm-piece--black {
   background: radial-gradient(circle at 33% 30%, #3c4654, #0b111a 75%);
   border: 1px solid #05080d;
-  color: #00e5ff;
+  color: var(--accent-core);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
 }
 .dm-crown { line-height: 1; }
@@ -427,7 +427,7 @@ export default {
   width: 34%;
   height: 34%;
   border-radius: 50%;
-  background: var(--cyan-core);
+  background: var(--accent-core);
   opacity: 0.55;
   animation: dm-pulse 1.2s ease-in-out infinite;
   pointer-events: none;

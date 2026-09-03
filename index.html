@@ -1,14 +1,107 @@
-<!-- BACKUP DO HTML ORIGINAL ABAIXO -->
-<!--
-[...HTML antigo mantido como backup, consulte o histórico do arquivo para restaurar.]
--->
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rebeca Nonato | Software Engineer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Rajdhani:wght@500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <title>Rebeca Nonato — Software Engineer | Backend & Distributed Systems</title>
+    <meta
+      name="description"
+      content="Portfólio profissional de Rebeca Nonato, Software Engineer com 10+ anos em desenvolvimento de sistemas e foco atual em backend, sistemas distribuídos e arquiteturas orientadas a eventos com Kotlin, Java, Node.js e AWS."
+    />
+    <meta name="author" content="Rebeca Nonato" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://rebecanonato89.dev/" />
+
+    <link rel="alternate" type="application/json" href="/resume.json" title="Currículo em formato JSON Resume" />
+    <link rel="alternate" type="text/markdown" href="/resume.md" title="Currículo em Markdown" />
+    <link rel="alternate" type="application/pdf" href="/rebeca-nonato-curriculo.pdf" title="Currículo em PDF" />
+    <link rel="author" href="/humans.txt" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content="https://rebecanonato89.dev/" />
+    <meta property="og:site_name" content="Rebeca Nonato — Portfólio" />
+    <meta property="og:title" content="Rebeca Nonato | Backend & Distributed Systems" />
+    <meta
+      property="og:description"
+      content="Software Engineer com 10+ anos em desenvolvimento de sistemas, com foco em backend, sistemas distribuídos, event-driven architecture e confiabilidade de produção."
+    />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="profile:first_name" content="Rebeca" />
+    <meta property="profile:last_name" content="Nonato" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Rebeca Nonato | Backend & Distributed Systems" />
+    <meta
+      name="twitter:description"
+      content="Software Engineer com 10+ anos em desenvolvimento de sistemas, focada em backend e sistemas distribuídos com Kotlin, Java, Node.js e AWS."
+    />
+
+    <meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="light dark" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Rebeca Nonato",
+        "jobTitle": "Software Engineer",
+        "description": "Software Engineer com mais de 10 anos em desenvolvimento de sistemas, com foco atual em backend, sistemas distribuídos, arquiteturas orientadas a eventos e confiabilidade de produção.",
+        "url": "https://rebecanonato89.dev/",
+        "email": "mailto:rebecanonato89@gmail.com",
+        "sameAs": [
+          "https://www.linkedin.com/in/rebecanonato89/",
+          "https://github.com/rebecanonato89"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Alice"
+        },
+        "alumniOf": [
+          { "@type": "CollegeOrUniversity", "name": "Universidade Federal de Lavras (UFLA)" },
+          { "@type": "CollegeOrUniversity", "name": "FIAP" },
+          { "@type": "CollegeOrUniversity", "name": "Anhanguera Educacional" }
+        ],
+        "knowsAbout": [
+          "Kotlin", "Java", "Node.js", "TypeScript", "Spring Boot", "AWS", "Kafka", "SQS",
+          "Distributed Systems", "Event-Driven Architecture", "DDD", "Clean Architecture",
+          "Hexagonal Architecture", "CQRS", "Outbox Pattern", "Observability", "Docker", "Kubernetes"
+        ]
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem('rn-theme');
+          if (!theme) {
+            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', theme);
+
+          if (localStorage.getItem('rn-contrast') === '1') {
+            document.documentElement.setAttribute('data-contrast', 'high');
+          }
+
+          var step = parseInt(localStorage.getItem('rn-font-step') || '0', 10);
+          if (!Number.isNaN(step) && step !== 0) {
+            document.documentElement.style.fontSize = (100 + step * 10) + '%';
+          }
+
+          if (localStorage.getItem('rn-reduced-motion') === '1') {
+            document.documentElement.classList.add('force-reduced-motion');
+          }
+        } catch (e) {
+          /* localStorage indisponível — segue com os padrões */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="app"></div>

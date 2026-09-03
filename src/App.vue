@@ -1,166 +1,218 @@
 <template>
-  <div class="container" :class="{ 'high-contrast-mode': isHighContrast, 'light-mode': isLightMode, 'app-mode': isGameRoute }">
+  <div id="app-shell">
     <a href="#main-content" class="skip-link" @click.prevent="skipToMain">Pular para o conteúdo principal</a>
 
-    <aside class="a11y-toolbar" aria-label="Ferramentas de acessibilidade e tema">
-      <button @click="toggleTheme" class="a11y-btn theme-btn" :aria-label="isLightMode ? 'Ativar modo escuro' : 'Ativar modo claro'">
-        <svg v-if="!isLightMode" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="12" cy="12" r="5"></circle>
-          <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"></path>
-        </svg>
-        <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-      </button>
+    <!-- Modo jogo: tela cheia, sem cabeçalho/rodapé de currículo (cada jogo tem seu próprio botão de voltar) -->
+    <template v-if="isGameRoute">
+      <router-view />
+    </template>
 
-      <div class="a11y-divider" aria-hidden="true"></div>
-
-      <button @click="changeFontSize(-1)" class="a11y-btn" aria-label="Diminuir tamanho da fonte">A-</button>
-      <button @click="changeFontSize(1)" class="a11y-btn" aria-label="Aumentar tamanho da fonte">A+</button>
-      <button @click="resetFontSize" class="a11y-btn" aria-label="Restaurar tamanho da fonte padrão">A</button>
-      <button @click="toggleHighContrast" class="a11y-btn" :aria-pressed="isHighContrast" aria-label="Alternar modo de alto contraste restrito">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M12 2a10 10 0 0 0 0 20z" fill="currentColor"></path>
-        </svg>
-      </button>
-    </aside>
-
-    <header>
-      <div class="brand">
-        <h1>Rebeca Nonato</h1>
-        <span>SYS.INIT // SOFTWARE_ENGINEER_SENIOR</span>
+    <template v-else>
+      <div class="a11y-bar" role="group" aria-label="Preferências de leitura">
+        <div class="a11y-bar-inner">
+          <span class="a11y-bar-label">Leitura:</span>
+          <button type="button" class="a11y-btn" @click="changeFontSize(-1)" aria-label="Diminuir tamanho da fonte">
+            A<span aria-hidden="true">−</span>
+          </button>
+          <button type="button" class="a11y-btn" @click="changeFontSize(1)" aria-label="Aumentar tamanho da fonte">
+            A<span aria-hidden="true">+</span>
+          </button>
+          <button
+            type="button"
+            class="a11y-btn"
+            :class="{ 'a11y-btn--active': isHighContrast }"
+            :aria-pressed="isHighContrast"
+            aria-label="Alternar alto contraste"
+            @click="toggleHighContrast"
+          >
+            Alto contraste
+          </button>
+          <button
+            type="button"
+            class="a11y-btn"
+            :class="{ 'a11y-btn--active': reduceMotion }"
+            :aria-pressed="reduceMotion"
+            aria-label="Reduzir animações e movimento"
+            @click="toggleReduceMotion"
+          >
+            Reduzir movimento
+          </button>
+          <button
+            type="button"
+            class="a11y-btn"
+            aria-label="Alternar tema claro ou escuro"
+            :aria-pressed="theme === 'dark'"
+            @click="toggleTheme"
+          >
+            {{ theme === 'dark' ? 'Tema escuro' : 'Tema claro' }}
+          </button>
+        </div>
       </div>
-      <nav aria-label="Navegação Principal">
-        <ul v-if="$route.path === '/'">
-          <li><a href="#about" :class="{ active: activeSection === 'about' }" @click.prevent="scrollToId('about')">Identidade</a></li>
-          <li><a href="#experience" :class="{ active: activeSection === 'experience' }" @click.prevent="scrollToId('experience')">Log Execução</a></li>
-          <li><a href="#projects" :class="{ active: activeSection === 'projects' }" @click.prevent="scrollToId('projects')">Deployments</a></li>
-          <li><router-link to="/arcade" class="nav-highlight" :class="{ active: activeSection === 'arcade-preview' }">Arcade</router-link></li>
-          <li><router-link to="/recursos" class="nav-highlight" :class="{ active: activeSection === 'resources-preview' }">Recursos</router-link></li>
-          <li><a href="#contact" class="nav-cta" @click.prevent="scrollToId('contact')">Vamos nos conectar</a></li>
-        </ul>
-        <ul v-else>
-          <li><router-link to="/">&larr; Portfólio</router-link></li>
-          <li><router-link to="/arcade">Arcade</router-link></li>
-          <li><router-link to="/recursos">Recursos</router-link></li>
-          <li><router-link to="/#contact" class="nav-cta">Vamos nos conectar</router-link></li>
-        </ul>
-      </nav>
-    </header>
 
-    <router-view />
+      <header class="site-header">
+        <div class="site-header-inner">
+          <router-link to="/" class="brand">
+            <span class="brand-name">Rebeca Nonato</span>
+            <span class="brand-role">Software Engineer</span>
+          </router-link>
 
-    <footer>
-      <p>CONSTRUÍDO COM VUE.JS, HTML SEMÂNTICO E CSS FLUIDO. ACESSIBILIDADE NIVEL AAA.</p>
-      <p>REBECA NONATO &copy; 2026</p>
-    </footer>
+          <button
+            type="button"
+            class="nav-toggle"
+            :aria-expanded="navOpen"
+            aria-controls="primary-nav"
+            @click="navOpen = !navOpen"
+          >
+            <span aria-hidden="true">{{ navOpen ? '✕' : '☰' }}</span>
+            <span class="sr-only">{{ navOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação' }}</span>
+          </button>
+
+          <nav id="primary-nav" class="primary-nav" :class="{ 'primary-nav--open': navOpen }" aria-label="Seções do currículo">
+            <router-link
+              v-for="item in resumeNav"
+              :key="item.hash"
+              :to="{ path: '/', hash: item.hash }"
+              class="nav-link"
+              @click="navOpen = false"
+            >{{ item.label }}</router-link>
+            <span class="nav-divider" aria-hidden="true"></span>
+            <router-link to="/servicos" class="nav-link" active-class="nav-link--active" @click="navOpen = false">Serviços</router-link>
+            <router-link to="/arcade" class="nav-link" active-class="nav-link--active" @click="navOpen = false">Arcade</router-link>
+            <router-link to="/recursos" class="nav-link" active-class="nav-link--active" @click="navOpen = false">Recursos</router-link>
+          </nav>
+        </div>
+      </header>
+
+      <router-view />
+
+      <footer class="site-footer">
+        <div class="site-footer-inner">
+          <div class="site-footer-col">
+            <p class="footer-name">Rebeca Nonato</p>
+            <p class="footer-tagline">Software Engineer — Backend, Distributed Systems &amp; Cloud-Native</p>
+            <ul class="footer-links" aria-label="Contato">
+              <li><a href="mailto:rebecanonato89@gmail.com">rebecanonato89@gmail.com</a></li>
+              <li><a href="https://www.linkedin.com/in/rebecanonato89/" target="_blank" rel="noopener noreferrer">LinkedIn<span class="sr-only"> (abre em nova aba)</span></a></li>
+              <li><a href="https://github.com/rebecanonato89" target="_blank" rel="noopener noreferrer">GitHub<span class="sr-only"> (abre em nova aba)</span></a></li>
+            </ul>
+          </div>
+
+          <div class="site-footer-col">
+            <p class="footer-heading">Explorar</p>
+            <ul class="footer-links">
+              <li><router-link to="/servicos">Serviços</router-link></li>
+              <li><router-link to="/arcade">Arcade</router-link></li>
+              <li><router-link to="/recursos">Recursos</router-link></li>
+            </ul>
+          </div>
+
+          <div class="site-footer-col">
+            <p class="footer-heading">Currículo em outros formatos</p>
+            <ul class="footer-links">
+              <li><a href="/rebeca-nonato-curriculo.pdf" download>PDF</a></li>
+              <li><a href="/resume.md" download>Markdown</a></li>
+              <li><a href="/resume.json">JSON (resume.json)</a></li>
+              <li><a href="/llms.txt">llms.txt</a></li>
+              <li><a href="/sitemap.xml">sitemap.xml</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer-note">
+          Site construído com práticas de acessibilidade (WCAG) e leitura por agentes de IA em mente.
+        </p>
+      </footer>
+    </template>
   </div>
 </template>
 
 <script>
+const GAME_ROUTES = ['/go', '/damas', '/memoria'];
+
+const RESUME_NAV = [
+  { hash: '#sobre', label: 'Sobre' },
+  { hash: '#experiencia', label: 'Experiência' },
+  { hash: '#projetos', label: 'Projetos' },
+  { hash: '#skills', label: 'Skills' },
+  { hash: '#certificacoes', label: 'Certificações' },
+  { hash: '#publicacoes', label: 'Publicações' },
+  { hash: '#contato', label: 'Contato' },
+];
+
+const ROUTE_TITLES = {
+  '/': 'Rebeca Nonato — Currículo | Software Engineer',
+  '/servicos': 'Serviços | Rebeca Nonato',
+  '/arcade': 'Arcade | Rebeca Nonato',
+  '/recursos': 'Recursos | Rebeca Nonato',
+  '/go': 'Go | Arcade | Rebeca Nonato',
+  '/damas': 'Damas | Arcade | Rebeca Nonato',
+  '/memoria': 'Jogo da Memória | Arcade | Rebeca Nonato',
+};
+
 export default {
   name: 'App',
   data() {
     return {
+      resumeNav: RESUME_NAV,
+      navOpen: false,
       fontSizeStep: 0,
       isHighContrast: false,
-      isLightMode: false,
-      activeSection: '',
-      sectionObserver: null,
+      reduceMotion: false,
+      theme: 'light',
     };
   },
   computed: {
-    // Rotas de jogo entram em "modo app": some o cabeçalho/rodapé do portfólio
-    // e o jogo ganha a tela inteira (cada jogo tem sua barra própria de volta).
     isGameRoute() {
-      return ['/go', '/damas', '/memoria'].includes(this.$route.path);
-    }
+      return GAME_ROUTES.includes(this.$route.path);
+    },
   },
   watch: {
-    '$route.path'() {
-      document.body.classList.toggle('app-mode', this.isGameRoute);
-      this.$nextTick(() => this.setupSectionObserver());
-    }
+    '$route'(to) {
+      this.navOpen = false;
+      document.title = ROUTE_TITLES[to.path] || ROUTE_TITLES['/'];
+    },
   },
   mounted() {
-    // Recupera a preferência de tema do usuário (caso ele já tenha alterado antes)
-    const savedTheme = localStorage.getItem('rebeca-portfolio-lightmode');
-    if (savedTheme === 'true') {
-      this.isLightMode = true;
-    }
-    this.applyBodyClass();
-    document.body.classList.toggle('app-mode', this.isGameRoute);
-    // No carregamento inicial, o vue-router resolve a navegação de forma
-    // assíncrona: o <router-view> ainda pode não ter renderizado as seções
-    // no instante em que este mounted() roda. Esperar o router ficar pronto
-    // garante que o DOM da Home já existe antes de observar as seções.
-    this.$router.isReady().then(() => this.$nextTick(() => this.setupSectionObserver()));
-  },
-  beforeUnmount() {
-    if (this.sectionObserver) this.sectionObserver.disconnect();
+    document.title = ROUTE_TITLES[this.$route.path] || ROUTE_TITLES['/'];
+
+    // O tema e o contraste já foram aplicados via script inline em index.html
+    // (evita flash de tema errado); aqui só sincronizamos o estado reativo.
+    this.theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    this.isHighContrast = document.documentElement.getAttribute('data-contrast') === 'high';
+
+    const savedStep = parseInt(localStorage.getItem('rn-font-step') || '0', 10);
+    if (!Number.isNaN(savedStep)) this.fontSizeStep = savedStep;
+
+    this.reduceMotion = localStorage.getItem('rn-reduced-motion') === '1';
+    this.applyReduceMotionClass();
   },
   methods: {
-    // Observa as seções da home para: (1) destacar o item ativo no menu e
-    // (2) marcar a seção visível na tela com um destaque visual (.in-view),
-    // criando uma divisão clara entre elas conforme o scroll.
-    setupSectionObserver() {
-      if (this.sectionObserver) {
-        this.sectionObserver.disconnect();
-        this.sectionObserver = null;
-      }
-      // O scrollspy só faz sentido na home: é a única página com âncoras internas.
-      if (this.$route.path !== '/') return;
-      const sections = document.querySelectorAll('main#main-content section[id]');
-      if (!sections.length) return;
-      this.sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          entry.target.classList.toggle('in-view', entry.isIntersecting);
-          if (entry.isIntersecting) this.activeSection = entry.target.id;
-        });
-      }, { rootMargin: '-35% 0px -50% 0px', threshold: 0 });
-      sections.forEach((section) => this.sectionObserver.observe(section));
-    },
     toggleTheme() {
-      this.isLightMode = !this.isLightMode;
-      localStorage.setItem('rebeca-portfolio-lightmode', this.isLightMode);
-      this.applyBodyClass();
-    },
-    applyBodyClass() {
-      // O fundo decorativo (grade) vive no body para se estender por toda a
-      // largura da tela (não só a coluna central). Por isso o body também
-      // precisa das classes de tema, para usar as variáveis de cor corretas.
-      document.body.classList.toggle('high-contrast-mode', this.isHighContrast);
-      document.body.classList.toggle('light-mode', this.isLightMode);
-      if (this.isHighContrast) {
-        document.body.style.backgroundColor = '#000000';
-      } else if (this.isLightMode) {
-        document.body.style.backgroundColor = '#f4f7fb';
-      } else {
-        document.body.style.backgroundColor = '#030509';
-      }
-    },
-    changeFontSize(step) {
-      this.fontSizeStep += step;
-      if (this.fontSizeStep > 4) this.fontSizeStep = 4;
-      if (this.fontSizeStep < -2) this.fontSizeStep = -2;
-      this.applyFontSize();
-    },
-    resetFontSize() {
-      this.fontSizeStep = 0;
-      this.applyFontSize();
-    },
-    applyFontSize() {
-      const newSize = 100 + (this.fontSizeStep * 10);
-      document.documentElement.style.fontSize = `${newSize}%`;
+      this.theme = this.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', this.theme);
+      localStorage.setItem('rn-theme', this.theme);
     },
     toggleHighContrast() {
       this.isHighContrast = !this.isHighContrast;
-      this.applyBodyClass();
+      if (this.isHighContrast) {
+        document.documentElement.setAttribute('data-contrast', 'high');
+        localStorage.setItem('rn-contrast', '1');
+      } else {
+        document.documentElement.removeAttribute('data-contrast');
+        localStorage.setItem('rn-contrast', '0');
+      }
     },
-    scrollToId(id) {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    toggleReduceMotion() {
+      this.reduceMotion = !this.reduceMotion;
+      localStorage.setItem('rn-reduced-motion', this.reduceMotion ? '1' : '0');
+      this.applyReduceMotionClass();
+    },
+    applyReduceMotionClass() {
+      document.documentElement.classList.toggle('force-reduced-motion', this.reduceMotion);
+    },
+    changeFontSize(step) {
+      this.fontSizeStep = Math.min(4, Math.max(-2, this.fontSizeStep + step));
+      localStorage.setItem('rn-font-step', String(this.fontSizeStep));
+      document.documentElement.style.fontSize = `${100 + this.fontSizeStep * 10}%`;
     },
     skipToMain() {
       const el = document.getElementById('main-content');
@@ -168,365 +220,476 @@ export default {
       el.setAttribute('tabindex', '-1');
       el.focus();
       el.scrollIntoView();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Rajdhani:wght@500;600;700&family=Fira+Code:wght@400;500&display=swap');
-
-/* =========================================
-   VARIÁVEIS PADRÃO (DARK MODE / SCI-FI)
-   ========================================= */
+/* =========================================================================
+   Design tokens — tema claro (padrão) / escuro / alto contraste
+   ========================================================================= */
 :root {
-  --bg-base: #030509;
-  --bg-surface: rgba(10, 15, 25, 0.7);
-  --cyan-core: #00e5ff;
-  --cyan-dim: rgba(0, 229, 255, 0.15);
-  --cyan-border: rgba(0, 229, 255, 0.3);
-  --text-main: #e2e8f0;
-  --text-muted: #8892b0;
-  
-  --font-ui: 'Rajdhani', sans-serif;
-  --font-read: 'Inter', sans-serif;
-  --font-code: 'Fira Code', monospace;
-  
+  --bg-base: #ffffff;
+  --bg-surface: #f6f7f9;
+  --bg-surface-raised: #ffffff;
+  --text-main: #14161a;
+  --text-muted: #52596b;
+  --accent-core: #1d4ed8;
+  --accent-hover: #1e40af;
+  --accent-dim: rgba(29, 78, 216, 0.1);
+  --accent-border: #d9dce3;
+  --card-shadow: rgba(15, 23, 42, 0.08);
+  --scrim-overlay: rgba(15, 23, 42, 0.6);
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
   --space-sm: 0.5rem;
   --space-md: 1rem;
-  --space-lg: 2rem;
-  --space-xl: 4rem;
+  --space-lg: 1.75rem;
+  --space-xl: 3rem;
+
+  --font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-read: 'Atkinson Hyperlegible', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-code: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  --focus-ring: 3px solid var(--accent-core);
+  color-scheme: light;
 }
 
-/* =========================================
-   VARIÁVEIS MODO CLARO (LIGHT MODE)
-   ========================================= */
-.light-mode {
-  --bg-base: #f4f7fb;
-  --bg-surface: rgba(255, 255, 255, 0.85);
-  --cyan-core: #0066cc; /* Azul Elétrico mais escuro para contraste */
-  --cyan-dim: rgba(0, 102, 204, 0.1);
-  --cyan-border: rgba(0, 102, 204, 0.3);
-  --text-main: #1a202c;
-  --text-muted: #4a5568;
+:root[data-theme='dark'] {
+  --bg-base: #101216;
+  --bg-surface: #181b21;
+  --bg-surface-raised: #1e222a;
+  --text-main: #f2f4f8;
+  --text-muted: #a9b0c0;
+  --accent-core: #7fa4ff;
+  --accent-hover: #a4c0ff;
+  --accent-dim: rgba(127, 164, 255, 0.16);
+  --accent-border: #2b3040;
+  --card-shadow: rgba(0, 0, 0, 0.45);
+  --scrim-overlay: rgba(0, 0, 0, 0.7);
+  color-scheme: dark;
 }
 
-/* =========================================
-   VARIÁVEIS ALTO CONTRASTE (PRIORIDADE MÁXIMA)
-   ========================================= */
-.high-contrast-mode {
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg-base: #101216;
+    --bg-surface: #181b21;
+    --bg-surface-raised: #1e222a;
+    --text-main: #f2f4f8;
+    --text-muted: #a9b0c0;
+    --accent-core: #7fa4ff;
+    --accent-hover: #a4c0ff;
+    --accent-dim: rgba(127, 164, 255, 0.16);
+    --accent-border: #2b3040;
+    --card-shadow: rgba(0, 0, 0, 0.45);
+    --scrim-overlay: rgba(0, 0, 0, 0.7);
+    color-scheme: dark;
+  }
+}
+
+:root[data-contrast='high'] {
   --bg-base: #000000;
   --bg-surface: #000000;
-  --cyan-core: #FFFF00; /* Amarelo puro */
-  --cyan-dim: transparent;
-  --cyan-border: #FFFF00;
-  --text-main: #FFFFFF;
-  --text-muted: #FFFFFF;
+  --bg-surface-raised: #0a0a0a;
+  --text-main: #ffffff;
+  --text-muted: #f2f2f2;
+  --accent-core: #ffd60a;
+  --accent-hover: #ffe066;
+  --accent-dim: rgba(255, 214, 10, 0.2);
+  --accent-border: #ffffff;
+  --card-shadow: transparent;
+  --scrim-overlay: rgba(0, 0, 0, 0.9);
+  --focus-ring: 3px solid #ffd60a;
+  color-scheme: dark;
 }
 
-/* RESET */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { font-size: 100%; scroll-behavior: smooth; }
+/* =========================================================================
+   Reset & base
+   ========================================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+html, body { margin: 0; padding: 0; }
 
-/* O grid decorativo vive no body (não no .container) para se estender por
-   toda a largura da janela em qualquer resolução — em monitores ultrawide
-   ele cobre a tela inteira em vez de parar na coluna central de conteúdo.
-   As classes de tema (.light-mode/.high-contrast-mode) são espelhadas no
-   body via JS (ver applyBodyClass) para que as variáveis de cor cheguem
-   até aqui. */
 body {
-  font-family: var(--font-read);
+  background: var(--bg-base);
   color: var(--text-main);
-  line-height: 1.6;
-  background-color: var(--bg-base);
-  background-image:
-    linear-gradient(var(--cyan-dim) 1px, transparent 1px),
-    linear-gradient(90deg, var(--cyan-dim) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-attachment: fixed;
-  transition: background-color 0.4s ease, color 0.4s ease;
-}
-
-.container {
+  font-family: var(--font-read);
+  font-size: 1.0625rem;
+  line-height: 1.65;
   min-height: 100vh;
-  transition: max-width 0.3s ease;
-  padding: 0 var(--space-lg);
-  max-width: 1000px;
-  margin: 0 auto;
 }
 
-/* Em telas grandes o conteúdo cresce em vez de ficar preso numa coluna estreita */
-@media (min-width: 1440px) {
-  .container { max-width: 1200px; }
-}
-@media (min-width: 1800px) {
-  .container { max-width: 1440px; }
-}
-@media (min-width: 2200px) {
-  .container { max-width: 1680px; }
-}
+img { max-width: 100%; display: block; }
 
-/* Modo app (Go Game): esconde o cabeçalho e rodapé do portfólio em qualquer
-   tamanho de tela, priorizando o espaço da tela pro tabuleiro. A navegação de
-   volta ao portfólio passa a existir só na barra compacta própria do jogo. */
-.app-mode header,
-.app-mode footer {
-  display: none;
-}
+h1, h2, h3, h4 { font-family: var(--font-ui); font-weight: 700; line-height: 1.25; color: var(--text-main); }
 
-/* Desliga fundo no alto contraste */
-body.high-contrast-mode { background-image: none !important; }
+a { color: var(--accent-core); }
+a:hover { color: var(--accent-hover); }
 
-/* Em telas de tablet/celular a grade decorativa fica mais compacta (curta),
-   em vez de repetir o mesmo espaçamento largo usado no desktop. */
-@media (max-width: 1024px) {
-  body { background-size: 28px 28px; }
-}
-@media (max-width: 480px) {
-  body { background-size: 20px 20px; }
-}
-
-/* =========================================
-   ACESSBILIDADE & BARRA HUD
-   ========================================= */
-.skip-link {
-  position: absolute; top: -100px; left: 0;
-  background: var(--cyan-core); color: #000;
-  padding: var(--space-md); z-index: 9999;
-  font-family: var(--font-ui); font-weight: bold; text-transform: uppercase;
-  transition: top 0.2s; text-decoration: none;
-}
-.skip-link:focus { top: 0; }
+:focus-visible { outline: var(--focus-ring); outline-offset: 3px; border-radius: 2px; }
 
 .sr-only {
-  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-*:focus-visible {
-  outline: 2px dashed var(--cyan-core); outline-offset: 4px;
-  box-shadow: 0 0 15px var(--cyan-dim); border-radius: 4px;
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-md);
+  z-index: 3000;
+  background: var(--accent-core);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.15s ease;
 }
+.skip-link:focus { top: var(--space-md); }
 
-.a11y-toolbar {
-  position: fixed; top: 20px; right: 20px;
-  display: flex; gap: 8px; align-items: center;
-  z-index: 1000; background: var(--bg-surface);
-  padding: 8px; border: 1px solid var(--cyan-border);
-  border-radius: 8px; backdrop-filter: blur(10px);
-  transition: background 0.4s, border-color 0.4s;
+/* =========================================================================
+   Reduced motion
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
 }
-
-.a11y-divider {
-  width: 1px; height: 24px; background-color: var(--cyan-border);
-  margin: 0 4px;
+html.force-reduced-motion *, html.force-reduced-motion *::before, html.force-reduced-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
 }
+html { scroll-behavior: smooth; }
 
+/* =========================================================================
+   Accessibility preferences bar
+   ========================================================================= */
+.a11y-bar {
+  background: var(--text-main);
+  color: var(--bg-base);
+}
+.a11y-bar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.4rem var(--space-md);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+}
+.a11y-bar-label { opacity: 0.75; margin-right: 0.15rem; }
 .a11y-btn {
-  background: transparent; color: var(--text-main);
-  border: 1px solid var(--cyan-border); border-radius: 4px;
-  padding: 6px 12px; font-family: var(--font-code);
-  font-size: 1rem; font-weight: bold; cursor: pointer;
-  transition: all 0.2s; display: flex; align-items: center; justify-content: center;
-}
-.a11y-btn:hover, .a11y-btn:focus-visible {
-  background: var(--cyan-core); color: var(--bg-base);
-}
-.a11y-btn svg { width: 16px; height: 16px; }
-.theme-btn { padding: 6px 8px; }
-
-/* =========================================
-   LAYOUT & COMPONENTES
-   ========================================= */
-header {
-  padding: var(--space-lg) 0; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-md);
-  border-bottom: 1px solid var(--cyan-border); margin-bottom: var(--space-xl);
-  background: var(--bg-surface);
-  position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px);
-  transition: background 0.4s, border-color 0.4s;
-  /* Reserva espaço à direita para a barra de acessibilidade fixa (top:20/right:20),
-     evitando que itens de navegação fiquem escondidos/inclicáveis atrás dela. */
-  padding-right: 300px;
-}
-
-/* Gradiente na borda superior apenas no Dark Mode (Fica feio no claro) */
-body:not(.light-mode):not(.high-contrast-mode) header {
-  background: linear-gradient(180deg, rgba(3,5,9,0.95) 0%, rgba(3,5,9,0) 100%);
-}
-
-.brand h1 { font-family: var(--font-ui); font-size: 2rem; color: var(--text-main); text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px var(--cyan-dim); }
-.brand span { font-family: var(--font-code); font-size: 0.8rem; color: var(--cyan-core); }
-nav ul { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-lg); }
-nav a { position: relative; color: var(--text-muted); text-decoration: none; font-family: var(--font-ui); font-size: 1.1rem; text-transform: uppercase; transition: 0.3s; padding-bottom: 2px; }
-nav a:hover { color: var(--cyan-core); text-shadow: 0 0 8px var(--cyan-dim); }
-nav a.nav-highlight { color: var(--cyan-core); }
-
-/* Indica no menu qual seção da página está visível no momento (scrollspy) */
-nav a.active { color: var(--cyan-core); text-shadow: 0 0 8px var(--cyan-dim); }
-nav a.active::after {
-  content: ''; position: absolute; left: 0; right: 0; bottom: -6px;
-  height: 2px; background: var(--cyan-core); box-shadow: 0 0 8px var(--cyan-dim);
-}
-
-/* CTA "Vamos nos conectar": precisa se destacar dos demais links do menu,
-   por isso ganha o tratamento de botão sólido em vez de texto simples. */
-nav a.nav-cta {
-  background: var(--cyan-core); color: var(--bg-base); font-weight: 700;
-  padding: 8px 16px; border-radius: 4px; box-shadow: 0 0 15px var(--cyan-dim);
-}
-nav a.nav-cta:hover, nav a.nav-cta:focus-visible {
-  color: var(--bg-base); text-shadow: none; box-shadow: 0 0 25px var(--cyan-core); opacity: 0.9;
-}
-
-section { margin-bottom: var(--space-xl); padding: var(--space-lg); border-radius: 12px; transition: background-color 0.6s ease, box-shadow 0.6s ease; }
-
-/* Nos jogos (modo app) a seção deve continuar colada nas bordas da tela,
-   sem o box/realce de divisão pensado para as seções do portfólio. */
-.app-mode section {
-  padding: 0; border-radius: 0; background: none; box-shadow: none;
-}
-
-/* Divisão clara entre seções: a que estiver na tela ganha um leve destaque de
-   fundo, enquanto as demais permanecem neutras — reforça em qual "bloco" do
-   portfólio o visitante está no momento do scroll. */
-section.in-view {
-  background: var(--cyan-dim);
-  box-shadow: inset 0 0 0 1px var(--cyan-border);
-}
-.high-contrast-mode section.in-view,
-body.high-contrast-mode section.in-view {
   background: transparent;
-  box-shadow: inset 0 0 0 2px var(--cyan-border);
+  color: inherit;
+  border: 1px solid currentColor;
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.6rem;
+  min-height: 24px;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  opacity: 0.85;
 }
+.a11y-btn:hover { opacity: 1; }
+.a11y-btn--active { background: var(--accent-core); border-color: var(--accent-core); color: #101216; opacity: 1; font-weight: 600; }
+
+/* =========================================================================
+   Site header
+   ========================================================================= */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-base);
+  border-bottom: 1px solid var(--accent-border);
+}
+.site-header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+.brand {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  text-decoration: none;
+  margin-right: auto;
+}
+.brand-name { font-family: var(--font-ui); font-weight: 700; font-size: 1.05rem; color: var(--text-main); }
+.brand-role { font-size: 0.75rem; color: var(--text-muted); }
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  width: 40px;
+  height: 40px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.primary-nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+.nav-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--accent-border);
+  margin: 0 0.35rem;
+}
+.nav-link {
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-main);
+  text-decoration: none;
+  padding: 0.45rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+.nav-link:hover { background: var(--accent-dim); color: var(--accent-core); }
+.nav-link--active { color: var(--accent-core); font-weight: 700; }
+
+@media (max-width: 780px) {
+  .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
+  .primary-nav {
+    display: none;
+    position: absolute;
+    left: 0; right: 0; top: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    background: var(--bg-base);
+    border-bottom: 1px solid var(--accent-border);
+    padding: var(--space-sm) var(--space-md) var(--space-md);
+  }
+  .primary-nav--open { display: flex; }
+  .nav-divider { display: none; }
+  .site-header { position: relative; }
+  .nav-link { padding: 0.65rem 0.4rem; border-bottom: 1px solid var(--accent-border); border-radius: 0; }
+}
+
+/* =========================================================================
+   Layout / typography helpers shared by every page
+   ========================================================================= */
+main {
+  display: block;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-md) var(--space-xl);
+}
+
+section { margin-bottom: var(--space-xl); scroll-margin-top: 5.5rem; }
+section:last-child { margin-bottom: 0; }
 
 .section-title {
-  font-family: var(--font-ui); font-size: 2.2rem; color: var(--text-main); margin-bottom: var(--space-lg);
-  display: flex; align-items: center; gap: var(--space-md);
+  font-size: 1.4rem;
+  margin: 0 0 var(--space-md);
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent-border);
 }
-.section-title::before { content: ''; display: block; width: 12px; height: 12px; background: var(--cyan-core); box-shadow: 0 0 10px var(--cyan-dim); }
 
 .hud-card {
-  background: var(--bg-surface); 
-  border: 1px solid var(--cyan-border); 
-  border-radius: 8px;
-  padding: var(--space-lg); 
-  display: flex; 
-  flex-direction: column; 
-  transition: all 0.3s;
-  backdrop-filter: blur(10px);
-  color: var(--text-main); 
+  background: var(--bg-surface);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: 0 1px 3px var(--card-shadow);
 }
-.hud-card p, .hud-card strong {
+
+.card-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem; }
+.card-title { font-size: 1.1rem; margin: 0; }
+.card-period { font-family: var(--font-ui); font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; }
+.card-desc { color: var(--text-main); }
+.card-desc p { margin: 0 0 0.6rem; }
+.card-desc p:last-child { margin-bottom: 0; }
+.card-desc ul { margin: 0; }
+
+.tech-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0; margin: var(--space-sm) 0 0; }
+.tech-tag {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent-core);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+}
+
+.project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-md); }
+
+.btn-hud {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
   color: var(--text-main);
+  background: var(--bg-surface-raised);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+  line-height: 1.2;
 }
-.hud-card:hover { 
-  transform: translateY(-3px); 
-  border-color: var(--cyan-core); 
-  box-shadow: 0 5px 20px var(--cyan-dim); 
-}
+.btn-hud:hover { border-color: var(--accent-core); color: var(--accent-core); }
+.btn-hud--live { background: var(--accent-core); border-color: var(--accent-core); color: #ffffff; }
+.btn-hud--live:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: #ffffff; }
 
-.high-contrast-mode .hud-card { border-width: 2px; box-shadow: none !important; }
-
-.card-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--space-md); border-bottom: 1px dashed var(--cyan-dim); padding-bottom: var(--space-sm); }
-.card-title { font-family: var(--font-ui); font-size: 1.6rem; color: var(--text-main); margin-bottom: 0; }
-.card-period { font-family: var(--font-code); font-size: 0.85rem; color: var(--cyan-core); }
-
-.card-desc { color: var(--text-main); font-size: 0.95rem; flex-grow: 1; margin-bottom: var(--space-lg); }
-.card-desc p, .card-desc ul, .card-desc li { color: var(--text-main) !important; }
-
-.project-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); align-items: start; }
-
-/* Em telas largas o grid de projetos usa o espaço extra em 2 colunas em vez
-   de esticar cada card para a largura inteira da coluna central.
-   minmax(0, 1fr) evita que o conteúdo dos cards (tags, texto longo) force
-   a coluna a crescer além da largura disponível e estoure o container. */
-@media (min-width: 1000px) {
-  .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (min-width: 1800px) {
-  .project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-
-.tech-list { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-bottom: var(--space-lg); }
-.tech-tag { font-family: var(--font-code); font-size: 0.75rem; color: var(--cyan-core); background: var(--cyan-dim); border: 1px dashed var(--cyan-border); padding: 4px 8px; border-radius: 4px; }
-
-.btn-hud { display: inline-flex; align-items: center; gap: 8px; background: var(--cyan-dim); color: var(--cyan-core); border: 1px solid var(--cyan-border); padding: 8px 16px; font-family: var(--font-ui); font-size: 1.1rem; text-decoration: none; text-transform: uppercase; transition: all 0.3s; align-self: flex-start; }
-.btn-hud:hover { background: var(--cyan-core); color: var(--bg-base); box-shadow: 0 0 15px var(--cyan-dim); }
-.btn-hud--live { background: var(--cyan-core); color: var(--bg-base); font-weight: 700; }
-.btn-hud--live:hover { box-shadow: 0 0 25px var(--cyan-core); opacity: 0.85; }
-
-.timeline { list-style: none; position: relative; padding-left: 30px; }
-.timeline::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
-  background: linear-gradient(to bottom, var(--cyan-core), transparent);
-}
-.timeline-item { position: relative; margin-bottom: var(--space-lg); }
+.timeline { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--accent-border); }
+.timeline-item { position: relative; padding: 0 0 var(--space-lg) var(--space-lg); }
+.timeline-item:last-child { padding-bottom: 0; }
 .timeline-item::before {
-  content: ''; position: absolute; left: -36px; top: 6px; width: 14px; height: 14px;
-  background: var(--bg-base); border: 2px solid var(--cyan-core); border-radius: 50%;
-  box-shadow: 0 0 10px var(--cyan-dim); transition: background 0.4s;
+  content: '';
+  position: absolute;
+  left: -7px; top: 0.35rem;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--accent-core);
+  border: 2px solid var(--bg-base);
 }
-.timeline-date { font-family: var(--font-code); font-size: 0.85rem; color: var(--cyan-core); margin-bottom: 4px; display: block; }
-.timeline-title { font-family: var(--font-ui); font-size: 1.3rem; color: var(--text-main); margin-bottom: 2px; }
-.timeline-org { font-weight: 600; color: var(--text-main); font-size: 1rem; margin-bottom: 8px; }
-.timeline-desc { color: var(--text-muted); font-size: 0.95rem; }
+.timeline-date { font-family: var(--font-ui); font-size: 0.78rem; font-weight: 600; color: var(--accent-core); text-transform: uppercase; letter-spacing: 0.02em; }
+.timeline-title { font-size: 1.05rem; margin: 0.15rem 0 0.1rem; }
+.timeline-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--accent-core);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+  vertical-align: middle;
+}
+.timeline-org { font-family: var(--font-ui); font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.4rem; }
+.timeline-desc { margin: 0; }
 
-footer { border-top: 1px solid var(--cyan-border); padding: var(--space-lg) 0; text-align: center; font-family: var(--font-code); font-size: 0.8rem; color: var(--text-muted); }
+/* =========================================================================
+   Hero / stats (usados pela Home)
+   ========================================================================= */
+.hero { margin-bottom: var(--space-xl); }
+.hero-eyebrow {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-core);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.5rem;
+}
+.hero h1 { font-size: 2.1rem; margin: 0 0 0.4rem; }
+.hero-role { font-family: var(--font-ui); font-size: 1.1rem; color: var(--text-muted); margin: 0 0 var(--space-md); }
+.hero-summary { max-width: 62ch; margin: 0 0 var(--space-md); }
+.hero-actions { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-md); }
 
-/* =========================================
-   RESPONSIVIDADE E DISTÚRBIOS VESTIBULARES
-   ========================================= */
-@media (prefers-reduced-motion: reduce) {
-  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-sm);
+  margin: var(--space-lg) 0 0;
+}
+.stat-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  text-align: left;
+}
+.stat-value {
+  font-family: var(--font-ui);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--accent-core);
+  font-variant-numeric: tabular-nums;
+  display: block;
+}
+.stat-label { font-size: 0.82rem; color: var(--text-muted); }
+
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-md); }
+.skill-group-title { font-family: var(--font-ui); font-size: 0.95rem; margin: 0 0 0.5rem; }
+
+.publication-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-sm); }
+.note-secondary { font-size: 0.9rem; color: var(--text-muted); margin-top: var(--space-md); }
+.link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: var(--accent-core);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.link-btn:hover { color: var(--accent-hover); }
+
+/* Modo jogo: ocupa a tela inteira sem cabeçalho/rodapé */
+.game-shell { min-height: 100vh; }
+
+/* =========================================================================
+   Footer
+   ========================================================================= */
+.site-footer {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--accent-border);
+  padding: var(--space-xl) var(--space-md) var(--space-lg);
+}
+.site-footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-lg);
+}
+.footer-name { font-family: var(--font-ui); font-weight: 700; margin: 0 0 0.2rem; }
+.footer-tagline { color: var(--text-muted); font-size: 0.9rem; margin: 0; }
+.footer-heading { font-family: var(--font-ui); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin: 0 0 0.5rem; }
+.footer-links { list-style: none; margin: 0.6rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.92rem; }
+.footer-links a { color: var(--text-main); text-decoration: none; }
+.footer-links a:hover { color: var(--accent-core); text-decoration: underline; }
+.footer-note {
+  max-width: 1100px;
+  margin: var(--space-lg) auto 0;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--accent-border);
+  color: var(--text-muted);
+  font-size: 0.8rem;
 }
 
-/* Faixa intermediária (tablets e janelas médias): a barra de acessibilidade
-   ainda flutua no canto superior direito, mas o respiro reservado no cabeçalho
-   pode ser bem menor que os 300px pensados para telas largas. */
-@media (max-width: 1100px) and (min-width: 769px) {
-  header { padding-right: 190px; }
-  nav ul { gap: var(--space-md); }
-}
-
-@media (max-width: 768px) {
-  header { flex-direction: column; gap: var(--space-md); align-items: flex-start; padding-right: 0; }
-  nav ul { flex-wrap: wrap; gap: var(--space-md); }
-  .section-title { font-size: 1.8rem; }
-  section { padding: var(--space-md); margin-bottom: var(--space-lg); }
-  .card-header { flex-direction: column; }
-  .a11y-toolbar { top: auto; bottom: 20px; right: 20px; }
-  .container { padding: 0 var(--space-md); }
-
-  /* No celular, o Go Game ocupa a tela inteira (sem padding/fundo do portfólio),
-     pra parecer um aplicativo separado em vez de uma página comum. */
-  .app-mode.container {
-    padding: 0;
-    min-height: 100dvh;
-  }
-  body.app-mode {
-    background-image: none;
-  }
-  .app-mode .skip-link {
-    display: none;
-  }
-  /* A barra fixa de acessibilidade vira uma faixa presa no topo (em vez de flutuar
-     sobre o rodapé da tela), pra não tampar os botões principais do jogo. */
-  .app-mode .a11y-toolbar {
-    position: sticky;
-    top: 0;
-    bottom: auto;
-    right: auto;
-    left: auto;
-    width: 100%;
-    justify-content: center;
-    border-radius: 0;
-    border-width: 0 0 1px 0;
-    z-index: 200;
-  }
-}
-
-@media (max-width: 420px) {
-  .container { padding: 0 12px; }
-  .brand h1 { font-size: 1.5rem; }
+/* =========================================================================
+   Print — o currículo precisa ficar apresentável impresso / salvo em PDF
+   ========================================================================= */
+@media print {
+  .a11y-bar, .site-header, .site-footer, .skip-link { display: none !important; }
+  body { font-size: 12pt; color: #000; background: #fff; }
+  main { max-width: 100%; padding: 0; }
+  a { color: #000; text-decoration: underline; }
+  .hud-card { box-shadow: none; border: 1px solid #999; break-inside: avoid; }
+  section { break-inside: avoid-page; }
 }
 </style>

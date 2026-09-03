@@ -1,55 +1,52 @@
 # Rebeca Nonato
 
-**Software Engineer | Backend, Distributed Systems & Cloud-Native**
+**Software Engineer | Backend & Distributed Systems | Kotlin · Java · Node.js | AWS · Event-Driven**
 
-Engenheira de Software com mais de 7 anos de experiência, focada no desenho, implementação e sustentação de arquiteturas escaláveis. Priorizo a construção de sistemas sob restrições reais: consistência de dados, segurança corporativa, observabilidade e resiliência. 
+Engenheira de Software com mais de 10 anos de experiência em desenvolvimento de sistemas, com trajetória em ambientes corporativos e produtos digitais de alta disponibilidade. Minha atuação combina backend, sistemas distribuídos, integração assíncrona, confiabilidade e evolução de sistemas em produção.
 
-Possuo amplo histórico no gerenciamento de incidentes críticos (war rooms, P1/P2) em ambientes AWS e aplico rigorosamente padrões como Clean Architecture, Hexagonal e mensageria orientada a eventos. Todo código que produzo reflete decisões técnicas explícitas e mitigação direta de gargalos.
+Atualmente atuo em health tech com backend em Kotlin/JVM, features end-to-end, sistemas orientados a eventos, confiabilidade de produção e colaboração cross-team. Antes disso, na Accenture, atuei como referência técnica em ambientes de microsserviços e serverless na AWS, com Node.js, Kotlin e Java/Spring Boot, incluindo sustentação de sistemas críticos, incidentes P1/P2, observabilidade e modernização de aplicações.
 
-[Portfólio](https://rebecanonato89.dev) · [LinkedIn](https://www.linkedin.com/in/rebecanonato89/) · [Email](mailto:rebeca.nonato.dev@gmail.com)
+Este GitHub concentra projetos públicos que demonstram decisões de arquitetura, qualidade de código, mensageria, testes automatizados, DDD, Clean/Hexagonal Architecture e uso aplicado de IA em engenharia de software.
 
----
-
-## ⚙️ Stack & Engenharia
-
-* **Linguagens:** Java, Kotlin, TypeScript, C#, Python.
-* **Infraestrutura & Dados:** AWS (Lambda, ECS, EKS, EC2), PostgreSQL, Kafka, SQS, MinIO, Docker.
-* **Padrões Arquiteturais:** Clean Architecture, Hexagonal Architecture, Event-Driven Architecture, CQRS, Microsserviços, Multi-Tenant.
-* **Práticas & Operações:** TDD, CI/CD (GitHub Actions), Outbox Pattern, Observabilidade (Datadog, CloudWatch), RBAC.
+[Portfólio](https://rebecanonato89.dev) · [LinkedIn](https://www.linkedin.com/in/rebecanonato89/) · [Email](mailto:rebecanonato89@gmail.com)
 
 ---
 
-## 🚀 Projetos em Destaque
+## Stack principal
 
-| Projeto | Arquitetura & Implementação | Stack Principal |
-| :--- | :--- | :--- |
-| **[ClinicFiapApp](https://github.com/fiap-tech-challenge-java/clinicfiapp-monorepo)** | Sistema hospitalar distribuído com microsserviços. Implementação rigorosa de Outbox Pattern, CQRS e Kafka. Foco em resiliência com consumidores idempotentes e Dead Letter Queues (DLQ). | Java, Spring, Kafka, CQRS |
-| **[AllRev SaaS](https://github.com/Devs-IO/allrev-backend)** | Plataforma SaaS multi-tenant. API modular com controle de acesso baseado em funções (RBAC) restrito, persistência estruturada e JWT. | NestJS, PostgreSQL, Angular 17 |
-| **[Hedge CLI](https://github.com/rebecanonato89/hedge-cli)** | Detector híbrido via AST (tree-sitter) e heurística para identificação de *Eager Test* em suites Java, operando com LLM gating (ativação estrita sob demanda). | Python, AST, LLMs, ML |
-| **[Food Fiapp](https://github.com/fiap-tech-challenge-java/food-fiapp)** | API de gestão seguindo Clean Architecture. Acoplamento mínimo, cobertura de testes automatizados superior a 90% (JUnit 5, Mockito, ArchUnit) e integração com object storage. | Java 21, MinIO, Docker |
-| **[TechChallenge](https://github.com/fiap-tech-challenge-java/fiap-tech-challenge)** | API REST para gestão de usuários. Domínio isolado via Arquitetura Hexagonal, segurança via Spring Security (JWT/RBAC) e contratos expostos via OpenAPI. | Java 21, Spring Security |
-| **Equinox Solar CRM** | CRM full-stack com integrações via Docker. Em paralelo, atua como ambiente de pesquisa para aplicação de técnicas de Machine Learning na otimização de testes de software. | NestJS, ML, Python, NLP |
+* **Backend:** Kotlin, Java, Node.js/TypeScript, Spring Boot, NestJS.
+* **Sistemas distribuídos:** Kafka, SQS, Event-Driven Architecture, CQRS, Outbox Pattern, idempotência e DLQ.
+* **Cloud & Operações:** AWS (Lambda, ECS, EKS, EC2), Docker, Kubernetes, CI/CD, Datadog e CloudWatch.
+* **Arquitetura & Qualidade:** DDD, Clean Architecture, Hexagonal Architecture, TDD, JUnit, ArchUnit, PostgreSQL e RBAC.
+* **IA aplicada à engenharia:** análise estática + LLM gating, automação de fluxo de desenvolvimento e AI-assisted coding.
 
 ---
 
-## 🕹️ Arcade & Biblioteca Aberta
+## Projetos prioritários
 
-* **[Arcade](https://rebecanonato89.dev/#/arcade)** — Jogos implementados do zero no browser: **Go** (Monte Carlo), **Damas brasileiras** (minimax com poda alfa-beta, lei da maioria e dama voadora) e **Jogo da Memória**. Sem cadastro, sem instalação.
-* **[Recursos](https://rebecanonato89.dev/#/recursos)** — Curadoria de recursos gratuitos para devs: livros para download ([BibliotecaDev](https://github.com/KAYOKG/BibliotecaDev), Goalkicker, free-programming-books), roadmaps, ferramentas e cursos abertos.
+| Projeto | Contexto | O que demonstra | Stack principal |
+| :--- | :--- | :--- | :--- |
+| **[ClinicFiapApp](https://github.com/fiap-tech-challenge-java/clinicfiapp-monorepo)** | Acadêmico — FIAP | Backend distribuído com comunicação assíncrona, Outbox Pattern, CQRS, consumidores idempotentes e tratamento de falhas com DLQ. | Java, Spring, Kafka, CQRS |
+| **[Food Fiapp](https://github.com/rebecanonato89/food-fiapp)** | Acadêmico — FIAP | Clean Architecture validada com ArchUnit, testes unitários e de integração e quality gate de cobertura no build. | Java 21, Spring Boot, PostgreSQL, MinIO, Docker |
+| **[Hedge CLI](https://github.com/rebecanonato89/hedge-cli)** | Projeto independente | Análise estática de testes Java com AST, heurística, LLM gating e ensemble para detecção de Eager Test. | Python, tree-sitter, AST, LLMs |
+| **[Quotes Service](https://github.com/rebecanonato89/quotes-service)** | Projeto pessoal | Modelagem de domínio em Kotlin, validação funcional com Either, eventos de domínio e coroutines. | Kotlin, Spring Boot, DDD, Coroutines |
+| **[TechChallenge](https://github.com/rebecanonato89/fiap-tech-challenge)** | Acadêmico — FIAP | API Java com Arquitetura Hexagonal, domínio isolado, Spring Security, JWT/RBAC e contratos OpenAPI. | Java 21, Spring Boot, PostgreSQL |
+| **[Kube Backend](https://github.com/rebecanonato89/kube-backend)** | Laboratório técnico | Containerização e execução local de uma API Node.js/PostgreSQL no Kubernetes, com ConfigMap, Secret e Services. | Node.js, PostgreSQL, Docker, Kubernetes |
+
+Essa é a ordem recomendada para os repositórios públicos fixados no perfil.
 
 ---
 
-## 📜 Certificações Recentes
+## Projetos complementares
 
-* **Reinvention with Agentic AI** (Accenture, Dez 2025)
-* **AWS Educate Machine Learning Foundations** (AWS, Jun 2025)
-* **Introducing Generative AI with AWS** (Udacity, Jun 2025)
-* **Especialização em Arquitetura e Desenvolvimento Java** (FIAP, 2024 - 2026)
+**AllRev SaaS** continua relevante como case de produto multi-tenant, mas o repositório de backend é privado e por isso não deve ocupar um dos slots públicos fixados. **ConcursoTrack**, **Equinox Solar CRM** e os experimentos do Arcade permanecem como evidência complementar no portfólio.
 
 ---
 
-## 📊 Telemetria (Últimos 12 meses)
+## Formação e certificações
 
-* **779 contribuições totais** (Mar/2025 – Fev/2026)
-* **Distribuição:** 77% Commits | 13% Pull Requests | 5% Code Reviews | 5% Issues
-* *Foco em build-in-public e revisões de arquitetura por pares.*
+* **Especialização em Arquitetura e Desenvolvimento Java** — FIAP, 2024–2026
+* **Mestrado em Engenharia de Sistemas e Automação** — UFLA
+* **AWS Educate Machine Learning Foundations** — AWS, 2025
+* **Introducing Generative AI with AWS** — Udacity, 2025
+* **Reinvention with Agentic AI** — Accenture, 2025

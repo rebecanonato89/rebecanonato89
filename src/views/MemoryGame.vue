@@ -223,10 +223,10 @@ export default {
   margin: 0 calc(-1 * var(--space-lg)) var(--space-md);
   background: var(--bg-surface);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--cyan-border);
+  border-bottom: 1px solid var(--accent-border);
 }
 .mm-app-back {
-  color: var(--cyan-core);
+  color: var(--accent-core);
   text-decoration: none;
   font-family: var(--font-ui);
   font-size: 1rem;
@@ -267,20 +267,20 @@ export default {
 .mm-control-row label {
   font-family: var(--font-code);
   font-size: 0.75rem;
-  color: var(--cyan-core);
+  color: var(--accent-core);
   text-transform: uppercase;
 }
 .mm-control-row select {
   background: var(--bg-surface);
   color: var(--text-main);
-  border: 1px solid var(--cyan-border);
+  border: 1px solid var(--accent-border);
   border-radius: 4px;
   padding: 6px 8px;
   font-family: var(--font-read);
   font-size: 0.9rem;
 }
 .mm-panel-divider {
-  border-top: 1px dashed var(--cyan-dim);
+  border-top: 1px dashed var(--accent-dim);
   margin: var(--space-sm) 0;
 }
 .mm-stats {
@@ -343,29 +343,29 @@ export default {
   gap: 4px;
   backface-visibility: hidden;
   border-radius: 8px;
-  border: 1px solid var(--cyan-border);
+  border: 1px solid var(--accent-border);
 }
 .mm-card-back {
   background:
-    repeating-linear-gradient(45deg, var(--cyan-dim) 0 6px, transparent 6px 12px),
+    repeating-linear-gradient(45deg, var(--accent-dim) 0 6px, transparent 6px 12px),
     var(--bg-surface);
-  border-color: var(--cyan-core);
-  box-shadow: inset 0 0 12px var(--cyan-dim);
-  color: var(--cyan-core);
+  border-color: var(--accent-core);
+  box-shadow: inset 0 0 12px var(--accent-dim);
+  color: var(--accent-core);
   font-family: var(--font-code);
   font-size: 1.2rem;
 }
 .mm-card:not(:disabled):hover .mm-card-back {
-  box-shadow: 0 0 15px var(--cyan-dim);
-  border-color: var(--cyan-core);
+  box-shadow: 0 0 15px var(--accent-dim);
+  border-color: var(--accent-core);
 }
 .mm-card-front {
   background: var(--bg-surface);
   transform: rotateY(180deg);
 }
 .mm-card--matched .mm-card-front {
-  border-color: var(--cyan-core);
-  box-shadow: 0 0 12px var(--cyan-dim);
+  border-color: var(--accent-core);
+  box-shadow: 0 0 12px var(--accent-dim);
 }
 .mm-glyph { font-size: clamp(1.2rem, 5vw, 2rem); }
 .mm-label {
@@ -383,17 +383,17 @@ export default {
   align-items: center;
   gap: var(--space-sm);
   padding: var(--space-md);
-  border: 1px dashed var(--cyan-border);
+  border: 1px dashed var(--accent-border);
   border-radius: 8px;
   width: 100%;
 }
 .mm-victory-title {
   font-family: var(--font-code);
-  color: var(--cyan-core);
+  color: var(--accent-core);
   letter-spacing: 2px;
 }
 .mm-victory p { color: var(--text-main); }
-.mm-record { color: var(--cyan-core); font-weight: 600; }
+.mm-record { color: var(--accent-core); font-weight: 600; }
 
 @media (max-width: 768px) {
   .mm-app-bar { margin: 0 0 var(--space-md); }

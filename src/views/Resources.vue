@@ -213,7 +213,7 @@ export default {
 <style scoped>
 .res-intro { margin-bottom: var(--space-lg); }
 .res-intro p { color: var(--text-main); }
-.res-intro a { color: var(--cyan-core); }
+.res-intro a { color: var(--accent-core); }
 
 .res-category { margin-bottom: var(--space-xl); }
 .res-category-title {
@@ -244,8 +244,8 @@ export default {
   padding: var(--space-md);
 }
 .res-card--featured {
-  border-color: var(--cyan-core);
-  box-shadow: 0 0 18px var(--cyan-dim);
+  border-color: var(--accent-core);
+  box-shadow: 0 0 18px var(--accent-dim);
 }
 .res-card-top {
   display: flex;
@@ -261,10 +261,10 @@ export default {
 .res-badge {
   font-family: var(--font-code);
   font-size: 0.7rem;
-  background: var(--cyan-core);
+  background: var(--accent-core);
   color: var(--bg-base);
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   text-transform: uppercase;
   font-weight: 700;
   white-space: nowrap;
@@ -272,10 +272,10 @@ export default {
 .res-lang {
   font-family: var(--font-code);
   font-size: 0.7rem;
-  color: var(--cyan-core);
-  border: 1px dashed var(--cyan-border);
+  color: var(--accent-core);
+  border: 1px solid var(--accent-border);
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   white-space: nowrap;
 }
 .res-desc {
@@ -287,6 +287,6 @@ export default {
 .res-url {
   font-family: var(--font-code);
   font-size: 0.75rem;
-  color: var(--cyan-core);
+  color: var(--accent-core);
 }
 </style>

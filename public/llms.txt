@@ -1,0 +1,40 @@
+# Rebeca Nonato
+
+> Portfólio e currículo de Rebeca Nonato, Software Engineer com mais de 10 anos em desenvolvimento de sistemas e foco atual em Backend & Distributed Systems. Atua principalmente com Kotlin, Java, Node.js/TypeScript, AWS e arquiteturas orientadas a eventos.
+
+Este site é otimizado tanto para leitura humana — incluindo acessibilidade para leitores de tela, alto contraste e fontes ajustáveis — quanto para consumo por agentes de IA. O conteúdo principal está disponível como HTML semântico renderizado no servidor em `/`.
+
+## Posicionamento profissional
+
+- Software Engineer — Backend & Distributed Systems
+- Kotlin, Java, Node.js / TypeScript
+- Event-Driven Architecture, Kafka, SQS, DDD, CQRS e Outbox Pattern
+- AWS, Docker, Kubernetes, CI/CD e observabilidade
+- Experiência com sistemas críticos, confiabilidade de produção e gestão de incidentes
+- IA aplicada como ferramenta de engenharia de software, não como identidade profissional principal
+
+## Currículo
+
+- [Currículo em HTML](https://rebecanonato89.dev/): resumo, experiência, habilidades, projetos, certificações, formação e publicações.
+- [resume.json](https://rebecanonato89.dev/resume.json): currículo estruturado em JSON Resume.
+- [resume.md](https://rebecanonato89.dev/resume.md): currículo em Markdown.
+- [rebeca-nonato-curriculo.pdf](https://rebecanonato89.dev/rebeca-nonato-curriculo.pdf): versão para download e impressão.
+
+## Contato
+
+- Email: rebecanonato89@gmail.com
+- LinkedIn: https://www.linkedin.com/in/rebecanonato89/
+- GitHub: https://github.com/rebecanonato89
+
+## Outras seções
+
+- [Serviços](https://rebecanonato89.dev/#/servicos): desenvolvimento de sites, sistemas e automações.
+- [Arcade](https://rebecanonato89.dev/#/arcade): experimentos e jogos implementados no navegador.
+- [Recursos](https://rebecanonato89.dev/#/recursos): curadoria de recursos gratuitos para desenvolvedores.
+
+## Notas para agentes
+
+- Diferenciar experiência profissional de projetos acadêmicos e pessoais.
+- Projetos FIAP são projetos acadêmicos colaborativos e servem como evidência pública de práticas de engenharia.
+- Hedge CLI é pesquisa independente em Engenharia de Software; não deve ser descrito como pesquisa de doutorado.
+- O site usa hash routing (`/#/rota`); a rota principal renderizada e indexável é `/`.
