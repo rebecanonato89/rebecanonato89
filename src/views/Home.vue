@@ -24,7 +24,7 @@
     <section id="projetos" class="section projects" aria-labelledby="projetos-title">
       <header class="section-heading"><div><p class="eyebrow">Selected Engineering Work</p><h2 id="projetos-title">Projetos em Destaque</h2></div><p>Decisões de engenharia documentadas em código público — do domínio ao deploy.</p></header>
       <div class="projects-layout">
-        <article v-for="(project, index) in featuredProjects" :key="project.title" class="project-card" :class="{ lead: index === 0 }">
+        <article v-for="(project, index) in featuredProjects" :key="project.title" class="project-card" :class="{ lead: index === 0, closing: index === featuredProjects.length - 1 }">
           <div class="project-index" aria-hidden="true">0{{ index + 1 }}</div>
           <div class="project-content">
             <div class="project-meta"><span>{{ projectContext(project.title) }}</span><time>{{ project.period }}</time></div>
@@ -40,7 +40,7 @@
 
     <section id="sobre" class="section about" aria-labelledby="sobre-title"><div class="section-heading compact"><p class="eyebrow">Profile</p><h2 id="sobre-title">Engenharia para sistemas reais.</h2></div><div class="about-copy"><p>{{ aboutData.paragraphs[0] }}</p><p>{{ aboutData.paragraphs[1] }}</p></div></section>
 
-    <section id="experiencia" class="section" aria-labelledby="experiencia-title">
+    <section id="experiencia" class="section surface-alt" aria-labelledby="experiencia-title">
       <header class="section-heading"><div><p class="eyebrow">Experience</p><h2 id="experiencia-title">Trajetória profissional</h2></div><p>Mais de 10 anos construindo, modernizando e sustentando sistemas.</p></header>
       <ol class="career"><li v-for="job in experienceData" :key="job.role + job.company + job.period"><i aria-hidden="true"></i><time>{{ job.period }}</time><div><div class="career-title"><h3>{{ job.role }}</h3><span v-if="job.evolution">{{ job.evolution }}</span></div><p class="company">{{ job.company }}</p><p>{{ compactExperience(job) }}</p></div></li></ol>
     </section>
@@ -50,7 +50,7 @@
       <div class="skills"><article v-for="group in domainSkills" :key="group.category"><span aria-hidden="true">{{ group.number }}</span><h3>{{ group.category }}</h3><p>{{ group.primary }}</p><ul class="tech-list" :aria-label="group.category"><li v-for="item in group.items" :key="item">{{ item }}</li></ul></article></div>
     </section>
 
-    <section class="section compact-area" aria-label="Formação e publicações">
+    <section class="section compact-area surface-alt" aria-label="Formação e publicações">
       <div id="certificacoes"><div class="section-heading compact"><p class="eyebrow">Learning</p><h2>Formação &amp; Certificações</h2></div><ul class="compact-list"><li v-for="edu in educationData" :key="edu.role + edu.company"><div><strong>{{ edu.role }}</strong><span>{{ edu.company }}</span></div><time>{{ edu.period }}</time></li></ul></div>
       <div id="publicacoes"><div class="section-heading compact"><p class="eyebrow">Writing</p><h2>Publicações</h2></div><ul class="compact-list"><li v-for="pub in publicationsData" :key="pub.title"><div><strong>{{ pub.title }}</strong><span>{{ pub.venue }}</span></div><time>{{ pub.period }}</time></li></ul></div>
     </section>
@@ -65,7 +65,7 @@
 import { basicsData, aboutData, experienceData, educationData, publicationsData, projectsData, contactData } from '../data/profileData.js';
 const FEATURED = ['ClinicFiapApp - Microsserviços de Agendamento Hospitalar','Food Fiapp: API de Gestão de Restaurantes','Hedge CLI: Análise Estática + IA para Eager Test','Quotes Service: Cotação e Emissão de Apólices','TechChallenge: API de Gestão de Usuários','Kube Backend: API Node.js + PostgreSQL no Kubernetes'];
 const CONTEXT = { ClinicFiapApp: 'Projeto acadêmico colaborativo', Food: 'Projeto acadêmico', Hedge: 'Independent Software Engineering Research', Quotes: 'Projeto pessoal · MVP', TechChallenge: 'Projeto acadêmico', Kube: 'Laboratório de infraestrutura' };
-const FLOWS = { ClinicFiapApp: ['API','Command','Kafka','Consumer','Outbox','Database'], Food: ['HTTP','Use Case','Domain','Adapter'], Hedge: ['Java tests','AST','Heuristics','LLM gate','Ensemble'], Quotes: ['Quote','Domain rules','Event','Coroutine'] };
+const FLOWS = { ClinicFiapApp: ['API','Command','Kafka','Consumer','Outbox','Database'], Food: ['HTTP','Use Case','Domain','Adapter'], Hedge: ['Java tests','AST','Heuristics','LLM gate','Ensemble'], Quotes: ['Quote','Domain rules','Event','Coroutine'], Kube: ['Application','Docker','Kubernetes','PostgreSQL'] };
 export default {
   name: 'Home', data() { return { basicsData, aboutData, experienceData, educationData, publicationsData, projectsData, contactData }; },
   computed: {
@@ -94,4 +94,23 @@ main{overflow:hidden}.hero{max-width:1240px;min-height:620px;margin:auto;padding
 .about{display:grid;grid-template-columns:.8fr 1.2fr;gap:5rem}.about-copy{display:grid;gap:1.2rem;color:var(--text-muted);font-size:1.08rem}.about-copy p{margin:0}.career{margin:0;padding:0;list-style:none}.career li{position:relative;padding:0 0 2.4rem 2rem;display:grid;grid-template-columns:180px minmax(0,1fr);gap:2rem}.career li:before{content:'';position:absolute;left:4px;top:12px;bottom:-12px;width:1px;background:var(--accent-border)}.career li:last-child:before{display:none}.career>li>i{position:absolute;left:0;top:8px;width:9px;height:9px;border:2px solid var(--accent-core);border-radius:50%;background:var(--bg-base)}.career time{color:var(--text-subtle);font:.73rem var(--font-code)}.career-title{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem}.career-title h3{margin:0;font-size:1.05rem}.career-title span{padding:.16rem .45rem;border-radius:999px;background:var(--accent-dim);color:var(--accent-cyan);font:.65rem var(--font-code)}.career .company{margin:.18rem 0 .45rem;color:var(--accent-core);font-weight:700}.career li>div>p:last-child{max-width:76ch;margin:0;color:var(--text-muted);font-size:.92rem}.skills{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem}.skills article{grid-column:span 2;padding:1.5rem;border-top:2px solid var(--accent-core);background:var(--bg-surface)}.skills article:nth-child(4),.skills article:nth-child(5){grid-column:span 3}.skills article>span{color:var(--accent-soft);font:700 .75rem var(--font-code)}.skills h3{margin:1.5rem 0 .5rem}.skills p{margin:0;color:var(--text-muted)}
 .compact-area{max-width:1240px;display:grid;grid-template-columns:1fr 1fr;gap:4rem}.compact-list{margin:0;padding:0;list-style:none}.compact-list li{padding:.85rem 0;border-bottom:1px solid var(--accent-border);display:flex;justify-content:space-between;gap:1rem}.compact-list strong,.compact-list span{display:block}.compact-list strong{font:650 .86rem var(--font-ui)}.compact-list span,.compact-list time{color:var(--text-subtle);font-size:.72rem}.compact-list time{flex:0 0 auto;font-family:var(--font-code)}.machine{margin-block:2.5rem;padding:clamp(2rem,4vw,3rem);border:1px solid var(--accent-border);border-radius:18px;display:grid;grid-template-columns:1fr 1fr;gap:3rem;background:var(--bg-surface)}.machine h2{margin:0 0 1rem;font-size:clamp(1.8rem,3vw,2.7rem)}.machine p{max-width:57ch;margin:0;color:var(--text-muted)}.machine ul{margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.7rem;list-style:none}.machine li{padding:.65rem .8rem;border-left:2px solid var(--accent-core);background:var(--bg-surface-raised);font:.74rem var(--font-code)}.contact{max-width:1180px;margin:3.5rem auto 0;padding:clamp(3.5rem,7vw,6rem) 1.5rem;text-align:center}.contact>p:not(.eyebrow){max-width:56ch;margin:1.2rem auto 0;color:var(--text-muted)}.contact .actions{justify-content:center}
 @media(max-width:900px){.hero{min-height:auto;grid-template-columns:1fr;padding-top:4rem}.system-visual{max-width:540px;margin:auto}.about{grid-template-columns:1fr;gap:1rem}.skills article{grid-column:span 3}.skills article:last-child{grid-column:1/-1}.compact-area{gap:2rem}.mini-flow i{display:none}.mini-flow span{flex:1 1 90px;text-align:center}}@media(max-width:700px){.section-heading,.compact-area,.machine{grid-template-columns:1fr;gap:1.25rem}.projects-layout{grid-template-columns:1fr}.project-card.lead{grid-column:auto;display:block}.career li{grid-template-columns:1fr;gap:.4rem}.skills{grid-template-columns:1fr}.skills article,.skills article:nth-child(4),.skills article:nth-child(5),.skills article:last-child{grid-column:auto}}@media(max-width:430px){.hero,.section,.contact{padding-left:1rem;padding-right:1rem}.hero h1{font-size:clamp(2.4rem,12vw,3rem)}.actions .button{width:100%}.system-visual{margin-inline:-1rem}.project-meta{display:block}.project-meta time,.compact-list time{display:block;margin-top:.35rem}.compact-list li{display:block}.machine ul{grid-template-columns:1fr}.mini-flow span{flex-basis:100%}}@media print{.system-visual,.actions,.resume-links{display:none}.hero{min-height:0}}
+
+/* Wide editorial layout and subtle section rhythm. */
+main{max-width:none;margin:0;padding:0}
+.hero{width:calc(100% - 96px);max-width:1480px;padding-inline:0;grid-template-columns:minmax(0,1.15fr) minmax(380px,.85fr);gap:clamp(3rem,6vw,6rem)}
+.hero .actions{flex-wrap:nowrap}
+.section{width:calc(100% - 96px);max-width:1400px;padding:clamp(3.1rem,4.5vw,4.5rem) 0}
+.projects,.surface-alt{background:var(--bg-alternate);box-shadow:0 0 0 100vmax var(--bg-alternate);clip-path:inset(0 -100vmax)}
+.projects,.compact-area{max-width:1480px}
+.project-card.lead,.project-card.closing{grid-column:1/-1;display:grid;grid-template-columns:100px minmax(0,1fr)}
+.project-description{max-width:78ch}
+.mini-flow{display:flex;flex-wrap:wrap;overflow:visible}
+.mini-flow span{min-width:0;flex:1 1 76px;white-space:normal;text-align:center}
+.mini-flow i{flex:0 0 auto;text-align:center}
+.contact{width:calc(100% - 96px);max-width:1480px;border-radius:20px;background:var(--bg-alternate)}
+@media(max-width:1366px){.hero,.section,.contact{width:calc(100% - 64px)}.hero{gap:3rem}.hero h1{font-size:clamp(2.8rem,5.25vw,4.65rem)}}
+@media(max-width:1024px){.hero,.section,.contact{width:calc(100% - 40px)}.hero{grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:2rem}.hero .button{padding-inline:.8rem}.site-header-inner,.site-footer-inner,.footer-note{width:calc(100% - 40px)}}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.hero .actions{flex-wrap:wrap}.project-card.closing{display:block}.mini-flow{grid-template-columns:repeat(2,minmax(0,1fr))}.mini-flow i{display:none}}
+@media(max-width:700px){.hero,.section,.contact{width:calc(100% - 32px)}.project-card.lead{display:block}.site-header-inner,.site-footer-inner,.footer-note{width:calc(100% - 32px)}}
+@media(max-width:430px){.hero,.section,.contact{padding-left:0;padding-right:0}.mini-flow{grid-template-columns:1fr}.system-visual{margin-inline:0}}
 </style>
