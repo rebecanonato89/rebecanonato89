@@ -20,7 +20,7 @@
     <meta property="og:type" content="profile" />
     <meta property="og:url" content="https://rebecanonato89.dev/" />
     <meta property="og:site_name" content="Rebeca Nonato — Portfólio" />
-    <meta property="og:title" content="Rebeca Nonato | Backend & Distributed Systems" />
+    <meta property="og:title" content="Rebeca Nonato — Software Engineer | Backend & Distributed Systems" />
     <meta
       property="og:description"
       content="Software Engineer com 10+ anos em desenvolvimento de sistemas, com foco em backend, sistemas distribuídos, event-driven architecture e confiabilidade de produção."
@@ -29,8 +29,10 @@
     <meta property="profile:first_name" content="Rebeca" />
     <meta property="profile:last_name" content="Nonato" />
 
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Rebeca Nonato | Backend & Distributed Systems" />
+    <meta property="og:image" content="https://rebecanonato89.dev/og-portfolio.svg" />
+    <meta property="og:image:alt" content="Rebeca Nonato — Software Engineer, Backend & Distributed Systems" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Rebeca Nonato — Software Engineer | Backend & Distributed Systems" />
     <meta
       name="twitter:description"
       content="Software Engineer com 10+ anos em desenvolvimento de sistemas, focada em backend e sistemas distribuídos com Kotlin, Java, Node.js e AWS."
@@ -80,9 +82,7 @@
       (function () {
         try {
           var theme = localStorage.getItem('rn-theme');
-          if (!theme) {
-            theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-          }
+          if (!theme) theme = 'dark';
           document.documentElement.setAttribute('data-theme', theme);
 
           if (localStorage.getItem('rn-contrast') === '1') {
