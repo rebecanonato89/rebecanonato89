@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-labelledby="title desc">
+  <title id="title">Rebeca Nonato — Software Engineer</title>
+  <desc id="desc">Backend and distributed systems engineering portfolio header</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1020"/><stop offset="0.55" stop-color="#111a36"/><stop offset="1" stop-color="#16213e"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#8b5cf6"/><stop offset="0.5" stop-color="#38bdf8"/><stop offset="1" stop-color="#2dd4bf"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1200" height="300" rx="24" fill="url(#bg)"/>
+  <g opacity=".16" stroke="#93c5fd" fill="none"><path d="M780 55h100l45 45h105l60 60"/><path d="M730 205h125l42-42h145"/><path d="M890 35v70l55 55v90"/><circle cx="780" cy="55" r="7"/><circle cx="925" cy="100" r="7"/><circle cx="1090" cy="160" r="7"/><circle cx="730" cy="205" r="7"/><circle cx="897" cy="163" r="7"/><circle cx="1042" cy="163" r="7"/></g>
+  <g font-family="Inter,Segoe UI,Arial,sans-serif" fill="#f8fafc"><text x="72" y="92" font-size="20" letter-spacing="4" fill="#7dd3fc">SOFTWARE ENGINEERING</text><text x="72" y="158" font-size="52" font-weight="700">Rebeca Nonato</text><text x="72" y="202" font-size="24" fill="#cbd5e1">Backend · Distributed Systems · Event-Driven</text><text x="72" y="244" font-size="18" fill="#94a3b8">Kotlin  /  Java  /  Node.js  /  AWS</text></g>
+  <rect x="72" y="268" width="520" height="4" rx="2" fill="url(#accent)" filter="url(#glow)"/>
+</svg>
