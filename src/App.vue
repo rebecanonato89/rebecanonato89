@@ -329,23 +329,23 @@ export default {
 }
 
 :root[data-theme='dark'] {
-  --bg-base: #080d18;
-  --bg-surface: #0d1524;
-  --bg-surface-raised: #111c2e;
-  --bg-alternate: #0b1321;
-  --text-main: #f0f5ff;
-  --text-muted: #a8b5ca;
-  --text-subtle: #7d8da7;
-  --accent-core: #6f8cff;
-  --accent-hover: #91a7ff;
-  --accent-cyan: #55d7e5;
-  --accent-soft: #40506c;
+  --bg-base: #080D18;
+  --bg-surface: #0D1524;
+  --bg-surface-raised: #111C2E;
+  --bg-alternate: #0B1321;
+  --text-main: #F0F5FF;
+  --text-muted: #A8B5CA;
+  --text-subtle: #7D8DA7;
+  --accent-core: #6F8CFF;
+  --accent-hover: #91A7FF;
+  --accent-cyan: #55D7E5;
+  --accent-soft: #40506C;
   --accent-glow: rgba(69, 102, 240, 0.24);
   --accent-dim: rgba(111, 140, 255, 0.13);
-  --accent-border: #26344b;
-  --code-bg: #09111f;
-  --status-ok: #4bd6a2;
-  --button-text: #07101d;
+  --accent-border: #26344B;
+  --code-bg: #09111F;
+  --status-ok: #4BD6A2;
+  --button-text: #07101D;
   --card-shadow: rgba(0, 0, 0, 0.45);
   --scrim-overlay: rgba(0, 0, 0, 0.7);
   color-scheme: dark;
