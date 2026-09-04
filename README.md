@@ -9,10 +9,10 @@
 </p>
 
 <p align="center">
-  <a href="https://rebecanonato89.dev"><img src="https://img.shields.io/badge/PORTFÓLIO-3157D5?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Portfólio" /></a>
-  <a href="https://www.linkedin.com/in/rebecanonato89/"><img src="https://img.shields.io/badge/LINKEDIN-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
-  <a href="mailto:rebecanonato89@gmail.com"><img src="https://img.shields.io/badge/EMAIL-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
-  <a href="https://github.com/rebecanonato89"><img src="https://img.shields.io/badge/GITHUB-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
+  <a href="https://rebecanonato89.dev"><img src="./assets/readme-icons/portfolio.svg" alt="" width="18" /> Portfólio</a>&nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/rebecanonato89/"><img src="./assets/readme-icons/linkedin.svg" alt="" width="18" /> LinkedIn</a>&nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="mailto:rebecanonato89@gmail.com"><img src="./assets/readme-icons/mail.svg" alt="" width="18" /> Email</a>&nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="https://github.com/rebecanonato89"><img src="./assets/readme-icons/github.svg" alt="" width="18" /> GitHub</a>
 </p>
 
 <p align="center">
@@ -34,16 +34,11 @@ Software Engineer com **10+ anos construindo, modernizando e operando sistemas**
 Trabalho com sistemas críticos, observabilidade, incidentes, CI/CD e decisões arquiteturais sob restrições reais de consistência, disponibilidade e mudança. Em projetos públicos, procuro tornar essas decisões verificáveis por meio de testes, limites arquiteturais e documentação técnica.
 
 <p align="center">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg" alt="Kotlin" title="Kotlin" width="42" height="42" />&nbsp;&nbsp;
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Java" title="Java" width="42" height="42" />&nbsp;&nbsp;
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="Node.js" title="Node.js" width="42" height="42" />&nbsp;&nbsp;
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" alt="TypeScript" title="TypeScript" width="42" height="42" />&nbsp;&nbsp;
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="Spring Boot" title="Spring Boot" width="42" height="42" />&nbsp;&nbsp;
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="AWS" title="AWS" width="42" height="42" />&nbsp;&nbsp;
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apachekafka/apachekafka-original.svg" alt="Apache Kafka" title="Apache Kafka" width="42" height="42" />&nbsp;&nbsp;
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" title="PostgreSQL" width="42" height="42" />&nbsp;&nbsp;
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker" title="Docker" width="42" height="42" />&nbsp;&nbsp;
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg" alt="Kubernetes" title="Kubernetes" width="42" height="42" />
+  <img src="./public/tech-icons/kotlin.svg" alt="Kotlin" title="Kotlin" width="36" height="36" />&nbsp;&nbsp;
+  <img src="./public/tech-icons/java.svg" alt="Java" title="Java" width="36" height="36" />&nbsp;&nbsp;
+  <img src="./public/tech-icons/nodejs.svg" alt="Node.js" title="Node.js" width="36" height="36" />&nbsp;&nbsp;
+  <img src="./public/tech-icons/aws.svg" alt="AWS" title="AWS" width="36" height="36" />&nbsp;&nbsp;
+  <img src="./public/tech-icons/kafka.svg" alt="Apache Kafka" title="Apache Kafka" width="36" height="36" />
 </p>
 
 ---
@@ -126,13 +121,13 @@ Mais de 10 anos construindo, modernizando e sustentando sistemas.
 
 <table>
   <tr>
-    <td width="33%" valign="top"><h3>⌁ Backend</h3>Kotlin · Java · Node.js / TypeScript<br/>Spring Boot · NestJS · PostgreSQL</td>
-    <td width="34%" valign="top"><h3>⇄ Distributed Systems</h3>Kafka · SQS · Event-Driven<br/>CQRS · Outbox · Idempotência · DLQ</td>
-    <td width="33%" valign="top"><h3>⬡ Architecture</h3>DDD · Clean Architecture<br/>Hexagonal · Microservices · Multi-Tenant</td>
+    <td width="33%" valign="top"><h3><img src="./assets/readme-icons/backend.svg" alt="" width="22" /> Backend</h3>Kotlin · Java · Node.js / TypeScript<br/>Spring Boot · NestJS · PostgreSQL</td>
+    <td width="34%" valign="top"><h3><img src="./assets/readme-icons/distributed.svg" alt="" width="22" /> Distributed Systems</h3>Kafka · SQS · Event-Driven<br/>CQRS · Outbox · Idempotência · DLQ</td>
+    <td width="33%" valign="top"><h3><img src="./assets/readme-icons/architecture.svg" alt="" width="22" /> Architecture</h3>DDD · Clean Architecture<br/>Hexagonal · Microservices · Multi-Tenant</td>
   </tr>
   <tr>
-    <td colspan="2" valign="top"><h3>☁ Cloud & Reliability</h3>AWS · Docker · Kubernetes · Datadog · CloudWatch · CI/CD · incidentes P1/P2</td>
-    <td valign="top"><h3>✓ Engineering Quality</h3>TDD · testes automatizados · ArchUnit · observabilidade · code review</td>
+    <td colspan="2" valign="top"><h3><img src="./assets/readme-icons/reliability.svg" alt="" width="22" /> Cloud & Reliability</h3>AWS · Docker · Kubernetes · Datadog · CloudWatch · CI/CD · incidentes P1/P2</td>
+    <td valign="top"><h3><img src="./assets/readme-icons/quality.svg" alt="" width="22" /> Engineering Quality</h3>TDD · testes automatizados · ArchUnit · observabilidade · code review</td>
   </tr>
 </table>
 
@@ -172,14 +167,7 @@ Mais de 10 anos construindo, modernizando e sustentando sistemas.
 
 O [portfólio](https://rebecanonato89.dev) usa HTML semântico e conteúdo prerenderizado para ser legível por pessoas, mecanismos de busca e agentes — sem abrir mão de acessibilidade.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Accessibility-WCAG-3157D5?style=flat-square" alt="Accessibility — WCAG" />
-  <img src="https://img.shields.io/badge/Semantic-HTML-E34F26?style=flat-square&logo=html5&logoColor=white" alt="Semantic HTML" />
-  <img src="https://img.shields.io/badge/Structured-Data-087E8B?style=flat-square" alt="Structured Data" />
-  <img src="https://img.shields.io/badge/JSON-Resume-111C2E?style=flat-square&logo=json&logoColor=white" alt="JSON Resume" />
-  <img src="https://img.shields.io/badge/LLM-readable-6F8CFF?style=flat-square" alt="LLM-readable" />
-  <img src="https://img.shields.io/badge/Content-Prerendered-138A63?style=flat-square" alt="Prerendered content" />
-</p>
+<p align="center"><code>Accessibility</code> · <code>Semantic HTML</code> · <code>Structured Data</code> · <code>JSON Resume</code> · <code>LLM-readable</code> · <code>Prerendered content</code></p>
 
 ---
 
@@ -193,8 +181,8 @@ O [portfólio](https://rebecanonato89.dev) usa HTML semântico e conteúdo prere
 </p>
 
 <p align="center">
-  <a href="mailto:rebecanonato89@gmail.com"><img src="https://img.shields.io/badge/rebecanonato89%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Enviar email" /></a>
-  <a href="https://www.linkedin.com/in/rebecanonato89/"><img src="https://img.shields.io/badge/rebecanonato89-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="Perfil no LinkedIn" /></a>
+  <a href="mailto:rebecanonato89@gmail.com"><img src="./assets/readme-icons/mail.svg" alt="" width="18" /> rebecanonato89@gmail.com</a>&nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/rebecanonato89/"><img src="./assets/readme-icons/linkedin.svg" alt="" width="18" /> rebecanonato89</a>
 </p>
 
 <p align="center"><sub>Backend · Distributed Systems · Event-Driven · Cloud & Reliability</sub></p>

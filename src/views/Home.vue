@@ -5,14 +5,13 @@
         <p class="eyebrow">{{ copy.hero.eyebrow }}</p>
         <h1 id="hero-title">{{ copy.hero.headline }}<br><span>{{ copy.hero.headlineAccent }}</span></h1>
         <p class="hero-name">{{ copy.hero.nameRole }}</p>
-        <p class="hero-subheadline">{{ copy.hero.focus }}</p>
-        <p class="hero-stack" :aria-label="copy.hero.stack">{{ copy.hero.stack }}</p>
+        <div class="hero-focus" :aria-label="copy.hero.focus"><template v-for="(focus, index) in focusItems" :key="focus"><span class="focus-item"><svg aria-hidden="true" viewBox="0 0 24 24"><template v-if="index === 0"><rect x="4" y="5" width="16" height="6" rx="2"/><rect x="4" y="13" width="16" height="6" rx="2"/><path d="M8 8h.01M8 16h.01M12 8h4M12 16h4"/></template><template v-else-if="index === 1"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M10.5 7 6.5 15.7M13.5 7l4 8.7M7.5 18h9"/></template><template v-else-if="index === 2"><path d="m13 2-8 12h7l-1 8 8-12h-7l1-8Z"/></template><template v-else><path d="M7.5 18.5h10a4 4 0 0 0 .5-8 6 6 0 0 0-11.4-1.7A4.8 4.8 0 0 0 7.5 18.5Z"/></template></svg>{{ focus }}</span><i v-if="index < focusItems.length - 1" aria-hidden="true">·</i></template></div>
         <div class="tech-strip" :aria-label="copy.hero.techLabel"><span v-for="technology in technologyLogos" :key="technology.name" class="tech-logo-item"><img :src="technology.src" :alt="technology.name" :class="{ 'tech-logo--mono': technology.mono }" loading="eager"/> <span>{{ technology.name }}</span></span></div>
         <div class="actions" :aria-label="copy.hero.projects">
           <a href="#projetos" class="button primary">{{ copy.hero.projects }}</a>
           <a href="https://github.com/rebecanonato89" target="_blank" rel="noopener noreferrer" class="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.18-3.37-1.18-.45-1.15-1.1-1.45-1.1-1.45-.9-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.6 9.6 0 0 1 12 7.35c.85 0 1.7.11 2.49.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>GitHub<span class="sr-only"> ({{ copy.a11y.external }})</span></a>
           <a href="https://www.linkedin.com/in/rebecanonato89/" target="_blank" rel="noopener noreferrer" class="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5.2 3.5a2.1 2.1 0 1 1 0 4.2 2.1 2.1 0 0 1 0-4.2ZM3.4 9h3.6v11.5H3.4V9Zm5.8 0h3.4v1.57h.05c.47-.9 1.62-1.85 3.34-1.85 3.57 0 4.23 2.35 4.23 5.4v6.38h-3.55v-5.66c0-1.35-.03-3.08-1.88-3.08s-2.17 1.47-2.17 2.98v5.76H9.2V9Z"/></svg>LinkedIn<span class="sr-only"> ({{ copy.a11y.external }})</span></a>
-          <a :href="`mailto:${basicsData.email}`" class="button">{{ copy.hero.contact }}</a>
+          <a :href="`mailto:${basicsData.email}`" class="button"><svg class="line-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>{{ copy.hero.contact }}</a>
         </div>
         <div class="resume-links" :aria-label="copy.footer.formats"><span>{{ copy.hero.resume }}</span><a href="/rebeca-nonato-curriculo.pdf" download>{{ copy.hero.pdf }}</a><a href="/resume.md" download>{{ copy.hero.markdown }}</a><a href="/resume.json">{{ copy.hero.json }}</a><button type="button" @click="printResume">{{ copy.hero.print }}</button></div>
       </div>
@@ -48,7 +47,7 @@
 
     <section id="skills" class="section" aria-labelledby="skills-title">
       <header class="section-heading"><div><p class="eyebrow">{{ copy.sections.capabilitiesEyebrow }}</p><h2 id="skills-title">{{ copy.sections.capabilitiesTitle }}</h2></div><p>{{ copy.sections.capabilitiesIntro }}</p></header>
-      <div class="skills"><article v-for="group in domainSkills" :key="group.category"><span aria-hidden="true">{{ group.number }}</span><span class="skill-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16M7 4v4M17 10v4M10 16v4"/></svg></span><h3>{{ group.category }}</h3><div v-if="skillLogos(group.category).length" class="skill-logos"><img v-for="technology in skillLogos(group.category)" :key="technology.name" :src="technology.src" :alt="technology.name" :class="{ 'tech-logo--mono': technology.mono }" loading="lazy"/></div><p>{{ group.primary }}</p><ul class="tech-list" :aria-label="group.category"><li v-for="item in group.items" :key="item">{{ item }}</li></ul></article></div>
+      <div class="skills"><article v-for="(group, index) in domainSkills" :key="group.category"><span aria-hidden="true">{{ group.number }}</span><span class="skill-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><template v-if="index === 0"><rect x="4" y="4" width="16" height="6" rx="2"/><rect x="4" y="14" width="16" height="6" rx="2"/><path d="M8 7h.01M8 17h.01M12 7h5M12 17h5"/></template><template v-else-if="index === 1"><circle cx="12" cy="4.5" r="2.5"/><circle cx="5" cy="18.5" r="2.5"/><circle cx="19" cy="18.5" r="2.5"/><path d="m10.7 6.7-4.4 9.6m7-9.6 4.4 9.6M7.5 18.5h9"/></template><template v-else-if="index === 2"><path d="m12 3 8 4-8 4-8-4 8-4Z"/><path d="m4 12 8 4 8-4M4 17l8 4 8-4"/></template><template v-else-if="index === 3"><path d="M7.5 16.5h9a3.5 3.5 0 0 0 .4-7A5.5 5.5 0 0 0 6.5 8 4.3 4.3 0 0 0 7.5 16.5Z"/><path d="m9 20 2-3 2 3 2-3"/></template><template v-else><path d="M12 3 5 6v5c0 4.6 2.9 8 7 10 4.1-2 7-5.4 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-5"/></template></svg></span><h3>{{ group.category }}</h3><p>{{ group.primary }}</p><ul class="tech-list" :aria-label="group.category"><li v-for="item in group.items" :key="item">{{ item }}</li></ul></article></div>
     </section>
 
     <section class="section compact-area surface-alt" aria-label="Formação e publicações">
@@ -56,7 +55,7 @@
       <div id="publicacoes"><div class="section-heading compact"><p class="eyebrow">{{ copy.sections.writingEyebrow }}</p><h2>{{ copy.sections.publicationsTitle }}</h2></div><ul class="compact-list"><li v-for="pub in publicationsData" :key="pub.title"><div><strong>{{ pub.title }}</strong><span>{{ pub.venue }}</span></div><time>{{ pub.period }}</time></li></ul></div>
     </section>
 
-    <section class="section machine" aria-labelledby="machine-title"><div><p class="eyebrow">{{ copy.sections.underEyebrow }}</p><h2 id="machine-title">{{ copy.sections.machineTitle }}</h2><p>{{ copy.sections.machineText }}</p></div><ul :aria-label="copy.sections.machineTitle"><li v-for="item in copy.machineItems" :key="item">{{ item }}</li></ul></section>
+    <section class="section machine" aria-labelledby="machine-title"><div><p class="eyebrow">{{ copy.sections.underEyebrow }}</p><div class="machine-heading"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m8 5-5 7 5 7M16 5l5 7-5 7M14 3l-4 18"/></svg><h2 id="machine-title">{{ copy.sections.machineTitle }}</h2></div><p>{{ copy.sections.machineText }}</p></div><ul :aria-label="copy.sections.machineTitle"><li v-for="(item, index) in copy.machineItems" :key="item"><svg aria-hidden="true" viewBox="0 0 24 24"><template v-if="index === 0"><circle cx="12" cy="5" r="2"/><path d="M5 9h14M12 7v14M8 21l4-7 4 7M5 9l3 5M19 9l-3 5"/></template><template v-else-if="index === 1"><path d="m8 5-5 7 5 7M16 5l5 7-5 7M14 3l-4 18"/></template><template v-else-if="index === 2"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/></template><template v-else-if="index === 3"><path d="M6 3h9l4 4v14H6V3Z"/><path d="M14 3v5h5M9 12h6M9 16h4"/></template><template v-else-if="index === 4"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M9 7V4h6v3M8 13h.01M16 13h.01M9 16h6"/></template><template v-else><path d="M6 3h9l4 4v14H6V3Z"/><path d="M14 3v5h5m-5 7 2 2 4-5"/></template></svg><span>{{ item }}</span></li></ul></section>
 
     <section id="contato" class="contact" aria-labelledby="contato-title"><p class="eyebrow">{{ copy.sections.contactEyebrow }}</p><h2 id="contato-title">{{ copy.sections.contactTitle }}</h2><p>{{ copy.contactIntro }}</p><div class="actions"><a v-for="channel in contactData.channels" :key="channel.label" :href="channel.url" :target="channel.url.startsWith('http') ? '_blank' : null" :rel="channel.url.startsWith('http') ? 'noopener noreferrer' : null" class="button primary">{{ channel.label }}<span v-if="channel.url.startsWith('http')" class="sr-only"> ({{ copy.a11y.external }})</span></a></div></section>
   </main>
@@ -75,6 +74,7 @@ export default {
     featuredProjects() { return FEATURED.map(title => this.projectsData.find(project => project.title === title)).filter(Boolean); },
     copy() { return LOCALES[this.locale]; },
     domainSkills() { return this.copy.domains; },
+    focusItems() { return this.copy.hero.focus.split(' · '); },
   },
   methods: {
     shortTitle(title) { return title.split(/:| - /)[0]; },
@@ -82,7 +82,6 @@ export default {
     projectFlow(title) { const key = Object.keys(FLOWS).find(item => title.startsWith(item)); return FLOWS[key] || null; },
     localizedDescription(project) { const key = Object.keys(this.copy.projectDescriptions).find(item => project.title.startsWith(item)); return this.copy.projectDescriptions[key] || project.description; },
     localizedExperience(job) { const role = job.role; const key = role.includes('Specialist') ? 'AccentureSpecialist' : role.includes('Senior Analyst') ? 'AccentureSenior' : role.includes('Alice') ? 'Alice' : role.includes('Vetta') ? 'Vetta' : role.includes('FUNDECC') ? 'FUNDECC' : role === 'Analista de Sistemas' ? 'AccentureLegacy' : role.includes('Professora') ? 'UFLA' : null; return this.copy.experienceIntro[key] || job.description; },
-    skillLogos(category) { if (category === 'Backend') return this.technologyLogos.slice(0, 3); if (category === 'Distributed Systems') return [this.technologyLogos[4]]; if (category === 'Cloud & Reliability') return [this.technologyLogos[3]]; return []; },
     printResume() { window.print(); },
   },
 };
@@ -114,13 +113,21 @@ main{max-width:none;margin:0;padding:0}
 @media(max-width:900px){.hero{grid-template-columns:1fr}.hero .actions{flex-wrap:wrap}.project-card.closing{display:block}.mini-flow{grid-template-columns:repeat(2,minmax(0,1fr))}.mini-flow i{display:none}}
 @media(max-width:700px){.hero,.section,.contact{width:calc(100% - 32px)}.project-card.lead{display:block}.site-header-inner,.site-footer-inner,.footer-note{width:calc(100% - 32px)}}
 @media(max-width:430px){.hero,.section,.contact{padding-left:0;padding-right:0}.mini-flow{grid-template-columns:1fr}.system-visual{margin-inline:0}}
-.tech-strip{display:flex;flex-wrap:wrap;gap:1rem 1.2rem;margin-top:1.25rem;color:var(--text-muted);font:600 .7rem var(--font-code)}
-.tech-logo-item{display:inline-flex;align-items:center;gap:.4rem}
-.tech-logo-item img{width:18px;height:18px;object-fit:contain}
-.skill-logos{display:flex;gap:.65rem;margin:1rem 0 .7rem;min-height:24px}
-.skill-logos img{width:22px;height:22px;object-fit:contain}
+.hero-focus{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem .6rem;margin:.55rem 0;color:var(--text-muted);font:600 .78rem var(--font-code)}
+.hero-focus>i{color:var(--accent-soft);font-style:normal}.focus-item{display:inline-flex;align-items:center;gap:.35rem}.focus-item svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;color:var(--accent-cyan)}
+.tech-strip{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.25rem;margin-top:1.1rem;color:var(--text-muted);font:600 .72rem var(--font-code)}
+.tech-logo-item{display:inline-flex;align-items:center;gap:.45rem;line-height:1}
+.tech-logo-item img{width:20px;height:20px;object-fit:contain;object-position:center}
 .button svg{width:1rem;height:1rem;fill:currentColor;flex:0 0 auto;margin-right:.45rem}.skill-symbol{display:block;width:30px;height:30px;margin:1rem 0 .2rem;color:var(--accent-cyan)}.skill-symbol svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.skills article:nth-child(3) .skill-symbol{color:var(--accent-core)}.skills article:nth-child(4) .skill-symbol{color:var(--accent-cyan)}.skills article:nth-child(5) .skill-symbol{color:var(--accent-core)}
-:global(.back-to-top){position:fixed;right:clamp(1rem,3vw,2rem);bottom:clamp(1rem,3vw,2rem);z-index:20;width:2.75rem;height:2.75rem;border:1px solid var(--accent-border);border-radius:999px;background:var(--bg-surface-raised);color:var(--text-main);font-size:1.3rem;line-height:1;box-shadow:0 8px 24px var(--card-shadow);cursor:pointer;transition:background .2s,border-color .2s,transform .2s}.back-to-top:hover{border-color:var(--accent-core);background:var(--accent-dim);transform:translateY(-2px)}
+.button svg.line-icon{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.skills article>.skill-symbol{color:var(--accent-cyan)}.skills article:nth-child(odd)>.skill-symbol{color:var(--accent-core)}
+.project-card{transition:transform 220ms ease,border-color 220ms ease,box-shadow 220ms ease}.project-card:hover{transform:translateY(-4px);border-color:var(--accent-core);box-shadow:0 14px 32px var(--card-shadow)}
+.skills article{transition:transform 200ms ease,border-color 200ms ease,background-color 200ms ease}.skills article:hover{transform:translateY(-3px);border-color:var(--accent-cyan);background:var(--bg-surface-raised)}
+.machine-heading{display:flex;align-items:flex-start;gap:.8rem}.machine-heading>svg{width:30px;height:30px;flex:0 0 auto;margin-top:.28rem;fill:none;stroke:var(--accent-cyan);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.machine li{display:flex;align-items:center;gap:.65rem}.machine li svg{width:19px;height:19px;flex:0 0 auto;fill:none;stroke:var(--accent-cyan);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.dots circle{transform-box:fill-box;transform-origin:center;animation:flow-dot 2.4s ease-in-out infinite}.dots circle:nth-child(2){animation-delay:.3s}.dots circle:nth-child(3){animation-delay:.6s}.dots circle:nth-child(4){animation-delay:.9s}@keyframes flow-dot{0%,100%{opacity:.55;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}
+:global(.back-to-top){position:fixed;right:clamp(1rem,3vw,2rem);bottom:clamp(1rem,3vw,2rem);z-index:20;width:2.75rem;height:2.75rem;border:1px solid var(--accent-border);border-radius:999px;background:var(--bg-surface-raised);color:var(--text-main);font-size:1.3rem;line-height:1;box-shadow:0 8px 24px var(--card-shadow);cursor:pointer;animation:back-top-in 180ms ease-out;transition:background .2s,border-color .2s,transform .2s}.back-to-top:hover{border-color:var(--accent-core);background:var(--accent-dim);transform:translateY(-2px)}@keyframes back-top-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .tech-logo--mono{filter:var(--mono-logo-filter)}
-@media(max-width:700px){.tech-strip{gap:.7rem .9rem}.tech-logo-item img{width:16px;height:16px}}
+@media(prefers-reduced-motion:reduce){.dots circle{animation:none}.project-card:hover,.skills article:hover{transform:none}}
+:global(html.force-reduced-motion) .dots circle{animation:none}:global(html.force-reduced-motion) .project-card:hover,:global(html.force-reduced-motion) .skills article:hover{transform:none}
+@media(max-width:700px){.tech-strip{gap:.8rem 1rem}.tech-logo-item img{width:18px;height:18px}.hero-focus{gap:.45rem .7rem}.hero-focus>i{display:none}}
 </style>
