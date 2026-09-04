@@ -39,14 +39,6 @@
           >
             {{ copy.a11y.motion }}
           </button>
-          <button
-            type="button"
-            class="a11y-btn"
-            :aria-label="theme === 'dark' ? copy.a11y.light : copy.a11y.dark"
-            @click="toggleTheme"
-          >
-            {{ theme === 'dark' ? copy.a11y.light : copy.a11y.dark }}
-          </button>
         </div>
       </div>
 
@@ -81,7 +73,7 @@
             <router-link to="/servicos" class="nav-link" active-class="nav-link--active" @click="navOpen = false">{{ copy.nav.services }}</router-link>
             <router-link to="/arcade" class="nav-link" active-class="nav-link--active" @click="navOpen = false">{{ copy.nav.arcade }}</router-link>
             <router-link to="/recursos" class="nav-link" active-class="nav-link--active" @click="navOpen = false">{{ copy.nav.resources }}</router-link>
-            <div class="locale-picker" role="group" :aria-label="copy.languageLabel"><button v-for="option in localeOptions" :key="option" type="button" :class="{ 'locale-active': option === locale }" :aria-pressed="option === locale" @click="setLocale(option)">{{ LOCALES[option].languageName }}</button></div>
+            <div class="locale-picker" role="group" :aria-label="copy.languageLabel"><button v-for="option in localeOptions" :key="option" type="button" :class="{ 'locale-active': option === locale }" :aria-pressed="option === locale" @click="setLocale(option)">{{ LOCALES[option].languageName }}</button><button type="button" class="theme-toggle" :aria-label="theme === 'dark' ? copy.a11y.light : copy.a11y.dark" @click="toggleTheme"><svg v-if="theme === 'dark'" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.64 5.64l1.42 1.42M16.94 16.94l1.42 1.42M18.36 5.64l-1.42 1.42M7.06 16.94l-1.42 1.42"/><circle cx="12" cy="12" r="4"/></svg><svg v-else aria-hidden="true" viewBox="0 0 24 24"><path d="M20.2 15.1A8.5 8.5 0 0 1 8.9 3.8 8.5 8.5 0 1 0 20.2 15.1Z"/></svg></button></div>
           </nav>
         </div>
       </header>
@@ -162,6 +154,7 @@ export default {
       activeSection: 'inicio',
       showBackTop: false,
       sectionObserver: null,
+      revealObserver: null,
       navOpen: false,
       fontSizeStep: 0,
       isHighContrast: false,
@@ -198,11 +191,13 @@ export default {
     this.reduceMotion = localStorage.getItem('rn-reduced-motion') === '1';
     this.applyReduceMotionClass();
     this.setupScrollSpy();
+    this.setupSectionReveal();
     window.addEventListener('scroll', this.updateBackTop, { passive: true });
     this.updateBackTop();
   },
   beforeUnmount() {
     this.sectionObserver?.disconnect();
+    this.revealObserver?.disconnect();
     window.removeEventListener('scroll', this.updateBackTop);
   },
   methods: {
@@ -279,6 +274,22 @@ export default {
         if (visible[0]) this.activeSection = visible[0].target.id;
       }, { rootMargin: '-22% 0px -62% 0px', threshold: [0.1, 0.35, 0.6] });
       ids.map(id => document.getElementById(id)).filter(Boolean).forEach(section => this.sectionObserver.observe(section));
+    },
+    setupSectionReveal() {
+      const sections = document.querySelectorAll('main > section');
+      if (!('IntersectionObserver' in window)) {
+        sections.forEach(section => section.classList.add('section-visible'));
+        return;
+      }
+      sections.forEach(section => section.classList.add('section-reveal'));
+      this.revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('section-visible');
+          observer.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      sections.forEach(section => this.revealObserver.observe(section));
     },
     updateBackTop() { this.showBackTop = window.scrollY > Math.max(420, window.innerHeight * 0.7); },
     backToTop() { window.scrollTo({ top: 0, behavior: this.reduceMotion ? 'auto' : 'smooth' }); },
@@ -439,6 +450,11 @@ body {
   font-size: 1.0625rem;
   line-height: 1.65;
   min-height: 100vh;
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+#app-shell, .site-header, .site-footer, .a11y-bar {
+  transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease;
 }
 
 img { max-width: 100%; display: block; }
@@ -593,6 +609,18 @@ html { scroll-behavior: smooth; }
 .locale-picker { display: inline-flex; gap: 0.15rem; margin-left: 0.35rem; padding-left: 0.45rem; border-left: 1px solid var(--accent-border); }
 .locale-picker button { border: 0; border-radius: var(--radius-sm); padding: 0.4rem 0.45rem; background: transparent; color: var(--text-muted); font: 600 0.72rem var(--font-code); cursor: pointer; }
 .locale-picker button:hover, .locale-picker button.locale-active { background: var(--accent-dim); color: var(--accent-core); }
+.locale-picker .theme-toggle {
+  width: 32px;
+  height: 32px;
+  margin-left: 0.25rem;
+  padding: 0.38rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--accent-border);
+  color: var(--text-main);
+}
+.theme-toggle svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 
 @media (max-width: 1080px) {
   .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
@@ -637,6 +665,20 @@ main {
 
 section { margin-bottom: var(--space-xl); scroll-margin-top: 5.5rem; }
 section:last-child { margin-bottom: 0; }
+.section-reveal { opacity: 0; transform: translateY(10px); transition: opacity 240ms ease, transform 240ms ease; }
+.section-reveal.section-visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .section-reveal { opacity: 1; transform: none; }
+}
+html.force-reduced-motion .section-reveal { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  .dots circle { animation: none !important; }
+}
+html.force-reduced-motion { scroll-behavior: auto !important; }
+html.force-reduced-motion .dots circle { animation: none !important; }
 
 .section-title {
   font-size: 1.4rem;
