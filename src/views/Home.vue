@@ -10,8 +10,8 @@
         <div class="tech-strip" :aria-label="copy.hero.techLabel"><span v-for="technology in technologyLogos" :key="technology.name" class="tech-logo-item"><img :src="technology.src" :alt="technology.name" :class="{ 'tech-logo--mono': technology.mono }" loading="eager"/> <span>{{ technology.name }}</span></span></div>
         <div class="actions" :aria-label="copy.hero.projects">
           <a href="#projetos" class="button primary">{{ copy.hero.projects }}</a>
-          <a href="https://github.com/rebecanonato89" target="_blank" rel="noopener noreferrer" class="button">GitHub<span class="sr-only"> ({{ copy.a11y.external }})</span></a>
-          <a href="https://www.linkedin.com/in/rebecanonato89/" target="_blank" rel="noopener noreferrer" class="button">LinkedIn<span class="sr-only"> ({{ copy.a11y.external }})</span></a>
+          <a href="https://github.com/rebecanonato89" target="_blank" rel="noopener noreferrer" class="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.18-3.37-1.18-.45-1.15-1.1-1.45-1.1-1.45-.9-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.6 9.6 0 0 1 12 7.35c.85 0 1.7.11 2.49.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>GitHub<span class="sr-only"> ({{ copy.a11y.external }})</span></a>
+          <a href="https://www.linkedin.com/in/rebecanonato89/" target="_blank" rel="noopener noreferrer" class="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5.2 3.5a2.1 2.1 0 1 1 0 4.2 2.1 2.1 0 0 1 0-4.2ZM3.4 9h3.6v11.5H3.4V9Zm5.8 0h3.4v1.57h.05c.47-.9 1.62-1.85 3.34-1.85 3.57 0 4.23 2.35 4.23 5.4v6.38h-3.55v-5.66c0-1.35-.03-3.08-1.88-3.08s-2.17 1.47-2.17 2.98v5.76H9.2V9Z"/></svg>LinkedIn<span class="sr-only"> ({{ copy.a11y.external }})</span></a>
           <a :href="`mailto:${basicsData.email}`" class="button">{{ copy.hero.contact }}</a>
         </div>
         <div class="resume-links" :aria-label="copy.footer.formats"><span>{{ copy.hero.resume }}</span><a href="/rebeca-nonato-curriculo.pdf" download>{{ copy.hero.pdf }}</a><a href="/resume.md" download>{{ copy.hero.markdown }}</a><a href="/resume.json">{{ copy.hero.json }}</a><button type="button" @click="printResume">{{ copy.hero.print }}</button></div>
@@ -48,7 +48,7 @@
 
     <section id="skills" class="section" aria-labelledby="skills-title">
       <header class="section-heading"><div><p class="eyebrow">{{ copy.sections.capabilitiesEyebrow }}</p><h2 id="skills-title">{{ copy.sections.capabilitiesTitle }}</h2></div><p>{{ copy.sections.capabilitiesIntro }}</p></header>
-      <div class="skills"><article v-for="group in domainSkills" :key="group.category"><span aria-hidden="true">{{ group.number }}</span><h3>{{ group.category }}</h3><div v-if="skillLogos(group.category).length" class="skill-logos"><img v-for="technology in skillLogos(group.category)" :key="technology.name" :src="technology.src" :alt="technology.name" :class="{ 'tech-logo--mono': technology.mono }" loading="lazy"/></div><p>{{ group.primary }}</p><ul class="tech-list" :aria-label="group.category"><li v-for="item in group.items" :key="item">{{ item }}</li></ul></article></div>
+      <div class="skills"><article v-for="group in domainSkills" :key="group.category"><span aria-hidden="true">{{ group.number }}</span><span class="skill-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16M7 4v4M17 10v4M10 16v4"/></svg></span><h3>{{ group.category }}</h3><div v-if="skillLogos(group.category).length" class="skill-logos"><img v-for="technology in skillLogos(group.category)" :key="technology.name" :src="technology.src" :alt="technology.name" :class="{ 'tech-logo--mono': technology.mono }" loading="lazy"/></div><p>{{ group.primary }}</p><ul class="tech-list" :aria-label="group.category"><li v-for="item in group.items" :key="item">{{ item }}</li></ul></article></div>
     </section>
 
     <section class="section compact-area surface-alt" aria-label="Formação e publicações">
@@ -119,6 +119,8 @@ main{max-width:none;margin:0;padding:0}
 .tech-logo-item img{width:18px;height:18px;object-fit:contain}
 .skill-logos{display:flex;gap:.65rem;margin:1rem 0 .7rem;min-height:24px}
 .skill-logos img{width:22px;height:22px;object-fit:contain}
+.button svg{width:1rem;height:1rem;fill:currentColor;flex:0 0 auto;margin-right:.45rem}.skill-symbol{display:block;width:30px;height:30px;margin:1rem 0 .2rem;color:var(--accent-cyan)}.skill-symbol svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.skills article:nth-child(3) .skill-symbol{color:var(--accent-core)}.skills article:nth-child(4) .skill-symbol{color:var(--accent-cyan)}.skills article:nth-child(5) .skill-symbol{color:var(--accent-core)}
+:global(.back-to-top){position:fixed;right:clamp(1rem,3vw,2rem);bottom:clamp(1rem,3vw,2rem);z-index:20;width:2.75rem;height:2.75rem;border:1px solid var(--accent-border);border-radius:999px;background:var(--bg-surface-raised);color:var(--text-main);font-size:1.3rem;line-height:1;box-shadow:0 8px 24px var(--card-shadow);cursor:pointer;transition:background .2s,border-color .2s,transform .2s}.back-to-top:hover{border-color:var(--accent-core);background:var(--accent-dim);transform:translateY(-2px)}
 :global(:root[data-theme='dark']) .tech-logo--mono{filter:invert(1)}
 @media(max-width:700px){.tech-strip{gap:.7rem .9rem}.tech-logo-item img{width:16px;height:16px}}
 </style>

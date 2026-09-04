@@ -5,6 +5,8 @@
     <!-- Modo jogo: tela cheia, sem cabeçalho/rodapé de currículo (cada jogo tem seu próprio botão de voltar) -->
     <template v-if="isGameRoute">
       <router-view />
+
+      <button v-if="showBackTop" type="button" class="back-to-top" :aria-label="copy.a11y.backTop" @click="backToTop">↑</button>
     </template>
 
     <template v-else>
@@ -25,7 +27,7 @@
             :aria-label="copy.a11y.contrast"
             @click="toggleHighContrast"
           >
-            Alto contraste
+            {{ copy.a11y.contrast }}
           </button>
           <button
             type="button"
@@ -35,16 +37,15 @@
             :aria-label="copy.a11y.motion"
             @click="toggleReduceMotion"
           >
-            Reduzir movimento
+            {{ copy.a11y.motion }}
           </button>
           <button
             type="button"
             class="a11y-btn"
-            :aria-label="theme === 'dark' ? copy.a11y.dark : copy.a11y.light"
-            :aria-pressed="theme === 'dark'"
+            :aria-label="theme === 'dark' ? copy.a11y.light : copy.a11y.dark"
             @click="toggleTheme"
           >
-            {{ theme === 'dark' ? copy.a11y.dark : copy.a11y.light }}
+            {{ theme === 'dark' ? copy.a11y.light : copy.a11y.dark }}
           </button>
         </div>
       </div>
@@ -73,6 +74,7 @@
               :key="item.hash"
               :to="{ path: '/', hash: item.hash }"
               class="nav-link"
+              :aria-current="activeSection === item.hash.slice(1) ? 'location' : undefined"
               @click="navOpen = false"
             >{{ item.label }}</router-link>
             <span class="nav-divider" aria-hidden="true"></span>
@@ -157,6 +159,9 @@ export default {
       localeOptions: LOCALE_OPTIONS,
       LOCALES,
       locale: getLocale(this.$route.params.locale || (typeof window !== 'undefined' ? localStorage.getItem('rn-locale') : null) || DEFAULT_LOCALE),
+      activeSection: 'inicio',
+      showBackTop: false,
+      sectionObserver: null,
       navOpen: false,
       fontSizeStep: 0,
       isHighContrast: false,
@@ -192,6 +197,13 @@ export default {
 
     this.reduceMotion = localStorage.getItem('rn-reduced-motion') === '1';
     this.applyReduceMotionClass();
+    this.setupScrollSpy();
+    window.addEventListener('scroll', this.updateBackTop, { passive: true });
+    this.updateBackTop();
+  },
+  beforeUnmount() {
+    this.sectionObserver?.disconnect();
+    window.removeEventListener('scroll', this.updateBackTop);
   },
   methods: {
     syncLocale(route) {
@@ -259,6 +271,17 @@ export default {
       el.focus();
       el.scrollIntoView();
     },
+    setupScrollSpy() {
+      if (!('IntersectionObserver' in window)) return;
+      const ids = ['sobre', 'projetos', 'experiencia', 'skills', 'certificacoes', 'contato'];
+      this.sectionObserver = new IntersectionObserver((entries) => {
+        const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) this.activeSection = visible[0].target.id;
+      }, { rootMargin: '-22% 0px -62% 0px', threshold: [0.1, 0.35, 0.6] });
+      ids.map(id => document.getElementById(id)).filter(Boolean).forEach(section => this.sectionObserver.observe(section));
+    },
+    updateBackTop() { this.showBackTop = window.scrollY > Math.max(420, window.innerHeight * 0.7); },
+    backToTop() { window.scrollTo({ top: 0, behavior: this.reduceMotion ? 'auto' : 'smooth' }); },
   },
 };
 </script>
@@ -330,22 +353,54 @@ export default {
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --bg-base: #101216;
-    --bg-surface: #181b21;
-    --bg-surface-raised: #1e222a;
+    --bg-base: #080d18;
+    --bg-surface: #0f1929;
+    --bg-surface-raised: #142137;
+    --bg-alternate: #0b1321;
     --text-main: #f2f4f8;
-    --text-muted: #a9b0c0;
-    --accent-core: #7fa4ff;
-    --accent-hover: #a4c0ff;
-    --accent-dim: rgba(127, 164, 255, 0.16);
-    --accent-border: #2b3040;
+    --text-muted: #aab7ce;
+    --text-subtle: #8292ad;
+    --accent-core: #6685ff;
+    --accent-hover: #8fa5ff;
+    --accent-cyan: #42d5e8;
+    --accent-soft: #4a5e83;
+    --accent-glow: rgba(66, 213, 232, 0.2);
+    --accent-dim: rgba(102, 133, 255, 0.15);
+    --accent-border: #263650;
+    --code-bg: #0a1424;
+    --status-ok: #42d5e8;
+    --button-text: #07101d;
     --card-shadow: rgba(0, 0, 0, 0.45);
     --scrim-overlay: rgba(0, 0, 0, 0.7);
     color-scheme: dark;
   }
 }
 
-:root[data-contrast='high'] {
+:root[data-theme='light'][data-contrast='high'] {
+  --bg-base: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-surface-raised: #ffffff;
+  --bg-alternate: #f5f7fb;
+  --text-main: #000000;
+  --text-muted: #111111;
+  --text-subtle: #222222;
+  --accent-core: #0645d6;
+  --accent-hover: #0036ad;
+  --accent-cyan: #0036ad;
+  --accent-soft: #000000;
+  --accent-glow: transparent;
+  --accent-dim: #e5edff;
+  --accent-border: #000000;
+  --code-bg: #ffffff;
+  --status-ok: #0645d6;
+  --button-text: #ffffff;
+  --card-shadow: transparent;
+  --scrim-overlay: rgba(0, 0, 0, 0.9);
+  --focus-ring: 3px solid #0645d6;
+  color-scheme: light;
+}
+
+:root[data-theme='dark'][data-contrast='high'] {
   --bg-base: #000000;
   --bg-surface: #000000;
   --bg-surface-raised: #0a0a0a;
