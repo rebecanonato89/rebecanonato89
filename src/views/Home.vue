@@ -121,6 +121,6 @@ main{max-width:none;margin:0;padding:0}
 .skill-logos img{width:22px;height:22px;object-fit:contain}
 .button svg{width:1rem;height:1rem;fill:currentColor;flex:0 0 auto;margin-right:.45rem}.skill-symbol{display:block;width:30px;height:30px;margin:1rem 0 .2rem;color:var(--accent-cyan)}.skill-symbol svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.skills article:nth-child(3) .skill-symbol{color:var(--accent-core)}.skills article:nth-child(4) .skill-symbol{color:var(--accent-cyan)}.skills article:nth-child(5) .skill-symbol{color:var(--accent-core)}
 :global(.back-to-top){position:fixed;right:clamp(1rem,3vw,2rem);bottom:clamp(1rem,3vw,2rem);z-index:20;width:2.75rem;height:2.75rem;border:1px solid var(--accent-border);border-radius:999px;background:var(--bg-surface-raised);color:var(--text-main);font-size:1.3rem;line-height:1;box-shadow:0 8px 24px var(--card-shadow);cursor:pointer;transition:background .2s,border-color .2s,transform .2s}.back-to-top:hover{border-color:var(--accent-core);background:var(--accent-dim);transform:translateY(-2px)}
-:global(:root[data-theme='dark']) .tech-logo--mono{filter:invert(1)}
+.tech-logo--mono{filter:var(--mono-logo-filter)}
 @media(max-width:700px){.tech-strip{gap:.7rem .9rem}.tech-logo-item img{width:16px;height:16px}}
 </style>

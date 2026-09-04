@@ -310,6 +310,7 @@ export default {
   --button-text: #ffffff;
   --card-shadow: rgba(15, 23, 42, 0.08);
   --scrim-overlay: rgba(15, 23, 42, 0.6);
+  --mono-logo-filter: none;
 
   --radius-sm: 6px;
   --radius-md: 12px;
@@ -348,6 +349,7 @@ export default {
   --button-text: #07101D;
   --card-shadow: rgba(0, 0, 0, 0.45);
   --scrim-overlay: rgba(0, 0, 0, 0.7);
+  --mono-logo-filter: invert(1);
   color-scheme: dark;
 }
 
