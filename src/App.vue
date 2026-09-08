@@ -121,10 +121,10 @@ import { LOCALES, LOCALE_OPTIONS, DEFAULT_LOCALE, getLocale } from './i18n/index
 const GAME_ROUTES = ['/go', '/damas', '/memoria'];
 
 const RESUME_NAV = [
-  { hash: '#sobre', key: 'about' },
   { hash: '#projetos', key: 'projects' },
   { hash: '#experiencia', key: 'experience' },
   { hash: '#skills', key: 'skills' },
+  { hash: '#sobre', key: 'about' },
   { hash: '#certificacoes', key: 'education' },
   { hash: '#contato', key: 'contact' },
 ];
